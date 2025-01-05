@@ -10,10 +10,11 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run watch\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch": "nodemon --watch ./src --ext ts --exec \"npx ts-node ./src/generateList.js\" --ignore ./src/layouts_and_modules.json"
   },
   "eslintConfig": {
     "extends": [
@@ -36,7 +37,10 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.5",
     "@types/react": "^19.0.2",
-    "@types/react-dom": "^19.0.2"
+    "@types/react-dom": "^19.0.2",
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.9"
   }
 }
