@@ -5,18 +5,6 @@
   ],
   "modules": [
     {
-      "name": "document",
-      "hasAdmin": true
-    },
-    {
-      "name": "member",
-      "hasAdmin": true
-    },
-    {
-      "name": "menu",
-      "hasAdmin": true
-    },
-    {
       "name": "setting",
       "hasAdmin": true
     }
