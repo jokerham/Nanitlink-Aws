@@ -1,4 +1,3 @@
-import { fontWeight } from './../../../node_modules/@mui/system/typography/typography.d';
 import { createTheme } from '@mui/material/styles';
 
 // Custom MUI theme
