@@ -13,9 +13,9 @@ const Layout = () => {
       <Container sx={{display: 'flex',
           flexDirection: 'column',
           minHeight: '100vh' }}>
-        <ColumnBox sx={{minHeight: '100vh'}}>
+        <ColumnBox sx={{minHeight: '100vh', gap: 2}}>
           <Header />
-          <RowBox sx={{ flex: 1, display: 'flex' }}>
+          <RowBox sx={{ flex: 1, display: 'flex', gap: 3 }}>
             <SideMenu />
             <ColumnBox sx={{ flex: 1 }}>
               <Outlet />
