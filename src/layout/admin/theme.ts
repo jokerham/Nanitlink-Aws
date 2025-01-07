@@ -1,3 +1,4 @@
+import { fontWeight } from './../../../node_modules/@mui/system/typography/typography.d';
 import { createTheme } from '@mui/material/styles';
 
 // Custom MUI theme
@@ -145,7 +146,7 @@ const theme = createTheme({
           },
           '& > .MuiList-root > .MuiListItem-root': {
             color: '#333333',
-            backgroundImage: 'linear-gradient(to bottom, #f1f1f1, #e7e8e8)', // #f9f9f9 , #ffffff
+            backgroundImage: 'linear-gradient(to bottom, #f1f1f1, #e7e8e8)',
             borderBottom: '1px solid #e0e0e0',
             minHeight: 36,
             paddingTop: 0,
@@ -159,9 +160,21 @@ const theme = createTheme({
             },
             '& > .MuiListItemText-root': {
               paddingLeft: '16px',
+              '&.active': {
+                fontWeight: 700,
+              }
+            },
+            '&:hover': {
+              backgroundImage: 'linear-gradient(to bottom, #ffffff, #f1f1f1)',
+            },
+            '& > .MuiListItemText-root.active .MuiTypography-root.MuiListItemText-primary': {
+              fontWeight: 700,
             },
             '& .MuiTypography-root.MuiListItemText-primary': {
-              fontSize: '0.8125rem', // 13px
+              fontSize: '0.8125rem',
+              '&:hover': {
+                fontWeight: 700,
+              }
             },
           }
         },

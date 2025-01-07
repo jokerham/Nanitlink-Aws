@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Box, List, ListItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
 import { FaHome, FaUser, FaCog, FaStar, FaListUl, FaFileAlt, FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { FiTool } from "react-icons/fi";
 import { IoIosArrowDown } from 'react-icons/io'
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 
 interface IMenu {
   id: string,
@@ -14,45 +15,75 @@ interface IMenu {
   active?: boolean,
 };
 
+const initialMenuData = [
+  { id: 'dashboard', name: 'Dashboard', icon: <FaHome />, children: [], navigateTo: '/admin'},
+  { id: 'menu', name: 'Menu', icon: <FaListUl />, children: [
+    { id: 'menu-editor', name: 'Menu Editor', navigateTo: '/admin/menu' },
+    { id: 'site-design', name: 'Site Design', navigateTo: '/admin/site' },
+    { id: 'layouts', name: 'Layouts', navigateTo: '/admin/layout' }, ], },
+  { id: 'member', name: 'Member', icon: <FaUser />, children: [
+    { id: 'member-list', name: 'Member List', navigateTo: '/admin/member' },
+    { id: 'member-setting', name: 'Member Setting', navigateTo: '/admin/member/setting' },
+    { id: 'member-group', name: 'Member Group', navigateTo: '/admin/member/group' },
+    { id: 'member-point', name: 'Point', navigateTo: '/admin/point' }, ], },
+  { id: 'content', name: 'Content', icon: <FaFileAlt />, children: [
+    { id: 'document', name: 'Document', navigateTo: '/admin/document' },
+    { id: 'comment', name: 'Comment', navigateTo: '/admin/comment' },
+    { id: 'file', name: 'File', navigateTo: '/admin/file' },
+    { id: 'poll', name: 'Poll', navigateTo: '/admin/poll' },
+    { id: 'language', name: 'Multilingual', navigateTo: '/admin/language' },
+    { id: 'trash', name: 'Trash', navigateTo: '/admin/trash' },
+    { id: 'spam', name: 'SpamFilter', navigateTo: '/admin/spam' }, ], },
+  { id: 'favorite', name: 'Favorite', icon: <FaStar />, children: [
+    // { id: '', name: '' } 
+  ], },
+  { id: 'settings', name: 'Settings', icon: <FiTool />, children: [
+    { id: 'setting-general', name: 'General', navigateTo: '/admin/setting/general' },
+    { id: 'admin-menu', name: 'Admin Setup', navigateTo: '/admin/setting/menu' },
+    { id: 'setting-file', name: 'File Uplaod', navigateTo: '/admin/setting/file' }, ], },
+  { id: 'advanced', name: 'Advanced', icon: <FaCog />, children: [
+    // { id: '', name: '' },
+  ], },
+] as IMenu[];
+
 const SideMenu = () => {
   // State to track expanded accordions
   const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
   // State to track collapsea
   const [collapsed, setCollapsed] = useState(false); 
+  const [menuData, setMenuData] = useState(initialMenuData);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const menuData = [
-    { id: 'dashboard', name: 'Dashboard', icon: <FaHome />, children: [], active: true},
-    { id: 'menu', name: 'Menu', icon: <FaListUl />, children: [
-      { id: 'menu-editor', name: 'Menu Editor' },
-      { id: 'site-design', name: 'Site Design' },
-      { id: 'layouts', name: 'Layouts' }, ], },
-    { id: 'member', name: 'Member', icon: <FaUser />, children: [
-      { id: 'member-list', name: 'Member List' },
-      { id: 'member-setting', name: 'Member Setting' },
-      { id: 'member-group', name: 'Member Group' },
-      { id: 'member-point', name: 'Point' }, ], },
-    { id: 'content', name: 'Content', icon: <FaFileAlt />, children: [
-      { id: 'document', name: 'Document' },
-      { id: 'comment', name: 'Comment' },
-      { id: 'file', name: 'File' },
-      { id: 'poll', name: 'Poll' },
-      { id: 'language', name: 'Multilingual' },
-      { id: 'trash', name: 'Trash' },
-      { id: 'spam', name: 'SpamFilter' }, ], },
-    { id: 'favorite', name: 'Favorite', icon: <FaStar />, children: [
-      // { id: '', name: '' } 
-    ], },
-    { id: 'settings', name: 'Settings', icon: <FaCog />, children: [
-      { id: 'setting-general', name: 'General' },
-      { id: 'admin-menu', name: 'Admin Setup' },
-      { id: 'setting-file', name: 'File Uplaod' }, ], },
-    { id: 'advanced', name: 'Advanced', icon: <FaCog />, children: [
-      // { id: '', name: '' },
-    ], },
-  ] as IMenu[];
+  // Function to update the active state based on the current path
+  const updateActiveMenu = (path: string) => {
+    const normalizePath = (path: string) => path.replace(/\/+$/, '');
 
-  const isActive = (active: boolean) => (active ? 'active' : '');
+    const updateMenu = (menus: IMenu[]): IMenu[] =>
+      menus.map(menu => {
+        // Check if the normalized paths match
+        const isActive =
+          normalizePath(menu.navigateTo ?? '') === normalizePath(path) ||
+          menu.children?.some(child => normalizePath(child.navigateTo ?? '') === normalizePath(path));
+  
+        return {
+          ...menu,
+          active: isActive,
+          children: menu.children ? updateMenu(menu.children) : undefined,
+        };
+      });
+  
+    setMenuData(updateMenu(initialMenuData));
+  };
+
+  useEffect(() => {
+    console.log(menuData);
+  }, [menuData])
+
+  // Update active state whenever the path changes
+  useEffect(() => {
+    updateActiveMenu(location.pathname);
+  }, [location.pathname]);
 
   // Toggle Expand Icon
   const expandIcon = (menu: IMenu) => {
@@ -70,6 +101,8 @@ const SideMenu = () => {
           ? prevExpanded.filter((id) => id !== menu.id) // Collapse if already expanded
           : [...prevExpanded, menu.id] // Expand if not already expanded
       );
+    } else {
+      setCollapsed(false);
     }
   };
 
@@ -109,10 +142,10 @@ const SideMenu = () => {
           <Accordion 
             key={menu.id} 
             disableGutters
-            className={isActive(menu.active ?? false)}
+            className={menu.active ? 'active' : ''}
             expanded={expandedMenus.includes(menu.id)}
             onChange={handleAccordionChange(menu)}>
-            <AccordionSummary expandIcon={!collapsed && expandIcon(menu)} onClick={() => {onClick(menu)}}>
+            <AccordionSummary expandIcon={!collapsed && expandIcon(menu)} onClick={(event) => {onClick(menu)}}>
               <ListItemIcon>
                 {menu.icon}
               </ListItemIcon>
@@ -122,8 +155,8 @@ const SideMenu = () => {
               <AccordionDetails>
                 <List>
                   {menu.children?.map((child) => (
-                    <ListItem key={child.id} onClick={() => {onClick(menu)}}>
-                      <ListItemText primary={child.name} />
+                    <ListItem key={child.id} onClick={() => {onClick(child)}}>
+                      <ListItemText primary={child.name} className={child.active ? 'active' : ''}/>
                     </ListItem>
                   ))}
                 </List>
