@@ -118,7 +118,10 @@ const theme = createTheme({
               margin: 0,
             },
           },
-          '& .MuiTypography-root.MuiListItemText-primary': {
+          '& .MuiListItemText-root': {
+            marginLeft: '16px',
+          },
+          '& .MuiListItemText-primary': {
             fontSize: '0.8125rem', // 13px
           },
         },

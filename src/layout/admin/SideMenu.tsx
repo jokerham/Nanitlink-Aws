@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Box, List, ListItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Box, List, ListItem, ListItemIcon, ListItemText, IconButton, styled } from '@mui/material';
 import { FaHome, FaUser, FaCog, FaStar, FaListUl, FaFileAlt, FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 import { FiTool } from "react-icons/fi";
 import { IoIosArrowDown } from 'react-icons/io'
@@ -45,6 +45,34 @@ const initialMenuData = [
     // { id: '', name: '' },
   ], },
 ] as IMenu[];
+
+const SideMenuBox = styled(Box)(({ theme }) => ({
+  display: 'inline-block',
+  p: '2px', 
+  borderRadius: '5px', 
+  boxShadow: '0 0 10px 3px rgba(0, 0, 0, 0.2)', 
+  position: 'relative',
+}));
+
+const ToggleIconButton = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  top: '50%',
+  right: '-10px',
+  transform: 'translateY(-50%)',
+  height: '50px', // Set the height
+  width: '10px', // Set the width
+  borderRadius: '0 5px 5px 0', // Right border-radius
+  backgroundColor: '#eeeeee',
+  //boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)',
+  boxShadow: '0 0 10px 3px rgba(0, 0, 0, 0.2)', 
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: 0,
+  '&:hover': {
+    backgroundColor: '#f0f0f0',
+  },
+}));
 
 const SideMenu = () => {
   // State to track expanded accordions
@@ -131,13 +159,14 @@ const SideMenu = () => {
   
   return (
     <Box>
-      <Box sx={{ 
-        display: 'inline-block', 
-        width: collapsed ? 40 : 180, 
-        p: '2px', 
-        borderRadius: '5px', 
-        boxShadow: '0 0 10px 3px rgba(0, 0, 0, 0.2)', 
-        position: 'relative' }}>
+      <SideMenuBox sx={{ width: collapsed ? 40 : 180 }}>
+
+        {/* Toggle Button */}
+        <ToggleIconButton onClick={toggleMenu}>
+          {collapsed ? <FaChevronRight size={8} /> : <FaChevronLeft size={8} />}
+        </ToggleIconButton>
+
+        {/* List of Accordion Menu */}
         {menuData.map((menu) => (
           <Accordion 
             key={menu.id} 
@@ -149,7 +178,7 @@ const SideMenu = () => {
               <ListItemIcon>
                 {menu.icon}
               </ListItemIcon>
-              { !collapsed && <ListItemText primary={menu.name} sx={{ml: '16px'}}/> }
+              { !collapsed && <ListItemText primary={menu.name}/> }
             </AccordionSummary>
             {(menu.children?.length ?? 0) > 0 && (
               <AccordionDetails>
@@ -164,32 +193,7 @@ const SideMenu = () => {
             )}
           </Accordion>
         ))}
-
-        {/* Toggle Button */}
-        <IconButton
-          onClick={toggleMenu}
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            right: '-10px',
-            transform: 'translateY(-50%)',
-            height: '50px', // Set the height
-            width: '10px', // Set the width
-            borderRadius: '0 5px 5px 0', // Right border-radius
-            backgroundColor: '#ffffff',
-            boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 0,
-            '&:hover': {
-              backgroundColor: '#f0f0f0',
-            },
-          }}
-        >
-          {collapsed ? <FaChevronRight size={8} /> : <FaChevronLeft size={8} />}
-        </IconButton>
-      </Box>
+      </SideMenuBox>
     </Box>
   );
 };
