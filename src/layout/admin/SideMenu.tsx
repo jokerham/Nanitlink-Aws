@@ -260,8 +260,15 @@ const SideMenu = () => {
 
   // Collapse/Expand Menu
   const toggleMenu = () => {
+    if (collapsed) {
+      // filter active menu from menuData
+      const activeMenu = menuData.filter(menu => menu.active);
+      const activeMenuId = activeMenu.map(menu => menu.id);
+      setExpandedMenus(activeMenuId); // Open active accordion when expanding
+    } else {
+      setExpandedMenus([]); // Close all accordions when collapsing
+    }
     setCollapsed(!collapsed);
-    setExpandedMenus([]); // Close all accordions when collapsing
   };
 
   const onClick = (menu: IMenu) => {
