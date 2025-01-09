@@ -1,14 +1,16 @@
-import React from 'react';
+import { useParams } from 'react-router-dom';
+import General from './general';
+import PageNotFound from 'PageNotFound';
 
-interface Props {
-}
-
-const Component: React.FC<Props> = () => {
-  return (
-    <div>
-      SETTING / ADMIN
-    </div>
-  );
+const IndexComponent = () => {
+  const { action } = useParams<{ action: string }>();
+  
+  switch (action) {
+    case 'general':
+      return <General />;
+    default:
+      return <PageNotFound />;
+  }
 };
 
-export default Component;
+export default IndexComponent;
