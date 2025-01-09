@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <h1>Admin Layout</h1>
+        <h1>Deafult Layout</h1>
       </div>
     </ThemeProvider>
   );
