@@ -29,6 +29,11 @@ const theme = createTheme({
       fontSize: '22px', // Set h1 font size to 24px
       fontWeight: 600
     },
+    h4: {
+      color: '#333',
+      fontSize: '13px', // Set h1 font size to 24px
+      fontWeight: 700
+    },
     h5: {
       fontSize: '13px', // Set h1 font size to 24px
     },
@@ -82,6 +87,20 @@ const theme = createTheme({
           textDecoration: 'none', // Remove underline by default
           '&:hover': {
             textDecoration: 'underline', // Add underline on hover
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        size: "small",
+        variant: "outlined",
+      },
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            height: 30, // Control height
+            padding: "0", // Adjust padding inside the input
           },
         },
       },
