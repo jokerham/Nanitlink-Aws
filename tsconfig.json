@@ -29,6 +29,7 @@
   "include": [
     "src",
     "src/**/*.d.ts",
-    "src/types.d.ts"
-, "batch/generateList.js"  ]
+    "src/types.d.ts",
+    "batch/generateList.mjs"
+  ]
 }

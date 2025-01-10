@@ -1,17 +1,18 @@
-import { dirname, join } from "path";
-import { existsSync, readdirSync, statSync, writeFileSync } from "fs";
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+import { existsSync, readdirSync, statSync, writeFileSync } from 'fs';
 
-// Define the paths
-const __dirname = dirname(new URL(import.meta.url).pathname);
-const layoutDir = join(__dirname, './layout');
-const moduleDir = join(__dirname, './module');
-const outputFilePath = join(__dirname, 'layouts_and_modules.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = resolve(dirname(dirname(__filename)), './src');
 
-// Helper function to get subdirectories
+const layoutDir = resolve(__dirname, './layout');
+const moduleDir = resolve(__dirname, './module');
+const outputFilePath = resolve(__dirname, 'layouts_and_modules.json');
+
 const getSubdirectories = (directory) => {
   try {
     return readdirSync(directory).filter((subdir) => {
-      const fullPath = join(directory, subdir);
+      const fullPath = resolve(directory, subdir);
       return statSync(fullPath).isDirectory();
     });
   } catch (error) {
@@ -20,12 +21,10 @@ const getSubdirectories = (directory) => {
   }
 };
 
-// Function to scan modules and check for 'admin' subdirectory
 const getModulesWithAdminCheck = (directory) => {
   const modules = getSubdirectories(directory);
-
   return modules.map((module) => {
-    const adminPath = join(directory, module, 'admin');
+    const adminPath = resolve(directory, module, 'admin');
     return {
       name: module,
       hasAdmin: existsSync(adminPath),
@@ -33,8 +32,8 @@ const getModulesWithAdminCheck = (directory) => {
   });
 };
 
-// Main function to generate the JSON file
 const generateJsonFile = () => {
+  console.log(layoutDir);
   const layouts = getSubdirectories(layoutDir);
   const modules = getModulesWithAdminCheck(moduleDir);
 
@@ -47,5 +46,4 @@ const generateJsonFile = () => {
   console.log(`JSON file created successfully at: ${outputFilePath}`);
 };
 
-// Execute the function
 generateJsonFile();
