@@ -22,7 +22,7 @@ export enum EFieldType {
 
 export type TSection = {
   seq: number,
-  label: string,
+  label?: string,
   fields: TFieldSetting[],
 }
 
@@ -48,7 +48,9 @@ export interface IOptionFieldSetting extends IBaseFieldSetting {
   type: EFieldType.Select | EFieldType.Radio | EFieldType.Checkbox
   options: {
     multiple: boolean;
-    sort: boolean;
+    hasNone?: boolean;
+    hasAll?: boolean;
+    sort?: boolean;
     data: TOptionItem[];
   }
 }

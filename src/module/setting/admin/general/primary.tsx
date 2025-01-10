@@ -3,7 +3,7 @@ import { FormikHelpers, FormikValues } from "formik";
 
 const Primary = () => {
   const initialValues = {
-    title: ''
+    title: '', language: ''
   };
   
   const onSubmit = (values: FormikValues, formikHelpers: FormikHelpers<FormikValues>) => {
@@ -13,6 +13,13 @@ const Primary = () => {
   const sections = [
     {seq: 1, label: 'Primary', fields: [
       {type: EFieldType.TextField, name: 'title', label: 'Title'},
+      {type: EFieldType.Select, name: 'language', lable: 'Default Language', options: {
+        multiple: false,
+        data: [
+          {value: 'en', label: 'English'},
+          {value: 'ko', label: 'Korean'}
+        ]
+      }},
     ]}
   ] as TSection[];
 
