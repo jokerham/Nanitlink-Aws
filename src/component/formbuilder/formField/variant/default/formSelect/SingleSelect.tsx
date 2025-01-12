@@ -7,7 +7,7 @@ export const SingleSelect = (props: TFieldSetting) => {
   const { label, name, options } = fieldSetting;
   const { data = [], hasAll = false, hasNone = false } = options;
   return (
-    <FormControl>
+    <FormControl fullWidth>
       {label && 
         <InputLabel id={`${name}-label`}>{label}</InputLabel>
       }

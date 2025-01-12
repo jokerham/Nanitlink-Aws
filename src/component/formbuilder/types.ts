@@ -24,6 +24,7 @@ export type TSection = {
   seq: number,
   label?: string,
   fields: TFieldSetting[],
+  expanded?: boolean
 }
 
 export type TOptionItem = {
@@ -47,7 +48,7 @@ export interface ITextFieldSetting extends IBaseFieldSetting {
 export interface IOptionFieldSetting extends IBaseFieldSetting {
   type: EFieldType.Select | EFieldType.Radio | EFieldType.Checkbox
   options: {
-    multiple: boolean;
+    multiple?: boolean;
     hasNone?: boolean;
     hasAll?: boolean;
     sort?: boolean;

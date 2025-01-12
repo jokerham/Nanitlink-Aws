@@ -17,28 +17,29 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Tahoma, sans-serif', // Set primary font as Tahoma
+    fontFamily: 'Tahoma, sans-serif',
     h1: {
-      fontFamily: 'Arial, sans-serif', // Set h1 font as Arial
-      fontSize: '24px', // Set h1 font size to 24px
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '24px',
       fontWeight: 600
     },
     h2: {
       color: '#666',
-      fontFamily: 'Arial, sans-serif', // Set h1 font as Arial
-      fontSize: '22px', // Set h1 font size to 24px
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '22px',
       fontWeight: 600
     },
     h4: {
       color: '#333',
-      fontSize: '13px', // Set h1 font size to 24px
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '13px',
       fontWeight: 700
     },
     h5: {
-      fontSize: '13px', // Set h1 font size to 24px
+      fontSize: '13px',
     },
     h6: {
-      fontSize: '11px', // Set h1 font size to 24px
+      fontSize: '11px',
     },
   },
   components: {
@@ -95,13 +96,61 @@ const theme = createTheme({
       defaultProps: {
         size: "small",
         variant: "outlined",
+        fullWidth: true,
       },
       styleOverrides: {
         root: {
-          "& .MuiOutlinedInput-root": {
-            height: 30, // Control height
-            padding: "0", // Adjust padding inside the input
-          },
+        },
+      },
+    },
+    MuiSelect: {
+      defaultProps: {
+        size: "small",
+        variant: "outlined",
+      },
+      styleOverrides: {
+        root: {
+          paddingTop: "2px",
+          paddingBottom: "1px",
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          color: '#555',
+          fontFamily: 'Arial, sans-serif',
+          fontSize: '14px', 
+          fontWeight: 400,
+          height: 26,
+          padding: "0px 16px 0px 16px",
+        },
+      }
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+          paddingTop: '2px',
+          paddingBottom: '2px',
+        },
+      }
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          maxHeight: '30px', // Set max height for the entire checkbox control
+        },
+        label: {
+          fontFamily: 'Arial, sans-serif',
+          fontSize: '14px', // Set label font size
+        },
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          height: '30px', // Set the height of the checkbox itself
         },
       },
     },
