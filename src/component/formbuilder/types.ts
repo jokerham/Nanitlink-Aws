@@ -43,6 +43,8 @@ export interface ITextFieldSetting extends IBaseFieldSetting {
     EFieldType.File |
     EFieldType.Custom |
     EFieldType.Hidden;
+  multiline?: boolean
+  rows?: number
 }
 
 export interface IOptionFieldSetting extends IBaseFieldSetting {

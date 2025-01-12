@@ -100,6 +100,10 @@ const theme = createTheme({
       },
       styleOverrides: {
         root: {
+          '& .MuiInputBase-multiline': {
+            paddingLeft: 0,
+            paddingRight: 0,
+          },
         },
       },
     },
