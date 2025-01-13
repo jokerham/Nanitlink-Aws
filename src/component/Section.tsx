@@ -1,7 +1,8 @@
 import { Accordion, AccordionDetails, AccordionSummary, styled, Typography } from "@mui/material"
+import { AccordionSummaryProps } from '@mui/material/AccordionSummary';
 import { BiSolidDownArrow } from "react-icons/bi";
 
-const StyledAccordion = styled(Accordion)({
+export const Section = styled(Accordion)({
   boxShadow: 'none',
   border: 'none',
   backgroundColor: 'transparent',
@@ -11,7 +12,18 @@ const StyledAccordion = styled(Accordion)({
   },
 });
 
-const StyledAccordionSummary = styled(AccordionSummary)({
+interface SectionTitleProps extends AccordionSummaryProps {
+  children: React.ReactNode;
+}
+
+export const SectionTitle = styled((props: SectionTitleProps) => (
+  <AccordionSummary
+    expandIcon={<BiSolidDownArrow />}
+    {...props}
+  >
+    <Typography variant="h2">{props.children}</Typography>
+  </AccordionSummary>
+))(({ theme }) => ({
   padding: 0,
   borderBottom: '1px solid #ccc',
   minHeight: 'unset',
@@ -22,33 +34,10 @@ const StyledAccordionSummary = styled(AccordionSummary)({
     margin: 0,
     '&.Mui-expanded': {
       margin: 0,
-    }
+    },
   },
-});
+}));
 
-const StyledAccordionDetails = styled(AccordionDetails)({
-  padding: 0,
+export const SectionContent = styled(AccordionDetails)({
+  padding: '5px 0 0 0',
 });
-
-export const Section = ({ children, defaultExpanded }: { children: React.ReactNode, defaultExpanded?: boolean }) => {
-  if (children === undefined || children === null) return (<></>);
-  return (
-      <StyledAccordion defaultExpanded={defaultExpanded}>
-        { children }
-      </StyledAccordion>
-  )
-}
-export const SectionTitle = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <StyledAccordionSummary expandIcon={<BiSolidDownArrow />}>
-      <Typography variant="h2">{children}</Typography>
-    </StyledAccordionSummary>
-  )
-}
-export const SectionContent = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <StyledAccordionDetails>
-      {children}
-    </StyledAccordionDetails>
-  )
-}
