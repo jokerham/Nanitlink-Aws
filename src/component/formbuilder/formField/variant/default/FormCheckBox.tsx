@@ -1,13 +1,14 @@
 import { Checkbox, FormControlLabel, Box } from "@mui/material";
 import { IOptionFieldSetting, TFieldSetting } from "component/formbuilder/types";
 import { Field } from "formik";
+import { Fragment } from "react/jsx-runtime";
 
 export const FormCheckBox = (props: TFieldSetting) => {
   const optionFieldSetting = props as IOptionFieldSetting
   const { name, options, type, ...restProp } = optionFieldSetting;
 
   return (
-    <Box>
+    <Fragment>
       {options.data.map((option) => (
         <FormControlLabel control={
           <Field
@@ -19,6 +20,6 @@ export const FormCheckBox = (props: TFieldSetting) => {
             {...restProp} />
           } label={option.label}/>
       ))}
-    </Box>
+    </Fragment>
   );
 }

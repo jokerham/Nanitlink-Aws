@@ -1,4 +1,4 @@
-import { FieldInputProps, FormikConfig, FormikValues } from "formik";
+import { FieldInputProps, FormikConfig, FormikHandlers, FormikValues } from "formik";
 
 export enum EVariant {
   Default,
@@ -32,15 +32,19 @@ export type TOptionItem = {
   label: string
 }
 
-interface IBaseFieldSetting extends FieldInputProps<FormikValues> {
+export type FieldInputPropsWithoutHandlers<Value> = Omit<FieldInputProps<Value>, 'value' | 'onChange' | 'onBlur'>;
+
+interface IBaseFieldSetting extends FieldInputPropsWithoutHandlers<FormikValues> {
   label: string
+  value?: FormikValues
+  onChange?: FormikHandlers['handleChange'];
+  onBlur?: FormikHandlers['handleBlur'];
 }
 
 export interface ITextFieldSetting extends IBaseFieldSetting {
   type: 
     EFieldType.TextField | 
     EFieldType.TextArea |
-    EFieldType.File |
     EFieldType.Custom |
     EFieldType.Hidden;
   multiline?: boolean
@@ -58,6 +62,22 @@ export interface IOptionFieldSetting extends IBaseFieldSetting {
   }
 }
 
+export type TFileInfo = {
+  fileName: string
+  fileSize: number
+  filePath: string
+  isLocal: boolean
+  file: Blob
+}
+
+export interface IFileFieldSetting extends IBaseFieldSetting {
+  type: EFieldType.File
+  options: {
+    multiple: boolean;
+    files?: TFileInfo[];
+  }
+}
+
 export interface ICustomFieldSetting extends IBaseFieldSetting {
   type: EFieldType.Custom
   options: {
@@ -68,6 +88,7 @@ export interface ICustomFieldSetting extends IBaseFieldSetting {
 export type TFieldSetting = 
   ITextFieldSetting |
   IOptionFieldSetting |
+  IFileFieldSetting |
   ICustomFieldSetting;
 
 export interface IFormBuilderProps {

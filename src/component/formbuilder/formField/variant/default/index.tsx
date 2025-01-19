@@ -4,11 +4,14 @@ import { FormSelect } from "./formSelect";
 import { FormCheckBox } from "./FormCheckBox";
 import { FormTextArea } from "./FormTextArea";
 import { FormRadio } from "./FormRadio";
+import { FormFile } from "./formFile";
 
 export const Default = (props: TFieldSetting) => {
   switch (props.type) {
     case EFieldType.Checkbox:
       return <FormCheckBox {...props}/>
+    case EFieldType.File:
+        return <FormFile {...props}/>
     case EFieldType.Radio:
       return <FormRadio {...props}/>
     case EFieldType.TextArea:

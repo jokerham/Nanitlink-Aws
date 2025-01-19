@@ -21,7 +21,7 @@ export const FormBuilder = ({variant: givenVariant, formikConfig, sections}: IFo
                 <SectionContent>
                   <ColumnBox sx={{gap: 0}}>
                     {section.fields.map((fieldSetting, key) => (
-                      <Variant variant={variant} fieldSetting={fieldSetting} />
+                      <Variant key={key} variant={variant} fieldSetting={fieldSetting} />
                     ))}
                   </ColumnBox>
                   <Box sx={{textAlign: 'right'}}>
