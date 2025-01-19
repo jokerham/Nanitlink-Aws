@@ -1,13 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { TitleBox } from "component/customMui";
 import Primary from "./primary";
 import EmbedFilter from "./embedFilter";
 import Advanced from "./advanced";
 import SiteLock from "./siteLock";
+import { Fragment } from "react/jsx-runtime";
 
 const General = () => {
   return (
-    <Box>
+    <Fragment>
       <TitleBox>
         <Typography variant="h1">General Setting</Typography>
       </TitleBox>
@@ -15,7 +16,7 @@ const General = () => {
       <EmbedFilter/>
       <Advanced/>
       <SiteLock/>
-    </Box>
+    </Fragment>
   );
 };
 

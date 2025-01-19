@@ -222,10 +222,6 @@ const SideMenu = () => {
     setMenuData(updateMenu(initialMenuData));
   };
 
-  useEffect(() => {
-    console.log(menuData);
-  }, [menuData])
-
   // Update active state whenever the path changes
   useEffect(() => {
     updateActiveMenu(location.pathname);
