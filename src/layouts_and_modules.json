@@ -5,6 +5,10 @@
   ],
   "modules": [
     {
+      "name": "menu",
+      "hasAdmin": true
+    },
+    {
       "name": "setting",
       "hasAdmin": true
     }
