@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, Box } from "@mui/material";
+import { Checkbox, FormControlLabel } from "@mui/material";
 import { IOptionFieldSetting, TFieldSetting } from "component/formbuilder/types";
 import { Field } from "formik";
 import { Fragment } from "react/jsx-runtime";
