@@ -120,7 +120,6 @@ const SideMenu = () => {
 
   // Collapse/Expand Accordion
   const handleAccordionChange = (menu: IMenu) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-    console.log(menu.id, menu.children?.length);
     if ((menu.children?.length ?? 0) > 0) {
       setExpandedMenus((prevExpanded) =>
         prevExpanded.includes(menu.id)
