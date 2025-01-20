@@ -158,6 +158,33 @@ const theme = createTheme({
         },
       },
     },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          // Apply dense padding to all tables
+          borderCollapse: 'collapse', // Optional: Better for dense tables
+        },
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          // Reduce row height
+          '&.MuiTableRow-root': {
+            height: 36, // Adjust to your preference
+          },
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          // Apply dense padding to table cells
+          padding: '6px 16px', // Adjust padding as needed
+          fontSize: '0.875rem', // Smaller font for a dense look
+        },
+      },
+    },
   },
 });
 
