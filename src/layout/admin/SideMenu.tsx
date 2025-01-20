@@ -21,21 +21,21 @@ const initialMenuData = [
   { id: 'dashboard', name: 'Dashboard', icon: <FaHome />, children: [], navigateTo: '/admin'},
   { id: 'menu', name: 'Menu', icon: <FaListUl />, children: [
     { id: 'menu-editor', name: 'Menu Editor', navigateTo: '/admin/menu/edit' },
-    { id: 'site-design', name: 'Site Design', navigateTo: '/admin/site/' },
-    { id: 'layouts', name: 'Layouts', navigateTo: '/admin/layout' }, ], },
+    { id: 'site-design', name: 'Site Design', navigateTo: '/admin/site/design' },
+    { id: 'layouts', name: 'Layouts', navigateTo: '/admin/layout/list' }, ], },
   { id: 'member', name: 'Member', icon: <FaUser />, children: [
-    { id: 'member-list', name: 'Member List', navigateTo: '/admin/member' },
+    { id: 'member-list', name: 'Member List', navigateTo: '/admin/member/list' },
     { id: 'member-setting', name: 'Member Setting', navigateTo: '/admin/member/setting' },
     { id: 'member-group', name: 'Member Group', navigateTo: '/admin/member/group' },
     { id: 'member-point', name: 'Point', navigateTo: '/admin/point' }, ], },
   { id: 'content', name: 'Content', icon: <FaFileAlt />, children: [
-    { id: 'document', name: 'Document', navigateTo: '/admin/document' },
-    { id: 'comment', name: 'Comment', navigateTo: '/admin/comment' },
-    { id: 'file', name: 'File', navigateTo: '/admin/file' },
-    { id: 'poll', name: 'Poll', navigateTo: '/admin/poll' },
-    { id: 'language', name: 'Multilingual', navigateTo: '/admin/language' },
-    { id: 'trash', name: 'Trash', navigateTo: '/admin/trash' },
-    { id: 'spam', name: 'SpamFilter', navigateTo: '/admin/spam' }, ], },
+    { id: 'document', name: 'Document', navigateTo: '/admin/document/list' },
+    { id: 'comment', name: 'Comment', navigateTo: '/admin/comment/list' },
+    { id: 'file', name: 'File', navigateTo: '/admin/file/list' },
+    { id: 'poll', name: 'Poll', navigateTo: '/admin/poll/list' },
+    { id: 'language', name: 'Multilingual', navigateTo: '/admin/language/list' },
+    { id: 'trash', name: 'Trash', navigateTo: '/admin/trash/list' },
+    { id: 'spam', name: 'SpamFilter', navigateTo: '/admin/spam/list' }, ], },
   { id: 'favorite', name: 'Favorite', icon: <FaStar />, children: [
     { id: '', name: 'No data...' } 
   ], },
