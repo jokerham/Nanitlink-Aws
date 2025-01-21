@@ -86,8 +86,14 @@ export const sxStyles = {
     },
   },
   listItemButton: {
-    px: '5px',
-    py: '2px'
+    px: '10px',
+    py: '2px',
+    '& svg': {
+      opacity: 0.5,
+      height: '14px',
+      width: '13px',
+      color: '#000',
+    },
   },
   ListItemText: {
     primary: {

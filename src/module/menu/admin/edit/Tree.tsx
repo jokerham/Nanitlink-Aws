@@ -3,7 +3,7 @@ import { Tree as ArboristTree, NodeApi } from 'react-arborist';
 import { ColumnBox, RowBox } from 'component/customMui';
 import { FaFolder, FaFolderOpen, FaHome, FaPlusCircle } from 'react-icons/fa';
 import { CgMenuBoxed } from 'react-icons/cg';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import useResizeObserver from 'use-resize-observer';
 import { IMenu, NodeProps } from './types';
 import { sxStyles } from './styles';
@@ -55,6 +55,11 @@ const Tree: React.FC<{ onAddMenu: () => void; onSelectNode: (node: any) => void 
     <ColumnBox sx={sxStyles.tree}>
       <RowBox sx={sxStyles.header}>
         <Typography variant='h1' sx={sxStyles.h1}>Menu Editor</Typography>
+      </RowBox>
+      <RowBox>
+        <TextField id="search" size="small" />
+        <Button variant="contained" size="small">Find</Button>
+        <Button variant="contained" size="small" disabled>Next</Button>
       </RowBox>
       <ColumnBox sx={sxStyles.content} ref={ref}>
         <ArboristTree {...treeProps}>
