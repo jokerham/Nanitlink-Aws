@@ -19,6 +19,7 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^11.0.2",
     "sass": "^1.83.1",
+    "use-resize-observer": "^9.1.0",
     "yup": "^1.6.1"
   },
   "scripts": {
@@ -53,6 +54,7 @@
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "concurrently": "^9.1.2",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.3"
   }
 }
