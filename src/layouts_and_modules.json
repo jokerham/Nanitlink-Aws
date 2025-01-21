@@ -5,6 +5,10 @@
   ],
   "modules": [
     {
+      "name": "member",
+      "hasAdmin": true
+    },
+    {
       "name": "menu",
       "hasAdmin": true
     },
