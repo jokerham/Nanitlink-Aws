@@ -104,6 +104,15 @@ const theme = createTheme({
             paddingLeft: 0,
             paddingRight: 0,
           },
+          '& .MuiInputLabel-root': {
+            top: -6,
+            fontSize: '14px',
+            paddingLeft: 0,
+            paddingRight: 0,
+          },
+          '& .MuiInputLabel-shrink': {
+            top: 0,
+          },
         },
       },
     },

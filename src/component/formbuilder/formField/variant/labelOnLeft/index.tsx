@@ -1,5 +1,5 @@
 import { TFieldSetting } from "component/formbuilder/types";
-import { Default } from "../default";
+import { Base } from "../base";
 import { Grid2, Typography } from "@mui/material";
 
 // Define styles outside the return component
@@ -28,7 +28,7 @@ export const LabelOnLeft = (props: TFieldSetting) => {
         <Typography variant="h4">{label}</Typography>
       </Grid2>
       <Grid2 size={10}>
-        <Default {...fieldSetting as TFieldSetting}/>
+        <Base {...fieldSetting as TFieldSetting}/>
       </Grid2>
     </Grid2>
   );
