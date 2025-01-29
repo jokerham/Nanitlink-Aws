@@ -1,4 +1,5 @@
 import { FieldInputProps, FormikConfig, FormikHandlers, FormikValues } from "formik";
+import { Ref } from "react";
 
 export enum EVariant {
   Default,
@@ -95,6 +96,8 @@ export interface IFormBuilderProps {
   variant: EVariant,
   formikConfig: FormikConfig<FormikValues>
   sections: TSection[]
+  formRef?: Ref<HTMLFormElement>
+  showSubmitButton?: boolean
 }
 
 export interface IFormFieldProps {
@@ -109,4 +112,10 @@ export interface IAttachment {
   keyPath: string
   signedUrl?: string
   file: Blob
+}
+
+export interface IFormFieldListProps {
+  variant: EVariant,
+  section: TSection,
+  showSubmitButton: boolean
 }
