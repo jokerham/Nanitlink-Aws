@@ -26,6 +26,6 @@ export const TitleBox = styled(Box)(({ theme }) => ({
   width: '100%',
 }));
 
-export const CenterRowBox = styled(RowBox)(({ theme }) => ({
+export const CenterRowBox = styled(RowBox)(() => ({
   alignItems: 'center',
 }));

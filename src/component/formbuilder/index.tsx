@@ -1,4 +1,4 @@
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikConsumer } from 'formik';
 import { EVariant, IFormBuilderProps, IFormFieldListProps } from './types';
 import { Section, SectionContent, SectionTitle } from 'component/Section';
 import { ColumnBox } from 'component/customMui';
@@ -7,13 +7,30 @@ import { Box, Button } from '@mui/material';
 import { Fragment } from 'react/jsx-runtime';
 export * from './types';
 
-const FormFieldList = ({variant, section, showSubmitButton}: IFormFieldListProps) => {
+const FormFieldList = ({variant, section, showSubmitButton, onValueChanged}: IFormFieldListProps) => {
   return (
     <Fragment>
       <ColumnBox sx={{gap: 0}}>
-        {section.fields.map((fieldSetting, key) => (
-          <Variant key={key} variant={variant} fieldSetting={fieldSetting} />
-        ))}
+        {section.fields.map((fieldSetting, key) => {
+          return (
+            <FormikConsumer key={key}>
+              {({handleChange}) => {
+                const enhancedHandleChange = (event: React.ChangeEvent<any>) => {
+                  handleChange(event); // ✅ Update Formik state
+                  onValueChanged?.(); // ✅ Trigger additional logic
+                };
+                const { onChange, ...rest } = fieldSetting;
+                const newFieldSetting = {
+                  ...rest,
+                  onChange: enhancedHandleChange
+                }
+
+                return (
+                  <Variant key={key} variant={variant} fieldSetting={newFieldSetting}/>
+                )
+              }}
+            </FormikConsumer>
+          )})}
       </ColumnBox>
       {showSubmitButton &&(
         <Box sx={{textAlign: 'right'}}>
@@ -31,33 +48,44 @@ export const FormBuilder = ({
   formikConfig, 
   sections,
   formRef,
-  showSubmitButton
+  showSubmitButton,
+  onValueChange
 }: IFormBuilderProps) => {
   const variant = givenVariant || EVariant.Default
+
   return (
     <Formik 
       {...formikConfig}
       enableReinitialize={true}>
-        {({values}) => (
-          <Form ref={formRef}>
-            {sections.map((section, key) => {
-              if (section.label) {
-                return (
-                  <Section key={key} defaultExpanded={section.expanded ?? false}>
-                    <SectionTitle>{ section.label }</SectionTitle>
-                    <SectionContent>
-                      <FormFieldList variant={variant} section={section} showSubmitButton={showSubmitButton??true} />
-                    </SectionContent>
-                  </Section>
-                )
-              } else {
-                return (
-                  <FormFieldList variant={variant} section={section} showSubmitButton={showSubmitButton??true} />
-                )
-              }
-            })}
-          </Form>
-        )}
+        {({values}) => {
+          const fieldProps = {
+            variant:variant,
+            showSubmitButton:showSubmitButton??true,
+            onValueChanged: () =>{
+              onValueChange?.(values);
+            }
+          }
+
+          return (
+            <Form ref={formRef}>
+              {sections.map((section, key) => {
+                if (section.label) {
+                  return (
+                    <Section key={key} defaultExpanded={section.expanded ?? false}>
+                      <SectionTitle>{ section.label }</SectionTitle>
+                      <SectionContent>
+                        <FormFieldList section={section} {...fieldProps} />
+                      </SectionContent>
+                    </Section>
+                  )
+                } else {
+                  return (
+                    <FormFieldList key={key} section={section} {...fieldProps} />
+                  )
+                }
+              })}
+            </Form>
+          )}}
     </Formik>
   )
 }

@@ -98,6 +98,7 @@ export interface IFormBuilderProps {
   sections: TSection[]
   formRef?: Ref<HTMLFormElement>
   showSubmitButton?: boolean
+  onValueChange?: (values: FormikValues) => void
 }
 
 export interface IFormFieldProps {
@@ -117,5 +118,6 @@ export interface IAttachment {
 export interface IFormFieldListProps {
   variant: EVariant,
   section: TSection,
-  showSubmitButton: boolean
+  showSubmitButton: boolean,
+  onValueChanged?: () => void,
 }
