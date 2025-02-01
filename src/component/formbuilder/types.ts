@@ -98,7 +98,7 @@ export interface IFormBuilderProps {
   sections: TSection[]
   formRef?: Ref<HTMLFormElement>
   showSubmitButton?: boolean
-  onValueChange?: (values: FormikValues) => void
+  onValueChanged?: () => void,
 }
 
 export interface IFormFieldProps {
@@ -120,4 +120,11 @@ export interface IFormFieldListProps {
   section: TSection,
   showSubmitButton: boolean,
   onValueChanged?: () => void,
+}
+
+export interface FormBuilderHandle {
+  addFieldToSection: (sectionIndex: number, newField: TFieldSetting) => void;
+  removeFieldFromSection: (sectionIndex: number, fieldName: string) => void;
+  getField: (fieldName: string) => TFieldSetting | undefined;
+  getFieldValue: (fieldName: string) => any | undefined;
 }

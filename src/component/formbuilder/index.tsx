@@ -1,10 +1,11 @@
-import { Form, Formik, FormikConsumer } from 'formik';
-import { EVariant, IFormBuilderProps, IFormFieldListProps } from './types';
+import { Form, Formik, FormikConsumer, useFormikContext } from 'formik';
+import { EVariant, FormBuilderHandle, IFormBuilderProps, IFormFieldListProps, TFieldSetting } from './types';
 import { Section, SectionContent, SectionTitle } from 'component/Section';
 import { ColumnBox } from 'component/customMui';
 import Variant from './formField';
 import { Box, Button } from '@mui/material';
 import { Fragment } from 'react/jsx-runtime';
+import { forwardRef, useImperativeHandle, useState, useRef } from 'react';
 export * from './types';
 
 const FormFieldList = ({variant, section, showSubmitButton, onValueChanged}: IFormFieldListProps) => {
@@ -16,17 +17,19 @@ const FormFieldList = ({variant, section, showSubmitButton, onValueChanged}: IFo
             <FormikConsumer key={key}>
               {({handleChange}) => {
                 const enhancedHandleChange = (event: React.ChangeEvent<any>) => {
-                  handleChange(event); // ✅ Update Formik state
-                  onValueChanged?.(); // ✅ Trigger additional logic
+                  handleChange(event);
+                  // ✅ Ensure onValueChanged runs after Formik values are updated
+                  setTimeout(() => {
+                    onValueChanged?.();
+                  }, 0);
                 };
-                const { onChange, ...rest } = fieldSetting;
-                const newFieldSetting = {
-                  ...rest,
-                  onChange: enhancedHandleChange
-                }
 
                 return (
-                  <Variant key={key} variant={variant} fieldSetting={newFieldSetting}/>
+                  <Variant
+                    variant={variant}
+                    fieldSetting={{
+                      ...fieldSetting,
+                      onChange: enhancedHandleChange}}/>
                 )
               }}
             </FormikConsumer>
@@ -43,27 +46,82 @@ const FormFieldList = ({variant, section, showSubmitButton, onValueChanged}: IFo
   )
 }
 
-export const FormBuilder = ({
-  variant: givenVariant, 
-  formikConfig, 
-  sections,
-  formRef,
-  showSubmitButton,
-  onValueChange
-}: IFormBuilderProps) => {
+export const FormBuilder = forwardRef<FormBuilderHandle, IFormBuilderProps>(
+  ({
+    variant: givenVariant, 
+    formikConfig, 
+    sections: initialSections,
+    formRef,
+    showSubmitButton,
+    onValueChanged
+  }: IFormBuilderProps, ref) => {
   const variant = givenVariant || EVariant.Default
+  const [sections, setSections] = useState(initialSections);
+  const formikRef = useRef<any>(null);
+
+  const addFieldToSection = (sectionIndex: number, newField: TFieldSetting) => {
+    setSections((prevSections) =>
+      prevSections.map((section, index) =>
+        index === sectionIndex ? { ...section, fields: [...section.fields, newField] } : section
+      )
+    );
+    const formik = formikRef.current
+    if (formik) {
+      formik.setValues({
+        ...(formik.values || {}),
+        [newField.name]: '',
+      });
+    }
+  };
+
+  const removeFieldFromSection = (sectionIndex: number, fieldName: string) => {
+    setSections((prevSections) =>
+      prevSections.map((section, index) =>
+        index === sectionIndex ? { ...section, fields: section.fields.filter((field) => field.name !== fieldName) } : section
+      )
+    );
+    const formik = formikRef.current;
+    if (formik) {
+      const updatedValues: { [key: string]: any } = { ...(formik.values || {}) };
+      delete updatedValues[fieldName];
+      formik.setValues(updatedValues);
+    }
+  };
+
+  const getField = (fieldName: string) => {
+    for (const section of sections) {
+      const field = section.fields.find((field) => field.name === fieldName);
+      if (field) {
+        return field;
+      }
+    }
+    return undefined;
+  }
+
+  const getFieldValue = (fieldName: string) => {
+    const formik = formikRef.current;
+    if (formik) {
+      return formik.values[fieldName];
+    }
+  }
+
+  useImperativeHandle(ref, () => ({
+    addFieldToSection,
+    removeFieldFromSection,
+    getField,
+    getFieldValue,
+  }));
 
   return (
     <Formik 
       {...formikConfig}
       enableReinitialize={true}>
-        {({values}) => {
+        {(formik) => {
+          formikRef.current = formik;
           const fieldProps = {
             variant:variant,
             showSubmitButton:showSubmitButton??true,
-            onValueChanged: () =>{
-              onValueChange?.(values);
-            }
+            onValueChanged: onValueChanged
           }
 
           return (
@@ -88,4 +146,4 @@ export const FormBuilder = ({
           )}}
     </Formik>
   )
-}
+});
