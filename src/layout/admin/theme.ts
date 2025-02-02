@@ -171,7 +171,7 @@ const theme = createTheme({
         },
         label: {
           fontFamily: 'Arial, sans-serif',
-          fontSize: '14px', // Set label font size
+          fontSize: '13px', // Set label font size
         },
       },
     },
