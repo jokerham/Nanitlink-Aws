@@ -1,20 +1,64 @@
-import { Typography } from '@mui/material';
-import { ColumnBox, RowBox } from 'component/customMui';
-import React from 'react';
 import { IMenu } from './types';
-import { sxStyles } from './styles';
+import Tab from './Tab';
+import { EFieldType, EVariant, FormBuilder, IFormBuilderProps } from 'component/formbuilder';
+import { FormikValues } from 'formik';
+import { RowBox } from 'component/customMui';
+import { ContainedButton, ContainedGrayButton } from './Components';
+import { useRef } from 'react';
 
-const EditForm: React.FC<{ node: IMenu }> = ({ node }) => {
+interface IEditFormProps {
+  node: IMenu,
+  onClose: () => void,
+  onSubmitHandler: (values: FormikValues) => void,
+}
+
+const EditForm = ({ node, onClose, onSubmitHandler }: IEditFormProps) => {
+  const formRef = useRef<HTMLFormElement>(null);
+  
+  const initialValues = {
+    name: node.name,
+    moduleId: node.moduleId,
+  }
+
+  const formBuilderProps: IFormBuilderProps = {
+    variant: EVariant.Default,
+    formikConfig: {
+      initialValues: initialValues,
+      onSubmit: onSubmitHandler,
+    },
+    sections: [
+      {
+        seq: 0,
+        fields: [
+          { name: 'name', label: 'Name', type: EFieldType.TextField, },
+          { name: 'moduleId', label: 'Module Id', type: EFieldType.TextField, },
+        ]
+      }
+    ],
+    formRef: formRef,
+    showSubmitButton: false
+  }
+
+  const onSubmit = () => {
+    if (formRef.current) {
+      formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
+  }
+
   return (
-    <ColumnBox sx={sxStyles.edit}>
-      <RowBox sx={sxStyles.header}>
-        <Typography variant='h1' sx={sxStyles.h1}>
-          General Setting
-        </Typography>
-      </RowBox>
-      <ColumnBox sx={sxStyles.content}>
-      </ColumnBox>
-    </ColumnBox>
+    <Tab
+      title='General Setting'
+      onClose={onClose}
+      contentComponent={
+        <FormBuilder {...formBuilderProps}/>
+      }
+      actionComponent={
+        <RowBox sx={{justifyContent: 'space-between', width: '100%'}}>
+          <ContainedGrayButton onClick={onClose}>Cancel</ContainedGrayButton>
+          <ContainedButton onClick={onSubmit}>Submit</ContainedButton>
+        </RowBox>
+      }
+    />
   );
 };
 

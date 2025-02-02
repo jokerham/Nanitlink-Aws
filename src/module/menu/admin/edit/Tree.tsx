@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tree as ArboristTree, NodeApi } from 'react-arborist';
-import { ColumnBox, RowBox } from 'component/customMui';
+import { RowBox } from 'component/customMui';
 import { FaFolder, FaFolderOpen, FaHome, FaPlusCircle } from 'react-icons/fa';
 import { CgMenuBoxed } from 'react-icons/cg';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box} from '@mui/material';
 import useResizeObserver from 'use-resize-observer';
 import { IMenu, NodeProps } from './types';
-import { sxStyles } from './styles';
 import 'extension/nodeApiExt';
+import Tab from './Tab';
+import { ActionButton, ActionTypography, ContainedButton, SearchTextField, TreeNodeLabel, TreeNodeRowBox } from './Components';
 
 const initialMenuData = [
   { id: 'dashboard', name: 'Dashboard', module: 'page', moduleId: 'Dashboard', children: [], navigateTo: '/admin'},
@@ -36,7 +37,12 @@ const initialMenuData = [
   { id: 'advanced', name: 'Advanced', module: 'page', moduleId: 'Advanced', children: [] },
 ] as IMenu[];
 
-const Tree: React.FC<{ onAddMenu: () => void; onSelectNode: (node: any) => void }> = ({ onAddMenu, onSelectNode }) => {
+interface ITreeProps { 
+  onAddMenu: () => void,
+  onSelectNode: (node: any) => void 
+}
+
+const Tree = ({ onAddMenu, onSelectNode }: ITreeProps) => {
   const { ref, width, height } = useResizeObserver();
   const [treeProps, setTreeProps] = useState({
     data: initialMenuData,
@@ -48,54 +54,65 @@ const Tree: React.FC<{ onAddMenu: () => void; onSelectNode: (node: any) => void 
   });
 
   useEffect(() => {
-    setTreeProps((prev) => ({ ...prev, width: width ?? prev.width, height: (height ?? prev.height) - 15 }));
+    setTreeProps((prev) => ({
+      ...prev,
+      width: width ?? prev.width,
+      height: (height ?? prev.height) - 15 
+    }));
   }, [width, height]);
 
   return (
-    <ColumnBox sx={sxStyles.tree}>
-      <RowBox sx={sxStyles.header}>
-        <Typography variant='h1' sx={sxStyles.h1}>Menu Editor</Typography>
-      </RowBox>
-      <RowBox>
-        <TextField id="search" size="small" />
-        <Button variant="contained" size="small">Find</Button>
-        <Button variant="contained" size="small" disabled>Next</Button>
-      </RowBox>
-      <ColumnBox sx={sxStyles.content} ref={ref}>
+    <Tab
+      width={345}
+      title='Menu Editor'
+      headerComponent={
+        <RowBox>
+          <SearchTextField id="search" />
+          <ContainedButton>Find</ContainedButton>
+          <ContainedButton disabled>Next</ContainedButton>
+        </RowBox>
+      }
+      contentComponent={
         <ArboristTree {...treeProps}>
-          {(nodeProps) => <TreeNode {...nodeProps} onNodeClick={onSelectNode} />}
+          {(nodeProps) => (
+            <TreeNode {...nodeProps} onNodeClick={onSelectNode} />
+          )}
         </ArboristTree>
-      </ColumnBox>
-      <RowBox sx={sxStyles.action}>
-        <Button onClick={onAddMenu} sx={sxStyles.actionButton}>
-          <Typography variant='h4' sx={sxStyles.h4}>
+      }
+      actionComponent={
+        <ActionButton onClick={onAddMenu}>
+          <ActionTypography>
             <FaPlusCircle /> Add Menu
-          </Typography>
-        </Button>
-      </RowBox>
-    </ColumnBox>
+          </ActionTypography>
+        </ActionButton>
+      }
+      ref={ref}
+    />
   );
 };
 
-const TreeNode: React.FC<NodeProps> = ({ node, style, dragHandle, onNodeClick }) => {
+const TreeNode = ({ node, style, dragHandle, onNodeClick }: NodeProps) => {
   const hasParent = (node.parent ?? '') !== '';
   const hasChildren = (node.children?.length ?? 0) > 0;
   const isClosed = node.isClosed;
   const icon = hasParent ? (hasChildren ? (isClosed ? <FaFolder /> : <FaFolderOpen />) : <CgMenuBoxed />) : <FaHome />;
+  
   const handleClick = () => {
-    // set all nodes data active to false
     node.tree.root.walk((n: NodeApi<IMenu>) => { n.data.active = false; });
     node.data.active = true;
     onNodeClick(node.data);
   }
 
   return (
-    <Box style={style} ref={dragHandle as React.Ref<HTMLDivElement>}>
-      <RowBox className={node.data.active ? 'active' : ''} onClick={handleClick} sx={sxStyles.node}>
-        <Typography variant='h4' sx={sxStyles.h4}>\
-          {icon} {node.data.name}
-        </Typography>
-      </RowBox>
+    <Box style={style} ref={dragHandle}>
+      <TreeNodeRowBox 
+        className={node.data.active ? 'active' : ''} 
+        onClick={handleClick}>
+        <TreeNodeLabel>
+          {icon}
+          {node.data.name}
+        </TreeNodeLabel>
+      </TreeNodeRowBox>
     </Box>
   );
 };
