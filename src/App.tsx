@@ -12,41 +12,41 @@ const loadAdminModule = (moduleName: string) => lazy(() => import(`./module/${mo
 const App: React.FC = () => {
   return (
     <Router>
-    <Routes>
-      {/* Default Layout */}
-      <Route path="/" element={<DefaultLayout />}>
-        {modulesConfig.modules.map((module) => (
-          <Route
-            key={module.name}
-            path={`${module.name}/:action`}
-            element={
-              <Suspense fallback={<div>Loading...</div>}>
-                {React.createElement(loadModule(module.name))}
-              </Suspense>
-            }
-          />
-        ))}
-        <Route path="*" element={<PageNotFound/>}/>
-      </Route>
-
-      {/* Admin Layout */}
-      <Route path="admin" element={<AdminLayout />}>
-        {modulesConfig.modules
-          .filter((module) => module.hasAdmin)
-          .map((module) => (
+      <Routes>
+        {/* Default Layout */}
+        <Route path="/" element={<DefaultLayout />}>
+          {modulesConfig.modules.map((module) => (
             <Route
               key={module.name}
               path={`${module.name}/:action`}
               element={
                 <Suspense fallback={<div>Loading...</div>}>
-                  {React.createElement(loadAdminModule(module.name))}
+                  {React.createElement(loadModule(module.name))}
                 </Suspense>
               }
             />
           ))}
-        <Route path="*" element={<PageNotFound/>}/>
-      </Route>
-    </Routes>
+          <Route path="*" element={<PageNotFound/>}/>
+        </Route>
+
+        {/* Admin Layout */}
+        <Route path="admin" element={<AdminLayout />}>
+          {modulesConfig.modules
+            .filter((module) => module.hasAdmin)
+            .map((module) => (
+              <Route
+                key={module.name}
+                path={`${module.name}/:action`}
+                element={
+                  <Suspense fallback={<div>Loading...</div>}>
+                    {React.createElement(loadAdminModule(module.name))}
+                  </Suspense>
+                }
+              />
+            ))}
+          <Route path="*" element={<PageNotFound/>}/>
+        </Route>
+      </Routes>
     </Router>
   );
 };
