@@ -1,14 +1,105 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Button, ButtonGroup, Divider, Link, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
-import { TAction, TRowAction, IDataRow, ITableBuidleProps } from './types';
+import { IDataRow, ITableBuidleProps, TAction } from './types';
 import { RowBox } from 'component/customMui';
+import { ac } from 'react-router/dist/development/route-data-aSUFWnQ6';
 
 export * from './types';
 
-export const TableBuilder = (props: ITableBuidleProps) => {
-  const [dataRow, setDataRow] = useState<IDataRow|null>(null)
-  const { data, filters, actions, paginationOption } = props;
+interface ITableButtonGroupProps {
+  actions?: TAction[], 
+  dataRow: TSelected
+}
+
+type TSelected = IDataRow[] | IDataRow | null
+
+const TableButtonGroup = ({actions, dataRow}: ITableButtonGroupProps) => {
+  const onClickHandler = (action: TAction) => {
+    switch (action.actionType) {
+      case 'none':
+        return action.action();
+      case 'row':
+        return action.action(dataRow as IDataRow);
+      case 'rows':
+        return action.action(dataRow as IDataRow[]);
+      default:
+    }
+  }
+
+  const disabled = (action: TAction) => {
+    switch (action.actionType) {
+      case 'none':
+        return dataRow !== null;
+      case 'row':
+        return dataRow === null || Array.isArray(dataRow);
+      case 'rows':
+        return dataRow === null || !Array.isArray(dataRow);
+      default:
+        return true;
+    }
+  }
+
+  return (
+    <ButtonGroup variant="contained" size="small">
+      {actions?.map((action, index) => {
+        const buttonProps: { onClick: () => void; disabled: boolean } = {
+          onClick: () => {onClickHandler(action)},
+          disabled: disabled(action)
+        }
+        return (
+          <Button key={index} {...buttonProps}>{action.label}</Button>
+        )
+      })}
+    </ButtonGroup>
+  )
+}
+
+export const TableBuilder = ({ data, filters, actions, paginationOption }: ITableBuidleProps) => {
+  const [dataRow, setDataRow] = useState<TSelected>(null)
   const columns = Object.keys(data[0]);
+
+  const onSelectedHandler = (row: IDataRow) => {
+    if (dataRow === null) {
+      setDataRow(row)
+    } else {
+      if (Array.isArray(dataRow)) {
+        const dataRows = dataRow as IDataRow[]
+        if (dataRows.some(dataRow => dataRow.id === row.id)) {
+          const excludeRows = dataRows.filter(dataRow => dataRow !== row)
+          if (excludeRows.length <= 1) {
+            setDataRow(excludeRows[0] ?? null)
+          } else {
+            setDataRow(excludeRows)
+          }
+        } else {
+          setDataRow([...dataRows, row])
+        }
+      } else {
+        if (dataRow.id === row.id) {
+          setDataRow(null)
+        } else {
+          setDataRow([dataRow, row])
+        }
+      }
+    }
+  }
+
+  const isSelected = (row: IDataRow) => {
+    if (dataRow === null) {
+      return false
+    } else {
+      if (Array.isArray(dataRow)) {
+        const dataRows = dataRow as IDataRow[]
+        return dataRows.some(dataRow => dataRow.id === row.id)
+      } else {
+        return dataRow.id === row.id
+      }
+    }
+  }
+
+  useEffect(() => {
+    console.log({dataRow});
+  }, [dataRow])
 
   return (
     <Fragment>
@@ -23,26 +114,7 @@ export const TableBuilder = (props: ITableBuidleProps) => {
             </Fragment>
           ))}
         </RowBox>
-        <ButtonGroup variant="contained" size="small">
-          {actions?.map((action, index) => {
-            const buttonProps = {
-              onClick: () => {
-                if (action.action.length === 1) {
-                  const rowAction = action.action as TRowAction;
-                  rowAction(dataRow!); // Safely pass dataRow if required
-                } else {
-                  const simpleAction = action.action as TAction;
-                  simpleAction(); // Call without arguments if not required
-                }
-              },
-              disabled: (action.action.length === 1) ?
-              (dataRow === null) : false
-            }
-            return (
-              <Button key={index} {...buttonProps}>{action.label}</Button>
-            )
-          })}
-        </ButtonGroup>
+        <TableButtonGroup actions={actions} dataRow={dataRow} />
       </RowBox>
       <Divider />
       <TableContainer>
@@ -56,7 +128,10 @@ export const TableBuilder = (props: ITableBuidleProps) => {
           </TableHead>
           <TableBody>
             {data.map((row, index) => (
-              <TableRow key={index}>
+              <TableRow 
+                key={index} 
+                onClick={() => onSelectedHandler(row)} 
+                selected={isSelected(row)}>
                 {columns.map((column) => (
                   <TableCell key={column}>{row[column]}</TableCell>
                 ))}
@@ -98,26 +173,7 @@ export const TableBuilder = (props: ITableBuidleProps) => {
             }}
           />
         </RowBox>
-        <ButtonGroup variant="contained" size="small">
-          {actions?.map((action, index) => {
-            const buttonProps = {
-              onClick: () => {
-                if (action.action.length === 1) {
-                  const rowAction = action.action as TRowAction;
-                  rowAction(dataRow!); // Safely pass dataRow if required
-                } else {
-                  const simpleAction = action.action as TAction;
-                  simpleAction(); // Call without arguments if not required
-                }
-              },
-              disabled: (action.action.length === 1) ?
-              (dataRow === null) : false
-            }
-            return (
-              <Button key={index} {...buttonProps}>{action.label}</Button>
-            )
-          })}
-        </ButtonGroup>
+        <TableButtonGroup actions={actions} dataRow={dataRow} />
       </RowBox>
     </Fragment>
   );

@@ -8,18 +8,19 @@ export interface ITableFilter {
   value: string,
 }
 
+export type TNoneAction = () => void;
 export type TRowAction = (row: IDataRow) => void
-export type TAction = () => void;
+export type TRowsAction = (rows: IDataRow[]) => void
 
-export interface IAction {
-  label: string,
-  action: TAction | TRowAction
-}
+export type TAction =
+  | { label: string; actionType: 'none'; action: TNoneAction }
+  | { label: string; actionType: 'row'; action: TRowAction }
+  | { label: string; actionType: 'rows'; action: TRowsAction };
 
 export interface ITableBuidleProps {
   data: IDataRow[]
   filters?: ITableFilter[]
-  actions?: IAction[]
+  actions?: TAction[]
   paginationOption: {
     page: number,
     rowsPerPage: number,
