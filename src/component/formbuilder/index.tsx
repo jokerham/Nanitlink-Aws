@@ -11,13 +11,14 @@ export * from './types';
 const FormFieldList = ({variant, section, showSubmitButton, onValueChanged}: IFormFieldListProps) => {
   return (
     <Fragment>
-      <ColumnBox sx={{gap: 0}}>
+      <ColumnBox sx={{gap: '4px', mt: '8px'}}>
         {section.fields.map((fieldSetting, key) => {
           return (
             <FormikConsumer key={key}>
               {({handleChange}) => {
                 const enhancedHandleChange = (event: React.ChangeEvent<any>) => {
                   handleChange(event);
+                  
                   // ✅ Ensure onValueChanged runs after Formik values are updated
                   setTimeout(() => {
                     onValueChanged?.();
