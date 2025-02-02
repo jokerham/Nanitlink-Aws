@@ -1,7 +1,8 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Button, ButtonGroup, Divider, Link, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
-import { IDataRow, ITableBuidleProps, TAction } from './types';
+import { IDataRow, ITableBuidleProps, ITableFilter, TAction } from './types';
 import { RowBox } from 'component/customMui';
+import { isString } from 'formik';
 
 export * from './types';
 
@@ -57,9 +58,15 @@ const TableButtonGroup = ({actions, dataRow}: ITableButtonGroupProps) => {
   )
 }
 
-export const TableBuilder = ({ data, filters, actions, paginationOption }: ITableBuidleProps) => {
+export const TableBuilder = ({ columns: columnSettings, data: initialData, filters, actions, paginationOption }: ITableBuidleProps) => {
+  const [data, setData] = useState<IDataRow[]>(initialData)
   const [dataRow, setDataRow] = useState<TSelected>(null)
-  const columns = Object.keys(data[0]);
+  const [currentFilter, setCurrentFilter] = useState<ITableFilter | null>(null)
+  const columns = columnSettings ?? Object.keys(initialData[0]);
+
+  const onFilterSelectedHandler = (filter: ITableFilter) => {
+    setCurrentFilter(filter);
+  }
 
   const onSelectedHandler = (row: IDataRow) => {
     if (dataRow === null) {
@@ -100,9 +107,13 @@ export const TableBuilder = ({ data, filters, actions, paginationOption }: ITabl
     }
   }
 
-  useEffect(() => {
-    console.log({dataRow});
-  }, [dataRow])
+  useEffect (() => {
+    if (currentFilter === null || currentFilter.field === '') {
+      setData(initialData)
+    } else {
+      setData(initialData.filter(row => row[currentFilter.field] === currentFilter.value))
+    }
+  }, [currentFilter]);
 
   return (
     <Fragment>
@@ -113,7 +124,7 @@ export const TableBuilder = ({ data, filters, actions, paginationOption }: ITabl
               {(index > 0) && (
                 <Divider variant="middle" orientation="vertical" flexItem />
               )}
-              <Link>
+              <Link onClick={() => onFilterSelectedHandler(filter)}>
                 <Typography variant='h5'>
                   { filter.name }
                 </Typography>
@@ -129,7 +140,20 @@ export const TableBuilder = ({ data, filters, actions, paginationOption }: ITabl
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell key={column}>{column}</TableCell>
+                ( isString(column) ?
+                  <TableCell
+                    key={column}>
+                    {column}
+                  </TableCell> :
+                  ( (column.show ?? true ) &&
+                    <TableCell 
+                      key={column.id} 
+                      align={column.textAlign}
+                      width={column.width}>
+                      {column.name}
+                    </TableCell>
+                  )
+                )
               ))}
             </TableRow>
           </TableHead>
@@ -140,7 +164,26 @@ export const TableBuilder = ({ data, filters, actions, paginationOption }: ITabl
                 onClick={() => onSelectedHandler(row)} 
                 selected={isSelected(row)}>
                 {columns.map((column) => (
-                  <TableCell key={column}>{row[column]}</TableCell>
+                  ( isString(column) ?
+                    <TableCell key={column}>
+                      {
+                        (typeof row[column] === 'boolean') ? 
+                          (row[column]) ? 'Yes' : 'No' :
+                          row[column]
+                      }
+                    </TableCell> :
+                    ( (column.show ?? true ) &&
+                      <TableCell 
+                        key={column.id} 
+                        align={column.textAlign}>
+                        {
+                          (typeof row[column.id] === 'boolean') ? 
+                            column.dataMap?.[row[column.id].toString()] ?? row[column.id].toString() :
+                            row[column.id]
+                        }
+                      </TableCell>
+                    )
+                  )
                 ))}
               </TableRow>
             ))}

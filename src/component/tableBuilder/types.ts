@@ -1,11 +1,20 @@
+export interface IDataColumns {
+  id: string,
+  name: string,
+  show?: boolean,
+  textAlign: 'left' | 'center' | 'right',
+  width?: number
+  dataMap?: { [key: string]: string },
+}
+
 export interface IDataRow {
-  [key: string]: string|number;
+  [key: string]: string|number|boolean;
 }
 
 export interface ITableFilter {
   name: string,
   field: string,
-  value: string,
+  value: any,
 }
 
 export type TNoneAction = () => void;
@@ -18,6 +27,7 @@ export type TAction =
   | { label: string; actionType: 'rows'; action: TRowsAction };
 
 export interface ITableBuidleProps {
+  columns?: IDataColumns[]
   data: IDataRow[]
   filters?: ITableFilter[]
   actions?: TAction[]
