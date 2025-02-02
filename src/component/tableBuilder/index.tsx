@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
-import { Button, ButtonGroup, Divider, Link, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
+import { Button, ButtonGroup, Divider, Link, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import { IDataRow, ITableBuidleProps, TAction } from './types';
 import { RowBox } from 'component/customMui';
 
@@ -111,9 +111,13 @@ export const TableBuilder = ({ data, filters, actions, paginationOption }: ITabl
           {filters?.map((filter, index) => (
             <Fragment key={index}>
               {(index > 0) && (
-                <Divider orientation="vertical" flexItem />
+                <Divider variant="middle" orientation="vertical" flexItem />
               )}
-              <Link>{ filter.name }</Link>
+              <Link>
+                <Typography variant='h5'>
+                  { filter.name }
+                </Typography>
+              </Link>
             </Fragment>
           ))}
         </RowBox>
