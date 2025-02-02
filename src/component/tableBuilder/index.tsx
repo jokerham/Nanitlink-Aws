@@ -2,7 +2,6 @@ import { Fragment, useEffect, useState } from 'react'
 import { Button, ButtonGroup, Divider, Link, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import { IDataRow, ITableBuidleProps, TAction } from './types';
 import { RowBox } from 'component/customMui';
-import { ac } from 'react-router/dist/development/route-data-aSUFWnQ6';
 
 export * from './types';
 
@@ -21,7 +20,11 @@ const TableButtonGroup = ({actions, dataRow}: ITableButtonGroupProps) => {
       case 'row':
         return action.action(dataRow as IDataRow);
       case 'rows':
-        return action.action(dataRow as IDataRow[]);
+        if (Array.isArray(dataRow)) {
+          return action.action(dataRow as IDataRow[]);
+        } else {
+          return action.action([dataRow as IDataRow]);
+        }
       default:
     }
   }
@@ -33,7 +36,7 @@ const TableButtonGroup = ({actions, dataRow}: ITableButtonGroupProps) => {
       case 'row':
         return dataRow === null || Array.isArray(dataRow);
       case 'rows':
-        return dataRow === null || !Array.isArray(dataRow);
+        return dataRow === null;
       default:
         return true;
     }
