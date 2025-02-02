@@ -60,12 +60,24 @@ export const FormBuilder = forwardRef<FormBuilderHandle, IFormBuilderProps>(
   const [sections, setSections] = useState(initialSections);
   const formikRef = useRef<any>(null);
 
-  const addFieldToSection = (sectionIndex: number, newField: TFieldSetting) => {
-    setSections((prevSections) =>
-      prevSections.map((section, index) =>
-        index === sectionIndex ? { ...section, fields: [...section.fields, newField] } : section
-      )
+  const addFieldToSection = (sectionIndex: number, newField: TFieldSetting, index?: number) => {
+    setSections((prevSections) => 
+      prevSections.map((section, idx) => {
+        if (idx === sectionIndex) {
+          const updatedFields = [...section.fields];
+  
+          if (index !== undefined && index >= 0 && index < updatedFields.length) {
+            updatedFields.splice(index, 0, newField);
+          } else {
+            updatedFields.push(newField);
+          }
+  
+          return { ...section, fields: updatedFields };
+        }
+        return section;
+      })
     );
+
     const formik = formikRef.current
     if (formik) {
       formik.setValues({

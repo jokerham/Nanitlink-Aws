@@ -60,6 +60,7 @@ export interface IOptionFieldSetting extends IBaseFieldSetting {
     hasAll?: boolean;
     sort?: boolean;
     data: TOptionItem[];
+    direction?: 'row' | 'column';
   }
 }
 
@@ -123,7 +124,7 @@ export interface IFormFieldListProps {
 }
 
 export interface FormBuilderHandle {
-  addFieldToSection: (sectionIndex: number, newField: TFieldSetting) => void;
+  addFieldToSection: (sectionIndex: number, newField: TFieldSetting, index?: number) => void;
   removeFieldFromSection: (sectionIndex: number, fieldName: string) => void;
   getField: (fieldName: string) => TFieldSetting | undefined;
   getFieldValue: (fieldName: string) => any | undefined;
