@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import List from './List';
 import PageNotFound from 'PageNotFound';
+import Detail from './Detail';
 
 interface Props {
 }
@@ -11,6 +12,8 @@ const IndexComponent: React.FC<Props> = () => {
   switch (action) {
     case 'list':
       return <List />;
+    case 'detail':
+      return <Detail />
     default:
       return <PageNotFound />;
   }
