@@ -4,11 +4,7 @@ import { FormikHelpers, FormikValues } from "formik";
 const Primary = () => {
   const initialValues = {
     title: '',
-    supportingLanguage: {
-      'en': true,
-      'jp': false,
-      'ko': false,
-    },
+    supportingLanguage: ['en'],
     defaultLanguage: ''
   };
   
