@@ -40,10 +40,13 @@ interface IBaseFieldSetting extends FieldInputPropsWithoutHandlers<FormikValues>
   value?: FormikValues
   onChange?: FormikHandlers['handleChange'];
   onBlur?: FormikHandlers['handleBlur'];
+  disabled?: boolean
+  required?: boolean
 }
 
 export interface ITextFieldSetting extends IBaseFieldSetting {
   type: 
+    EFieldType.Password | 
     EFieldType.TextField | 
     EFieldType.TextArea |
     EFieldType.Custom |

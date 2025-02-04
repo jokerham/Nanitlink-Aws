@@ -2,6 +2,7 @@ import { EFieldType, TFieldSetting } from "component/formbuilder/types";
 import { FormTextField } from "./FormTextField";
 import { FormSelect } from "../base/formSelect";
 import { FormCheckBox } from "./FormCheckBox";
+import { FormPassword } from "./FormPassword";
 import { FormTextArea } from "./FormTextArea";
 import { FormRadio } from "./FormRadio";
 import { FormFile } from "../base/formFile";
@@ -14,6 +15,8 @@ export const Base = (props: TFieldSetting) => {
         return <FormFile {...props}/>
     case EFieldType.Radio:
       return <FormRadio {...props}/>
+    case EFieldType.Password:
+      return <FormPassword {...props} />
     case EFieldType.TextArea:
       return <FormTextArea {...props}/>
     case EFieldType.TextField:
