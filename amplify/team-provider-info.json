@@ -15,6 +15,9 @@
       "auth": {
         "awsnanitelink585bdcb0": {},
         "awsnanitelinkd053666d": {}
+      },
+      "api": {
+        "awsnanitelink": {}
       }
     }
   }

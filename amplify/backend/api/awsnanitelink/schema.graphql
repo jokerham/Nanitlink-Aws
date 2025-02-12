@@ -1,0 +1,143 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+# 
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type Board
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete] }, # Only Admins can mutate
+    { allow: public, operations: [read] } # Everyone can read (guests included)
+  ]) {
+  id: ID!
+  name: String!
+  description: String
+  posts: [Post] @hasMany
+}
+
+type Post 
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId", operations: [create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  title: String!
+  content: String!
+  board: Board @belongsTo
+  authorId: String!
+  comments: [Comment] @hasMany
+  attachments: [Media] @hasMany
+  status: PostStatus!
+  postType: PostType!
+  tags: [Tag] @manyToMany(relationName: "PostTags")
+}
+
+enum PostStatus {
+  PUBLISHED
+  DRAFT
+  ARCHIVED
+}
+
+enum PostType {
+  BOARD
+  PAGE
+}
+
+type Comment 
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId", operations: [create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete] }, 
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  post: Post @belongsTo
+  authorId: String!
+  content: String!
+  attachments: [Media] @hasMany
+}
+
+type Media
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId", operations: [create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  fileName: String!
+  path: String!
+  post: Post @belongsTo
+  comment: Comment @belongsTo
+}
+
+type Menu
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  parent: Menu @belongsTo
+  children: [Menu] @hasMany
+  link: String!
+}
+
+type Article
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  post: Post @hasOne
+}
+
+type Category
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  posts: [Post] @hasMany
+}
+
+type Tag
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId", operations: [create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  posts: [Post] @manyToMany(relationName: "PostTags")
+}
+
+type SiteSetting
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  key: ID!
+  value: String!
+}
+
+type ActivityLog
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "userId", operations: [create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  userId: String!
+  action: String!
+  timestamp: AWSDateTime
+}
