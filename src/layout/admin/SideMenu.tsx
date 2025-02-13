@@ -29,7 +29,7 @@ const initialMenuData = [
     { id: 'member-group', name: 'Member Group', navigateTo: '/admin/member/group' },
     { id: 'member-point', name: 'Point', navigateTo: '/admin/point' }, ], },
   { id: 'content', name: 'Content', icon: <FaFileAlt />, children: [
-    { id: 'document', name: 'Document', navigateTo: '/admin/document/list' },
+    { id: 'post', name: 'Post', navigateTo: '/admin/post/list' },
     { id: 'comment', name: 'Comment', navigateTo: '/admin/comment/list' },
     { id: 'file', name: 'File', navigateTo: '/admin/file/list' },
     { id: 'poll', name: 'Poll', navigateTo: '/admin/poll/list' },

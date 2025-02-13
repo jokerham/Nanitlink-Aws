@@ -5,11 +5,27 @@
   ],
   "modules": [
     {
+      "name": "article",
+      "hasAdmin": false
+    },
+    {
+      "name": "board",
+      "hasAdmin": false
+    },
+    {
+      "name": "link",
+      "hasAdmin": false
+    },
+    {
       "name": "member",
       "hasAdmin": true
     },
     {
       "name": "menu",
+      "hasAdmin": true
+    },
+    {
+      "name": "post",
       "hasAdmin": true
     },
     {

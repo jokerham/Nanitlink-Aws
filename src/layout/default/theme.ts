@@ -1,77 +1,114 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
-// Custom MUI theme
 const theme = createTheme({
   palette: {
-    mode: 'light',
     primary: {
-      main: '#007bff', // Blue accent color
+      main: "#222222", // Dark gray (Header, navbar, footer)
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#D32F2F", // Dark red (for active states, menu highlights)
     },
     background: {
-      default: '#f8f9fa', // Light gray background
-      paper: '#ffffff', // White background for cards
+      default: "#F5F5F5", // Soft light gray (main background)
+      paper: "#FFFFFF", // White (content areas)
     },
     text: {
-      primary: '#343a40', // Dark gray text
-      secondary: '#6c757d', // Lighter gray for secondary text
+      primary: "#1B1E1E", // Dark gray (main text)
+      secondary: "#4F4F4F", // Medium gray (subtext)
     },
   },
   typography: {
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: "'Noto Sans KR', Tahoma",
     h1: {
-      fontSize: '1.5rem',
-      fontWeight: 600,
+      fontSize: "2rem",
+      fontWeight: 700,
     },
     h2: {
-      fontSize: '1.3rem',
-      fontWeight: 500,
+      fontSize: "1.75rem",
+      fontWeight: 600,
+    },
+    h3: {
+      fontSize: "1.125rem",
+      fontWeight: 400,
+    },
+    h4: {
+      fontSize: "0.875rem",
+      fontWeight: 400,
     },
     body1: {
-      fontSize: '1rem',
-      color: '#343a40',
-    },
-    button: {
-      textTransform: 'none', // Disable uppercase for buttons
+      fontSize: "1rem",
+      lineHeight: 1.5,
     },
   },
+  shape: {
+    borderRadius: 6,
+  },
   components: {
-    MuiCard: {
+    MuiCssBaseline: { // Ensures that even non-MUI elements follow the font
       styleOverrides: {
-        root: {
-          border: '1px solid #e0e0e0',
-          borderRadius: '8px',
-          boxShadow: 'none',
+        body: {
+          fontFamily: "'Noto Sans KR', Tahoma, sans-serif",
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: '4px',
-          textTransform: 'none',
-          padding: '6px 12px',
-          fontWeight: 500,
-        },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#ffffff',
-          borderBottom: '1px solid #e0e0e0',
+          textTransform: "none",
+          borderRadius: 6,
+          fontWeight: 600,
+          padding: "8px 15px",
+          transition: "all 0.3s",
+          "&:hover": {
+            opacity: 0.9,
+          },
         },
       },
     },
     MuiPaper: {
       styleOverrides: {
         root: {
-          padding: '16px',
-          border: '1px solid #e0e0e0',
-          borderRadius: '8px',
-          boxShadow: 'none',
+          borderRadius: 6,
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
         },
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#222222",
+          borderRadius: 0,
+          borderBottom: "2px solid #D9534F",
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          "@media (min-width:600px)": {
+            minHeight: 50,
+          },
+          "& .MuiButton-root": {
+            color: "inherit", // Inherit color from AppBar
+            textTransform: "none",
+            textDecoration: "none", // Remove underline
+            borderRadius: 0, // Ensure consistency
+            height: 50,
+            display: "flex", // Ensure text is vertically aligned
+            alignItems: "center",
+            "& .MuiTypography-root": {
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            },
+          },
+          "& .MuiButton-root.active": {
+            backgroundColor: "#D9534F",
+          },
+        }
+      },
+    }
   },
 });
 

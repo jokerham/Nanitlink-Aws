@@ -9,7 +9,7 @@ const Header = () => {
           Admin Portal
         </Typography>
         <Box sx={{ flexGrow: 1 }}>
-          <Link><Typography variant='h6'>http://www.nanitelink.com</Typography></Link>
+          <Link href="/"><Typography variant='h6'>http://www.nanitelink.com</Typography></Link>
         </Box>
         <HorizontalBox sx={{height: 32}}>
           <Link><Typography variant='h5'>jokerham@gmail.com</Typography></Link>
