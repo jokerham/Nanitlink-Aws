@@ -1,13 +1,12 @@
-import React from 'react';
+import PageNotFound from 'PageNotFound';
+import { useParams } from 'react-router';
 
-interface Props {
-}
-
-const Component: React.FC<Props> = () => {
-  return (
-    <div>
-    </div>
-  );
+const IndexComponent = () => {
+  const { action } = useParams<{ action: string }>();
+  switch (action) {
+    default:
+      return <PageNotFound />;
+  }
 };
 
-export default Component;
+export default IndexComponent;
