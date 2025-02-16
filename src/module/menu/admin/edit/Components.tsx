@@ -1,7 +1,8 @@
 import { styled } from '@mui/material/styles';
-import { Button, ButtonProps, Link, ListItemButton, ListItemText, ListItemTextProps, TextField, TextFieldProps, Typography } from '@mui/material';
+import { Button, ButtonProps, createTheme, Link, ListItemButton, ListItemText, ListItemTextProps, TextField, TextFieldProps, Typography } from '@mui/material';
 import { ColumnBox, RowBox } from 'component/customMui';
 import { IoCloseSharp } from 'react-icons/io5';
+import { ThemeProvider } from '@emotion/react';
 
 export const MenuTab = styled(ColumnBox)(({ theme }) => ({
   alignItems: 'stretch',
@@ -72,17 +73,40 @@ export const CloseIcon = ({onClick}: ICloseIconProps ) => {
   )
 }
 
-const SearchTextFieldStyled = styled(TextField)({
-  '& .MuiInputBase-input': {
-    borderRadius: 4,
-    backgroundColor: '#fff',
-    paddingX: '10px',
-  }
-})
+const theme = createTheme({
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined',
+        size: 'small',
+        fullWidth: true,
+      },
+      styleOverrides: {
+        root: {
+          flexGrow: 1,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#FFF',
+          color: '#555',
+          fontSize: '14px', 
+          fontWeight: 400,
+          height: 26,
+          padding: 0,
+        },
+      }
+    },
+  },
+});
 
 export const SearchTextField = (props: TextFieldProps) => {
   return (
-    <SearchTextFieldStyled size="small"/>
+    <ThemeProvider theme={theme}>
+      <TextField {...props}/>
+    </ThemeProvider>
   );
 }
 

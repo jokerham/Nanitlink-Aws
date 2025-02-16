@@ -89,7 +89,7 @@ const Permission = ({ node, onClose, onSubmitHandler }: IPermissionFormProps) =>
   };
 
   const formBuilderProps: IFormBuilderProps = {
-    variant: EVariant.Default,
+    variant: EVariant.SmallSize,
     formikConfig: {
       initialValues: initialValues,
       onSubmit: onSubmitHandler,
