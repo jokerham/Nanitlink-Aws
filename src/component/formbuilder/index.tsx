@@ -1,17 +1,16 @@
-import { Form, Formik, FormikConsumer, useFormikContext } from 'formik';
+import { Form, Formik, FormikConsumer } from 'formik';
 import { EVariant, FormBuilderHandle, IFormBuilderProps, IFormFieldListProps, TFieldSetting } from './types';
 import { Section, SectionContent, SectionTitle } from 'component/Section';
 import { ColumnBox } from 'component/customMui';
 import Variant from './formField';
 import { Box, Button } from '@mui/material';
-import { Fragment } from 'react/jsx-runtime';
-import { forwardRef, useImperativeHandle, useState, useRef } from 'react';
+import { useState, useRef, useImperativeHandle, forwardRef, Fragment } from 'react';
 export * from './types';
 
 const FormFieldList = ({variant, section, showSubmitButton, onValueChanged}: IFormFieldListProps) => {
   return (
     <Fragment>
-      <ColumnBox sx={{gap: '4px', mt: '8px'}}>
+      <ColumnBox sx={{gap: section.gap ?? '8px', mt: '8px'}}>
         {section.fields.map((fieldSetting, key) => {
           return (
             <FormikConsumer key={key}>

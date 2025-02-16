@@ -4,6 +4,8 @@ import { Ref } from "react";
 export enum EVariant {
   Default,
   LabelOnLeft,
+  SmallSize,
+  Login,
 }
 
 export enum EFieldType {
@@ -24,6 +26,7 @@ export enum EFieldType {
 export type TSection = {
   seq: number,
   label?: string,
+  gap?: string,
   fields: TFieldSetting[],
   expanded?: boolean
 }
