@@ -14,7 +14,7 @@ import { IFormBuilderProps, EFieldType, EVariant, FormBuilder } from 'component/
 import { FormikValues } from 'formik';
 import { FaQuestionCircle, FaUserPlus } from 'react-icons/fa';
 import theme from './theme';
-import { NavLink, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 
 interface LoginDialogProps {
