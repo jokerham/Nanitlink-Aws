@@ -2,6 +2,7 @@ import { AppBar, Box, Button, Container, Toolbar, Typography, Link } from "@mui/
 import { useState } from "react";
 import { FaSignInAlt } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import LoginDialog from "component/dialog/loginDialog";
 
 const Header = () => {
   const [signInOpen, setSignInOpen] = useState(false);
@@ -32,6 +33,13 @@ const Header = () => {
           </Box>
         </Toolbar>
       </Container>
+      <LoginDialog
+        open={signInOpen}
+        onClose={() => setSignInOpen(false)}
+        onLogin={(username, password) => {
+          console.log(username, password);
+          setSignInOpen(false);
+        }}/>
     </AppBar>
   );
 };
