@@ -20,15 +20,15 @@ import { useNavigate } from 'react-router';
 interface LoginDialogProps {
   open: boolean;
   onClose: () => void;
-  onLogin: (username: string, password: string) => void;
+  onSignIn: (username: string, password: string) => void;
 }
 
-const LoginDialog = ({ open, onClose, onLogin }: LoginDialogProps) => {
+const SignInDialog = ({ open, onClose, onSignIn }: LoginDialogProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
 
   const handleSubmit = (values: FormikValues) => {
-    onLogin(values.username, values.password);
+    onSignIn(values.username, values.password);
   };
 
   const formBuilderProps: IFormBuilderProps = {
@@ -82,7 +82,7 @@ const LoginDialog = ({ open, onClose, onLogin }: LoginDialogProps) => {
     <ThemeProvider theme={theme}>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>
-          Login
+          Sign In
           <IconButton onClick={onClose}>
             <IoClose />
           </IconButton>
@@ -90,7 +90,7 @@ const LoginDialog = ({ open, onClose, onLogin }: LoginDialogProps) => {
         <DialogContent>
           <FormBuilder {...formBuilderProps} />
           <Button variant="contained" fullWidth onClick={onSubmit} sx={{mt: 2}}>
-            Login
+            Sign In
           </Button>
         </DialogContent>
         <DialogActions>
@@ -104,4 +104,4 @@ const LoginDialog = ({ open, onClose, onLogin }: LoginDialogProps) => {
   );
 };
 
-export default LoginDialog;
+export default SignInDialog;
