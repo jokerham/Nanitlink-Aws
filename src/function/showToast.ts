@@ -1,7 +1,14 @@
 import { toast } from 'react-toastify';
 
-const showToast = (message: string, type: 'success' | 'warning' | 'error') => {
-  toast(message, {
+const unknowErrorMessage = 'Unknown Error';
+const showToast = (message: any, type: 'success' | 'warning' | 'error') => {
+  const errorMessage = (message instanceof Error) ? (
+    message.message
+  ) : (
+    (typeof message === 'string') ? message : unknowErrorMessage
+  );
+
+  toast(errorMessage, {
     type: type,
     position: 'top-right',
     closeOnClick: true,
@@ -9,6 +16,10 @@ const showToast = (message: string, type: 'success' | 'warning' | 'error') => {
     draggable: false,
     theme: 'light'
   });
+
+  if (errorMessage === unknowErrorMessage) {
+    console.log(message);
+  }
 };
 
 export { showToast };
