@@ -1,6 +1,6 @@
 import { TFieldSetting } from "component/formbuilder/types";
-import { Base } from "../base";
-import { Grid2, Typography } from "@mui/material";
+import { Box, Grid2, Typography } from "@mui/material";
+import { SmallSize } from "../smallSize";
 
 // Define styles outside the return component
 const containerStyle = {
@@ -25,10 +25,15 @@ export const LabelOnLeft = (props: TFieldSetting) => {
   return (
     <Grid2 container spacing={2} sx={containerStyle}>
       <Grid2 size={2} sx={labelStyle}>
-        <Typography variant="h4">{label}</Typography>
+        <Typography variant="h4">
+          {(fieldSetting.required ?? false) && (
+            <Box component="small" sx={{color: '#F00', mr: '4px'}}>*</Box>
+          )}
+          {label}
+        </Typography>
       </Grid2>
       <Grid2 size={10}>
-        <Base {...fieldSetting as TFieldSetting}/>
+        <SmallSize {...fieldSetting as TFieldSetting}/>
       </Grid2>
     </Grid2>
   );

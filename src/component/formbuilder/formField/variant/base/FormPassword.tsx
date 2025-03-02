@@ -11,6 +11,7 @@ export const FormPassword = (fieldSetting: TFieldSetting) => {
       as={TextField}
       id={id}
       type="password"
+      fullWidth
       {...rest}
     />
   )

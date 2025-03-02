@@ -9,6 +9,7 @@ export const FormTextField = (fieldSetting: TFieldSetting) => {
     <Field
       as={TextField}
       id={id}
+      fullWidth
       {...fieldSetting}
     />
   )

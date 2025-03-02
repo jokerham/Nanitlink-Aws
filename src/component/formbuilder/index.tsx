@@ -3,11 +3,54 @@ import { EVariant, FormBuilderHandle, IFormBuilderProps, IFormFieldListProps, TF
 import { Section, SectionContent, SectionTitle } from 'component/Section';
 import { ColumnBox } from 'component/customMui';
 import Variant from './formField';
-import { Box, Button } from '@mui/material';
+import { Box, Button, createTheme } from '@mui/material';
 import { useState, useRef, useImperativeHandle, forwardRef, Fragment } from 'react';
+import { ThemeProvider } from '@emotion/react';
+import { useNavigate } from 'react-router';
 export * from './types';
 
+const buttonGrayTheme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          border: '1px solid #cccccc',
+          borderTopStyle: 'solid',
+          borderTopWidth: '1px',
+          backgroundColor: '#e6e6e6',
+          backgroundImage: 'linear-gradient(#ffffff, #e6e6e6)',
+          boxShadow: 'rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px',
+          color: '#333333',
+          fontSize: '12px',
+          textTransform: 'none',
+        },
+      },
+    },
+  },
+});
+
+const buttonBlackTheme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderTopStyle: 'solid',
+          borderTopWidth: '1px',
+          backgroundColor: '#363636',
+          backgroundImage: 'linear-gradient(rgb(68, 68, 68), rgb(34, 34, 34))',
+          boxShadow: 'rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px',
+          fontSize: '12px',
+          textTransform: 'none',
+        },
+      },
+    },
+  },
+});
+
 const FormFieldList = ({variant, section, showSubmitButton, onValueChanged}: IFormFieldListProps) => {
+  const navigate = useNavigate();
+  const onCancel = () => { navigate(-1); }
+
   return (
     <Fragment>
       <ColumnBox sx={{gap: section.gap ?? '8px', mt: '8px'}}>
@@ -36,10 +79,17 @@ const FormFieldList = ({variant, section, showSubmitButton, onValueChanged}: IFo
           )})}
       </ColumnBox>
       {showSubmitButton &&(
-        <Box sx={{textAlign: 'right'}}>
-          <Button type="submit" variant="contained" size="small" sx={{
-            mt: '10px', mb: '20px'
-          }}>Submit</Button>
+        <Box sx={{display: 'flex', alignItems: 'stretch', justifyContent: 'space-between', mt: '10px', mb: '20px'}}>
+          <ThemeProvider theme={buttonGrayTheme}>
+            <Button variant="contained" size="small" onClick={onCancel}>
+              Cancel
+            </Button>
+          </ThemeProvider>
+          <ThemeProvider theme={buttonBlackTheme}>
+            <Button type="submit" variant="contained" size="small">
+              Submit
+            </Button>
+          </ThemeProvider>
         </Box>
       )}
     </Fragment>
