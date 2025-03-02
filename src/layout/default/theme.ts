@@ -21,12 +21,13 @@ const theme = createTheme({
   typography: {
     fontFamily: "'Noto Sans KR', Tahoma",
     h1: {
-      fontSize: "2rem",
-      fontWeight: 700,
+      fontSize: "1.5rem",
+      fontFamily: 'Arial, sans-serif',
+      fontWeight: 600,
     },
     h2: {
-      fontSize: "1.75rem",
-      fontWeight: 600,
+      fontSize: "1.375rem",
+      fontWeight: 500,
     },
     h3: {
       fontSize: "1.125rem",
@@ -56,9 +57,9 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
-          borderRadius: 6,
-          fontWeight: 600,
-          padding: "8px 15px",
+          borderRadius: 4,
+          fontWeight: 400,
+          padding: "4px 12px",
           transition: "all 0.3s",
           "&:hover": {
             opacity: 0.9,
@@ -80,6 +81,10 @@ const theme = createTheme({
           backgroundColor: "#222222",
           borderRadius: 0,
           borderBottom: "2px solid #D9534F",
+          "& .MuiContainer-root": {
+            paddingLeft: 10,
+            paddingRight: 10,
+          }
         },
       },
     },
@@ -88,6 +93,7 @@ const theme = createTheme({
         root: {
           "@media (min-width:600px)": {
             minHeight: 50,
+            padding: 0,
           },
           "& .MuiButton-root": {
             color: "inherit", // Inherit color from AppBar
@@ -100,7 +106,7 @@ const theme = createTheme({
             "& .MuiTypography-root": {
               display: 'flex',
               alignItems: 'center',
-              gap: '6px'
+              gap: '6px',
             },
           },
           "& .MuiButton-root.active": {
