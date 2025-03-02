@@ -1,24 +1,38 @@
 import { Section, SectionContent, SectionTitle } from 'component/Section'
 import { IDataColumns, IDataRow, TableBuilder, TAction } from 'component/tableBuilder';
+import { deleteMember, getMemberList } from 'function/amplify/rest/member';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 export default function List() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState<IDataRow[]>([]);
 
   const columns: IDataColumns[] = [
-    { id: 'id', name: 'Id', show: true, textAlign: 'left' },
+    { id: 'id', name: 'Id', show: false },
     { id: 'userid', name: 'User ID', show: true, textAlign: 'left' },
     { id: 'name', name: 'Name', show: true, textAlign: 'left' },
     { id: 'email', name: 'Email', show: true, textAlign: 'left' },
     { id: 'group', name: 'Group', show: true, textAlign: 'left' },
-    { id: 'approved', name: 'Approved', show: true, textAlign: 'center', dataMap: { 'true': 'Approved', 'false': 'Denied' } },
+    { id: 'approved', name: 'Approved', show: true, textAlign: 'center' },
   ];
 
-  const data = [
-    { id: 1, userid: 'johndoe', name: 'John Doe', email: 'john.doe@example.com', group: 'admin', approved: true },
-    { id: 2, userid: 'janesmith', name: 'Jane Smith', email: 'jane.smith@example.com', group: 'guest', approved: false },
-    { id: 3, userid: 'bobjohnson', name: 'Bob Johnson', email: 'bob.johnson@example.com', group: 'guest', approved: true },
-  ];
+  useEffect(() => {
+    getMemberList().then((result) => {
+      const mappedData = result.users.map(user => ({
+        id: user.id,
+        userid: user.email,
+        name: user.name,
+        email: user.email,
+        group: user.userGroups.join(', '),
+        approved: user.activeState,
+      }));
+      console.log(mappedData);
+      setData(mappedData);
+      setLoading(false);
+    });
+  }, []);
 
   const filters = [
     { name: 'All Members', field: '', value: '' },
@@ -35,6 +49,9 @@ export default function List() {
   }
 
   const onDelete = (rows: IDataRow[]) => {
+    rows.map(row => {
+      deleteMember(row.userid as string);
+    })
   }
 
   const actions: TAction[] = [
@@ -56,6 +73,7 @@ export default function List() {
       <SectionContent>
         <TableBuilder 
           columns={columns}
+          loading={loading}
           data={data} 
           filters={filters} 
           actions={actions} 
