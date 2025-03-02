@@ -113,7 +113,7 @@ export const TableBuilder = ({ columns: columnSettings, data: initialData, filte
     } else {
       setData(initialData.filter(row => row[currentFilter.field] === currentFilter.value))
     }
-  }, [currentFilter]);
+  }, [currentFilter, initialData]);
 
   return (
     <Fragment>
@@ -148,7 +148,7 @@ export const TableBuilder = ({ columns: columnSettings, data: initialData, filte
                   ( (column.show ?? true ) &&
                     <TableCell 
                       key={column.id} 
-                      align={column.textAlign}
+                      align={column.textAlign ?? 'left'}
                       width={column.width}>
                       {column.name}
                     </TableCell>
@@ -158,35 +158,35 @@ export const TableBuilder = ({ columns: columnSettings, data: initialData, filte
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row, index) => (
-              <TableRow 
-                key={index} 
-                onClick={() => onSelectedHandler(row)} 
-                selected={isSelected(row)}>
-                {columns.map((column) => (
-                  ( isString(column) ?
-                    <TableCell key={column}>
-                      {
-                        (typeof row[column] === 'boolean') ? 
-                          (row[column]) ? 'Yes' : 'No' :
-                          row[column]
-                      }
-                    </TableCell> :
-                    ( (column.show ?? true ) &&
-                      <TableCell 
-                        key={column.id} 
-                        align={column.textAlign}>
+              {data.map((row, index) => (
+                <TableRow 
+                  key={index} 
+                  onClick={() => onSelectedHandler(row)} 
+                  selected={isSelected(row)}>
+                  {columns.map((column) => (
+                    ( isString(column) ?
+                      <TableCell key={column}>
                         {
-                          (typeof row[column.id] === 'boolean') ? 
-                            column.dataMap?.[row[column.id].toString()] ?? row[column.id].toString() :
-                            row[column.id]
+                          (typeof row[column] === 'boolean') ? 
+                            (row[column]) ? 'Yes' : 'No' :
+                            row[column]
                         }
-                      </TableCell>
+                      </TableCell> :
+                      ( (column.show ?? true ) &&
+                        <TableCell 
+                          key={column.id} 
+                          align={column.textAlign}>
+                          {
+                            (typeof row[column.id] === 'boolean') ? 
+                              column.dataMap?.[row[column.id]?.toString() ?? ''] ?? row[column.id]?.toString() :
+                              row[column.id]
+                          }
+                        </TableCell>
+                      )
                     )
-                  )
-                ))}
-              </TableRow>
-            ))}
+                  ))}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

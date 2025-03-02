@@ -2,13 +2,13 @@ export interface IDataColumns {
   id: string,
   name: string,
   show?: boolean,
-  textAlign: 'left' | 'center' | 'right',
+  textAlign?: 'left' | 'center' | 'right',
   width?: number
   dataMap?: { [key: string]: string },
 }
 
 export interface IDataRow {
-  [key: string]: string|number|boolean;
+  [key: string]: string|number|boolean|undefined;
 }
 
 export interface ITableFilter {
@@ -28,6 +28,7 @@ export type TAction =
 
 export interface ITableBuidleProps {
   columns?: IDataColumns[]
+  loading: boolean
   data: IDataRow[]
   filters?: ITableFilter[]
   actions?: TAction[]
