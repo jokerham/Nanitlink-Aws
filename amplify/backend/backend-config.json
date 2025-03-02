@@ -30,6 +30,20 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    },
+    "member": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "NLMember"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -59,5 +73,38 @@
       "service": "Cognito"
     }
   },
-  "function": {}
+  "function": {
+    "NLMember": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_NLMember_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NLMember"
+        }
+      ]
+    },
+    "AMPLIFY_function_NLMember_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NLMember"
+        }
+      ]
+    },
+    "AMPLIFY_function_NLMember_userPoolId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NLMember"
+        }
+      ]
+    }
+  }
 }

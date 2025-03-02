@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/member": {
+      "name": "/member",
+      "lambdaFunction": "NLMember",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

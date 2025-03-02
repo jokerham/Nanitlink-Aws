@@ -17,7 +17,15 @@
         "awsnanitelinkd053666d": {}
       },
       "api": {
-        "awsnanitelink": {}
+        "awsnanitelink": {},
+        "member": {}
+      },
+      "function": {
+        "NLMember": {
+          "userPoolId": "ap-northeast-2_zB6xjtUy1",
+          "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
+          "s3Key": "amplify-builds/NLMember-784c5675613168616e67-build.zip"
+        }
       }
     }
   }
