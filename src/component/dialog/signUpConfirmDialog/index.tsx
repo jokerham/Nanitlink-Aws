@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { 
   Dialog,
   DialogTitle,
@@ -6,39 +6,36 @@ import {
   DialogActions,
   Button,
   ThemeProvider,
-  IconButton,
-  ButtonGroup
+  IconButton
 } from '@mui/material';
 import { IoClose } from 'react-icons/io5';
 import { IFormBuilderProps, EFieldType, EVariant, FormBuilder } from 'component/formbuilder';
 import { FormikValues } from 'formik';
-import { FaQuestionCircle, FaUserPlus } from 'react-icons/fa';
-import theme from './theme';
-import { useNavigate } from 'react-router';
-import { signIn } from 'aws-amplify/auth';
-import "amplifyConfigure"
+import { confirmSignUp, ConfirmSignUpOutput } from 'aws-amplify/auth';
 import { showToast } from 'function/showToast';
+import theme from './theme';
+import "amplifyConfigure"
 
-interface LoginDialogProps {
+
+interface SignUpConfirmDialogProps {
   open: boolean;
+  username: string;
   onClose: () => void;
+  onConfirmSignUp: (result: ConfirmSignUpOutput) => void;
 }
 
-const SignInDialog = ({ open, onClose }: LoginDialogProps) => {
+const SignUpConfirmDialog = ({ open, username, onClose, onConfirmSignUp }: SignUpConfirmDialogProps) => {
   const formRef = useRef<HTMLFormElement>(null);
-  //const [signInResult, setSignInResult] = useState<SignInOutput | null>(null);
-
-  const navigate = useNavigate();
-
+  
   const handleSubmit = async (values: FormikValues) => {
     try {
-      await signIn({
-        username: values.username, 
-        password: values.password
-      });
-      onClose();
-    } catch (error) {
-      showToast(error, "warning");
+      const result = await confirmSignUp({
+        username: values.username,
+        confirmationCode: values.verificationCode
+      })
+      onConfirmSignUp(result);
+    } catch(error) {
+      showToast(error, 'warning');
     }
   };
 
@@ -46,8 +43,8 @@ const SignInDialog = ({ open, onClose }: LoginDialogProps) => {
     variant: EVariant.Login,
     formikConfig: {
       initialValues: {
-        username: '',
-        password: '',
+        username,
+        verificationCode: '',
       },
       onSubmit: handleSubmit
     },
@@ -58,12 +55,12 @@ const SignInDialog = ({ open, onClose }: LoginDialogProps) => {
         {
           name: 'username',
           label: 'Username',
-          type: EFieldType.TextField,
+          type: EFieldType.Hidden,
           required: true,
         },
         {
-          name: 'password',
-          label: 'Password',
+          name: 'verificationCode',
+          label: 'Verification Code',
           type: EFieldType.Password,
           required: true,
         },
@@ -79,40 +76,26 @@ const SignInDialog = ({ open, onClose }: LoginDialogProps) => {
     }
   }
 
-  const signUp = () => {
-    onClose();
-    navigate('/member/signUp');
-  }
-
-  const resetPassword = () => {
-    onClose();
-    navigate('/member/resetPassword');
-  }
-
   return (
     <ThemeProvider theme={theme}>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>
-          Sign In
+          Sign Up Confirmation
           <IconButton onClick={onClose}>
             <IoClose />
           </IconButton>
         </DialogTitle>
         <DialogContent>
           <FormBuilder {...formBuilderProps} />
-          <Button variant="contained" fullWidth onClick={onSubmit} sx={{mt: 2}}>
-            Sign In
-          </Button>
         </DialogContent>
         <DialogActions>
-          <ButtonGroup variant="contained" fullWidth>
-            <Button startIcon={<FaUserPlus/>} onClick={signUp}>Sign Up</Button>
-            <Button startIcon={<FaQuestionCircle/>} onClick={resetPassword}>Reset Password</Button>
-          </ButtonGroup>
+          <Button variant="contained" fullWidth onClick={onSubmit} sx={{mt: 2}}>
+            Confirm
+          </Button>
         </DialogActions>
       </Dialog>
     </ThemeProvider>
   );
 };
 
-export default SignInDialog;
+export default SignUpConfirmDialog;
