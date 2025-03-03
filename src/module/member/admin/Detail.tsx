@@ -19,7 +19,7 @@ const initialValues = {
   mailing: 'no',
   message: 'all',
   approved: 'true',
-  group: [''],
+  group: [],
 };
 
 // Form field configuration
@@ -45,8 +45,8 @@ const sectionZeroFields: TFieldSetting[] = [
     { value: 'false', label: 'Denied' },
   ]}},
   { name: 'group', label: 'Group', type: EFieldType.Checkbox, options: { multiple: true, data: [
-    { value: 'admin', label: 'Admin' },
-    { value: 'guest', label: 'Guest' },
+    { value: 'ADMIN', label: 'Admin' },
+    { value: 'GUEST', label: 'Guest' },
   ]}},
 ];
 

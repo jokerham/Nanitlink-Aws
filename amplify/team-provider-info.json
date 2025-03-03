@@ -25,6 +25,10 @@
           "userPoolId": "ap-northeast-2_zB6xjtUy1",
           "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
           "s3Key": "amplify-builds/NLMember-784c5675613168616e67-build.zip"
+        },
+        "NLMemberGroup": {
+          "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
+          "s3Key": "amplify-builds/NLMemberGroup-3138372b374f45427a49-build.zip"
         }
       }
     }

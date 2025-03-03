@@ -40,6 +40,14 @@
           ],
           "category": "function",
           "resourceName": "NLMember"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "NLMemberGroup"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -79,9 +87,30 @@
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "NLMemberGroup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
+    "AMPLIFY_function_NLMemberGroup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NLMemberGroup"
+        }
+      ]
+    },
+    "AMPLIFY_function_NLMemberGroup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NLMemberGroup"
+        }
+      ]
+    },
     "AMPLIFY_function_NLMember_deploymentBucketName": {
       "usedBy": [
         {

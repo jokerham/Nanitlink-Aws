@@ -13,3 +13,7 @@ export interface CognitoUser {
   
   userGroups: string[];
 }
+
+export interface CognitoGroup {
+  GroupName: string;
+}
