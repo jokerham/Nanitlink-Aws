@@ -14,11 +14,12 @@ export const Section = styled(Accordion)({
 
 interface SectionTitleProps extends AccordionSummaryProps {
   children: React.ReactNode;
+  expandable?: boolean;
 }
 
-export const SectionTitle = styled((props: SectionTitleProps) => (
+export const SectionTitle = styled(({expandable, ...props}: SectionTitleProps) => (
   <AccordionSummary
-    expandIcon={<BiSolidDownArrow />}
+    expandIcon={(expandable !== false) ? <BiSolidDownArrow /> : null}
     {...props}
   >
     <Typography variant="h2">{props.children}</Typography>

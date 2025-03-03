@@ -192,7 +192,7 @@ export const FormBuilder = forwardRef<FormBuilderHandle, IFormBuilderProps>(
                 if (section.label) {
                   return (
                     <Section key={key} defaultExpanded={section.expanded ?? false}>
-                      <SectionTitle>{ section.label }</SectionTitle>
+                      <SectionTitle expandable={section.expandable}>{ section.label }</SectionTitle>
                       <SectionContent>
                         <FormFieldList section={section} {...fieldProps} />
                       </SectionContent>

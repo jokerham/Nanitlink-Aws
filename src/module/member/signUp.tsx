@@ -69,7 +69,7 @@ const SignUp = () => {
 
   const sections: TSection[] = [
     {
-      seq: 0, label: 'Sign Up', expanded: true, gap: '0px',
+      seq: 0, label: 'Sign Up', expanded: true, gap: '0px', expandable: false,
       fields: [
         { name: "email", label: "Email", type: EFieldType.TextField, required: true, },
         { name: "password", label: "Password", type: EFieldType.Password, required: true, },

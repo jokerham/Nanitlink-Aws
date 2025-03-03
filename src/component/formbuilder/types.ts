@@ -29,6 +29,7 @@ export type TSection = {
   gap?: string,
   fields: TFieldSetting[],
   expanded?: boolean
+  expandable?: boolean
 }
 
 export type TOptionItem = {
