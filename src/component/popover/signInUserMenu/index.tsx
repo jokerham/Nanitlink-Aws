@@ -5,6 +5,7 @@ import { FaSignInAlt } from 'react-icons/fa';
 import { IoSettings } from 'react-icons/io5';
 import { signOut } from 'aws-amplify/auth';
 import { NavLink } from 'react-router';
+import AdminAuthorized from 'component/amplify/AdminAuthorized';
 
 interface ISignInUserMenuProps {
   open: boolean;
@@ -61,12 +62,14 @@ const SignInUserMenu = ({open, anchorEl, onClose}: ISignInUserMenuProps) => {
               <ListItemText primary="Sign Out" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component={NavLink} to="/admin">
-              <ListItemIcon><IoSettings /></ListItemIcon>
-              <ListItemText primary="Manage" />
-            </ListItemButton>
-          </ListItem>
+          <AdminAuthorized>
+            <ListItem disablePadding>
+              <ListItemButton component={NavLink} to="/admin">
+                <ListItemIcon><IoSettings /></ListItemIcon>
+                <ListItemText primary="Manage" />
+              </ListItemButton>
+            </ListItem>
+          </AdminAuthorized>
         </List>
       </Popover>
     </ThemeProvider>

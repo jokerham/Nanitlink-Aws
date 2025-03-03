@@ -45,11 +45,11 @@ const AdminAuthorized = ({children}: IAdminAuthorizedProps) => {
   
   return (
     <Fragment>
-      {loading ? <div>Loading...</div> : (isAdmin ? 
+      {loading ? null : (isAdmin ? 
         <UserContext.Provider value={{ userAttributes }}>
           {children}
         </UserContext.Provider>
-     : <div>Unauthorized</div>)}
+     : null )}
     </Fragment>
   )
 }
