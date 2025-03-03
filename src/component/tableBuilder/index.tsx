@@ -199,7 +199,7 @@ export const TableBuilder = ({ columns: columnSettings, data: initialData, filte
         <RowBox sx={{mr: 'auto'}}>
           <TablePagination
             component="div"
-            count={100}
+            count={data.length}
             page={paginationOption.page}
             onPageChange={paginationOption.handleChangePage}
             rowsPerPage={paginationOption.rowsPerPage}
