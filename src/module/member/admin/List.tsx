@@ -28,7 +28,6 @@ export default function List() {
         group: user.userGroups.join(', '),
         approved: user.activeState,
       }));
-      console.log(mappedData);
       setData(mappedData);
       setLoading(false);
     });

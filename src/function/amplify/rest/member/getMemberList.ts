@@ -16,7 +16,6 @@ export const getMemberList = async (
     const response = await getOperation.response;
     const jsonResponse = await response.body.json();
     if (jsonResponse !== null && typeof jsonResponse === 'object' && 'users' in jsonResponse) {
-      console.log(jsonResponse.users);
       const users = jsonResponse.users as unknown as CognitoUser[];
       return { users }
     } else {
