@@ -25,7 +25,7 @@ export const deleteMember = async (
     const delOperation = del({apiName, path, options});
     const response = await delOperation.response;
     
-    console.log(response);
+    //console.log(response);
     // if (jsonResponse !== null && typeof jsonResponse === 'object') {
     //   const user = jsonResponse as unknown as CognitoUser;
     //   return { user }

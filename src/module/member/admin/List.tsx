@@ -18,7 +18,7 @@ export default function List() {
     { id: 'approved', name: 'Approved', show: true, textAlign: 'center' },
   ];
 
-  useEffect(() => {
+  const fetchData = async () => {
     getMemberList().then((result) => {
       const mappedData = result.users.map(user => ({
         id: user.id,
@@ -31,6 +31,10 @@ export default function List() {
       setData(mappedData);
       setLoading(false);
     });
+  }
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const filters = [
@@ -47,10 +51,9 @@ export default function List() {
     navigate(`/admin/member/detail?userid=${row.userid}`);
   }
 
-  const onDelete = (rows: IDataRow[]) => {
-    rows.map(row => {
-      deleteMember(row.userid as string);
-    })
+  const onDelete = async (rows: IDataRow[]) => {
+    await Promise.all(rows.map(row => deleteMember(row.userid as string)));
+    fetchData();
   }
 
   const actions: TAction[] = [
