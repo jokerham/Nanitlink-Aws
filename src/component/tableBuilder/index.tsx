@@ -111,7 +111,12 @@ export const TableBuilder = ({ columns: columnSettings, data: initialData, filte
     if (currentFilter === null || currentFilter.field === '') {
       setData(initialData)
     } else {
-      setData(initialData.filter(row => row[currentFilter.field] === currentFilter.value))
+      setData(initialData.filter(row => {
+        const fieldValue = row[currentFilter.field]; // Get the field value
+        return (typeof fieldValue === "string" && typeof currentFilter.value === "string")
+          ? fieldValue.includes(currentFilter.value) // Use includes() for strings
+          : fieldValue === currentFilter.value; // Fallback to strict equality for other types
+      }));
     }
   }, [currentFilter, initialData]);
 

@@ -50,7 +50,7 @@ const sectionZeroFields: TFieldSetting[] = [
   ]}},
 ];
 
-const sections: TSection[] = [{ seq: 0, fields: sectionZeroFields }];
+const sections: TSection[] = [{ seq: 0, expandable: false, fields: sectionZeroFields }];
 
 const Detail = () => {
   const [searchParams] = useSearchParams();
@@ -98,7 +98,7 @@ const Detail = () => {
 
   return (
     <Section defaultExpanded={true}>
-      <SectionTitle>User Info Detail</SectionTitle>
+      <SectionTitle expandable={false}>User Info Detail</SectionTitle>
       <SectionContent>
         <FormBuilder {...formBuilderProps} />
       </SectionContent>

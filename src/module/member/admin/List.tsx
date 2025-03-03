@@ -35,9 +35,9 @@ export default function List() {
 
   const filters = [
     { name: 'All Members', field: '', value: '' },
-    { name: 'Admin', field: 'group', value: 'admin' },
-    { name: 'Approved', field: 'approved', value: true },
-    { name: 'Denied', field: 'approved', value: false },
+    { name: 'Admin', field: 'group', value: 'ADMIN' },
+    { name: 'Approved', field: 'approved', value: 'Enabled' },
+    { name: 'Denied', field: 'approved', value: 'Disabled' },
   ];
 
   const onCreate = () => {
@@ -68,7 +68,7 @@ export default function List() {
 
   return (
     <Section defaultExpanded={true}>
-      <SectionTitle>Member List</SectionTitle>
+      <SectionTitle expandable={false}>Member List</SectionTitle>
       <SectionContent>
         <TableBuilder 
           columns={columns}
