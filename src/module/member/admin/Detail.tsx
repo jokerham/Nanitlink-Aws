@@ -1,65 +1,78 @@
 import { EFieldType, EVariant, FormBuilder, IFormBuilderProps, TFieldSetting, TSection } from 'component/formbuilder';
 import { Section, SectionContent, SectionTitle } from 'component/Section';
 import { FormikValues, FormikHelpers } from 'formik';
-import { getMemberDetail } from 'function/amplify/rest/member';
-import { useEffect, useState, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { getMemberDetail, getMemberGroupList } from 'function/amplify/rest/member';
+import { CognitoGroup } from 'function/amplify/rest/member/types';
+import { updateMember } from 'function/amplify/rest/member/updateMember';
+import { showToast } from 'function/showToast';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // Initial form values
 const initialValues = {
-  userid: '',
+  id: '',
+  username: '',
   password: '',
   name: '',
   email: '',
-  username: '',
   nickname: '',
   homepage: '',
   birthday: '',
   profile: '',
   mailing: 'no',
-  message: 'all',
-  approved: 'true',
+  messaging: 'all',
   group: [],
 };
 
-// Form field configuration
-const sectionZeroFields: TFieldSetting[] = [
-  { name: 'userid', label: 'User ID', type: EFieldType.TextField, disabled: true },
-  { name: 'password', label: 'Password', type: EFieldType.Password, required: true },
-  { name: 'email', label: 'Email', type: EFieldType.TextField, required: true },
-  { name: 'username', label: 'User Name', type: EFieldType.TextField, required: true },
-  { name: 'nickname', label: 'Nick Name', type: EFieldType.TextField, required: true },
-  { name: 'homepage', label: 'Homepage', type: EFieldType.TextField },
-  { name: 'profile', label: 'Profile Image', type: EFieldType.File, options: { multiple: false } },
-  { name: 'mailing', label: 'Join Mailing', type: EFieldType.Radio, options: { data: [
-    { value: 'yes', label: 'Yes' },
-    { value: 'no', label: 'No' },
-  ]}},
-  { name: 'message', label: 'Receive Message', type: EFieldType.Radio, options: { data: [
-    { value: 'all', label: 'Receive all' },
-    { value: 'friends', label: 'Only friends' },
-    { value: 'reject', label: 'Reject all' },
-  ]}},
-  { name: 'approved', label: 'Status', type: EFieldType.Radio, options: { data: [
-    { value: 'true', label: 'Approved' },
-    { value: 'false', label: 'Denied' },
-  ]}},
-  { name: 'group', label: 'Group', type: EFieldType.Checkbox, options: { multiple: true, data: [
-    { value: 'ADMIN', label: 'Admin' },
-    { value: 'GUEST', label: 'Guest' },
-  ]}},
-];
-
-const sections: TSection[] = [{ seq: 0, expandable: false, fields: sectionZeroFields }];
-
 const Detail = () => {
   const [searchParams] = useSearchParams();
-  const userid = searchParams.get("userid");
+  const userid = searchParams.get("id");
+  const [groups, setGroups] = useState<CognitoGroup[]>([]);
+  const [sections, setSections] = useState<TSection[]>([]);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    getMemberGroupList().then((result) => setGroups(result.groups));
+  }, []);
+
+  useEffect(() => {
+    // Form field configuration
+    const sectionZeroFields: TFieldSetting[] = [
+      { name: 'id', label: 'User ID', type: EFieldType.Hidden },
+      { name: 'username', label: 'User Name', type: EFieldType.TextField, required: true },
+      { name: 'name', label: 'Given Name', type: EFieldType.TextField, required: true },
+      { name: 'password', label: 'Password', type: EFieldType.Password },
+      { name: 'email', label: 'Email', type: EFieldType.TextField, required: true },
+      { name: 'nickname', label: 'Nick Name', type: EFieldType.TextField, required: true },
+      { name: 'homepage', label: 'Homepage', type: EFieldType.TextField },
+      { name: 'profile', label: 'Profile Image', type: EFieldType.File, options: { multiple: false } },
+      { name: 'mailing', label: 'Join Mailing', type: EFieldType.Radio, options: { direction: 'row', data: [
+        { value: 'yes', label: 'Yes' },
+        { value: 'no', label: 'No' },
+      ]}},
+      { name: 'messaging', label: 'Receive Message', type: EFieldType.Radio, options: { direction: 'row', data: [
+        { value: 'all', label: 'Allow All' },
+        { value: 'friend', label: 'Allow for Friend Only' },
+        { value: 'reject', label: 'Reject All' },
+      ]}},
+      { name: 'group', label: 'Group', type: EFieldType.Checkbox, options: { multiple: true, sort: true, data:
+        groups.map(group => { return { value: group.GroupName, label: group.GroupName }})
+      }},
+    ];
+
+    const sections = [{ seq: 0, expanded: true, expandable: false, fields: sectionZeroFields }];
+    setSections(sections);
+  }, [groups])
 
   // Form submission handler
-  const onSubmit = useCallback((values: FormikValues, formikHelpers: FormikHelpers<FormikValues>) => {
-    // Handle form submission logic
-  }, []);
+  const onSubmit = async (values: FormikValues, formikHelpers: FormikHelpers<FormikValues>) => {
+    try {
+      await updateMember(values);
+      navigate('/admin/member/list');
+    } catch (error) {
+      showToast(error, 'error');
+    }
+  };
 
   // State for FormBuilder props
   const [formBuilderProps, setFormBuilderProps] = useState<IFormBuilderProps>({
@@ -81,20 +94,25 @@ const Detail = () => {
           ...prevProps.formikConfig,
           initialValues: {
             ...initialValues,
-            userid: user.userName,
+            id: user.id,
             name: user.name,
             email: user.email,
             username: user.userName,
             nickname: user.nickName,
             birthday: user.birthday,
             mailing: user.mailing,
+            messaging: user.messaging,
+            group: user.userGroups,
           },
         },
+        sections,
       }));
     };
 
-    fetchMemberDetails();
-  }, [userid]);
+    if (sections.length > 0) {
+      fetchMemberDetails();
+    }
+  }, [userid, sections]);
 
   return (
     <Section defaultExpanded={true}>

@@ -48,11 +48,11 @@ export default function List() {
   }
 
   const onEdit = (row: IDataRow) => {
-    navigate(`/admin/member/detail?userid=${row.userid}`);
+    navigate(`/admin/member/detail?id=${row.id}`);
   }
 
   const onDelete = async (rows: IDataRow[]) => {
-    await Promise.all(rows.map(row => deleteMember(row.userid as string)));
+    await Promise.all(rows.map(row => deleteMember(row.id as string)));
     fetchData();
   }
 

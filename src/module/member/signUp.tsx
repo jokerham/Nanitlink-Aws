@@ -190,3 +190,5 @@ const SignUp = () => {
 }
 
 export default SignUp;
+
+// Reference : https://docs.amplify.aws/gen1/javascript/build-a-backend/auth/manage-user-profile/
