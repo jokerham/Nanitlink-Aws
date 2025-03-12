@@ -4,14 +4,14 @@ import awsConfigure from 'amplifyconfiguration.json'
 import { showToast } from 'function/showToast';
 
 // API Function to Fetch Cognito Users
-export const deleteMember = async (
-  subId: string
+export const deleteMemberGroup = async (
+  groupName: string
 ) => {
   try {
     const apiName = 'member';
     const filters = { userPoolId: awsConfigure.aws_user_pools_id };
     const queryParams = new URLSearchParams( Object.entries(filters) );
-    const path = `/member/${subId}?${queryParams.toString()}`;
+    const path = `/memberGroup/${groupName}?${queryParams.toString()}`;
     const session = await fetchAuthSession();
     const token = session.tokens?.idToken;
     
@@ -28,11 +28,11 @@ export const deleteMember = async (
     if (response.statusCode === 200) {
       showToast('User deleted successfully', 'success');
     } else {
-      showToast('Failed to delete user', 'error');
+      showToast('Failed to delete group', 'error');
     }
     return;
   } catch (error) {
-    console.error('Error fetching user:', error);
+    console.error('Error fetching group:', error);
     throw error;
   }
 };

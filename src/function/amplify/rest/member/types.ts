@@ -10,8 +10,9 @@ export interface CognitoUser {
   lastSignInDate?: string;
   activeState: string;
   mailing: string;
-  
+  messaging: string;
   userGroups: string[];
+  sub: string;
 }
 
 export interface CognitoGroup {
