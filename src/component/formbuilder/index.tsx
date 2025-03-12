@@ -4,7 +4,7 @@ import { Section, SectionContent, SectionTitle } from 'component/Section';
 import { ColumnBox } from 'component/customMui';
 import Variant from './formField';
 import { Box, Button, createTheme } from '@mui/material';
-import { useState, useRef, useImperativeHandle, forwardRef, Fragment } from 'react';
+import { useState, useRef, useImperativeHandle, forwardRef, Fragment, useEffect } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { useNavigate } from 'react-router';
 export * from './types';
@@ -108,6 +108,10 @@ export const FormBuilder = forwardRef<FormBuilderHandle, IFormBuilderProps>(
   const variant = givenVariant || EVariant.Default
   const [sections, setSections] = useState(initialSections);
   const formikRef = useRef<any>(null);
+
+  useEffect(() => {
+    setSections(initialSections);
+  }, [initialSections]);
 
   const addFieldToSection = (sectionIndex: number, newField: TFieldSetting, index?: number) => {
     setSections((prevSections) => 
