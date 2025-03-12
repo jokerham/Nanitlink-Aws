@@ -1,5 +1,5 @@
 const { listGroups } = require('./listGroups');
-const { updateGroup } = require('./updateGroup');
+const { createGroup } = require('./createGroup');
 const { deleteGroup } = require('./deleteGroup');
 const { headers } = require('./headers');
 
@@ -11,7 +11,7 @@ exports.handler = async (event) => {
   
   try {
     const pathParameters = event.pathParameters || {};
-    const group = pathParameters.proxy;
+    const group = decodeURIComponent(pathParameters.proxy);
     const httpMethod = event.httpMethod;
     const userPoolId = event.queryStringParameters?.userPoolId || null;
 
@@ -26,8 +26,8 @@ exports.handler = async (event) => {
     switch (httpMethod) {
       case 'GET':
         return await listGroups(userPoolId, event.queryStringParameters);
-      case 'PUT':
-        return await updateGroup(userPoolId, group, event);
+      case 'POST':
+        return await createGroup(userPoolId, group, event);
       case 'DELETE':
         return await deleteGroup(userPoolId, group, event);
       default:

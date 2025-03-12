@@ -5,7 +5,7 @@
 Amplify Params - DO NOT EDIT */
 
 const { listAllMembers } = require('./listUsers');
-const { getUserByUserName } = require('./getUser');
+const { getUserBySubId } = require('./getUser');
 const { updateUser } = require('./updateUser');
 const { deleteUser } = require('./deleteUser');
 const { headers } = require('./headers');
@@ -18,7 +18,7 @@ exports.handler = async (event) => {
   
   try {
     const pathParameters = event.pathParameters || {};
-    const userName = pathParameters.proxy;
+    const userId = pathParameters.proxy;
     const httpMethod = event.httpMethod;
     const userPoolId = event.queryStringParameters?.userPoolId || null;
 
@@ -32,15 +32,15 @@ exports.handler = async (event) => {
 
     switch (httpMethod) {
       case 'GET':
-        if (userName) {
-          return await getUserByUserName(userPoolId, userName);
+        if (userId) {
+          return await getUserBySubId(userPoolId, userId);
         } else {
           return await listAllMembers(userPoolId, event.queryStringParameters);
         }
       case 'PUT':
-        return await updateUser(userPoolId, userName, event);
+        return await updateUser(userPoolId, userId, event);
       case 'DELETE':
-        return await deleteUser(userPoolId, userName, event);
+        return await deleteUser(userPoolId, userId, event);
       default:
         return {
           statusCode: 405,

@@ -3,7 +3,7 @@ const { headers } = require('./headers');
 
 const cognito = new AWS.CognitoIdentityServiceProvider();
 
-exports.updateGroup = async (userPoolId, groupName, event) => {
+exports.createGroup = async (userPoolId, groupName, event) => {
   try {
     if (!groupName) {
       return {
@@ -13,17 +13,17 @@ exports.updateGroup = async (userPoolId, groupName, event) => {
       };
     }
 
-    const requestBody = JSON.parse(event.body);
+    //const requestBody = JSON.parse(event.body);
 
     const params = {
       GroupName: groupName,
       UserPoolId: userPoolId,
-      Description: requestBody.description || undefined,
-      Precedence: requestBody.precedence || undefined,
-      RoleArn: requestBody.roleArn || undefined
+      // Description: requestBody.description || undefined,
+      // Precedence: requestBody.precedence || undefined,
+      // RoleArn: requestBody.roleArn || undefined
     };
 
-    const response = await cognito.updateGroup(params).promise();
+    const response = await cognito.createGroup(params).promise();
 
     return {
       statusCode: 200,
