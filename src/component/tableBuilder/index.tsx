@@ -64,6 +64,27 @@ export const TableBuilder = ({ columns: columnSettings, data: initialData, filte
   const [currentFilter, setCurrentFilter] = useState<ITableFilter | null>(null)
   const columns = columnSettings ?? Object.keys(initialData[0]);
 
+  // If TSelected contains record not in data then deleted it
+  useEffect(() => {
+    if (dataRow !== null) {
+      if (Array.isArray(dataRow)) {
+        const dataRows = dataRow as IDataRow[]
+        if (dataRows.some(dataRow => !data.some(row => row.id === dataRow.id))) {
+          const filteredRows = dataRows.filter(dataRow => data.some(row => row.id === dataRow.id))
+          if (filteredRows.length <= 1) {
+            setDataRow(filteredRows[0] ?? null)
+          } else {
+            setDataRow(filteredRows)
+          }
+        }
+      } else {
+        if (!data.some(row => row.id === dataRow.id)) {
+          setDataRow(null)
+        }
+      }
+    }
+  }, [data, dataRow]);
+
   const onFilterSelectedHandler = (filter: ITableFilter) => {
     setCurrentFilter(filter);
   }
