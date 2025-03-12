@@ -6,7 +6,7 @@ import { CognitoGroup } from 'function/amplify/rest/member/types';
 import { updateMember } from 'function/amplify/rest/member/updateMember';
 import { showToast } from 'function/showToast';
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Initial form values
 const initialValues = {
@@ -25,8 +25,7 @@ const initialValues = {
 };
 
 const Detail = () => {
-  const [searchParams] = useSearchParams();
-  const userid = searchParams.get("id");
+  const { id: userid } = useParams<{ id?: string }>();
   const [groups, setGroups] = useState<CognitoGroup[]>([]);
   const [sections, setSections] = useState<TSection[]>([]);
   const navigate = useNavigate();

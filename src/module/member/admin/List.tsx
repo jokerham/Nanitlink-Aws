@@ -48,7 +48,7 @@ export default function List() {
   }
 
   const onEdit = (row: IDataRow) => {
-    navigate(`/admin/member/detail?id=${row.id}`);
+    navigate(`/admin/member/detail/${row.id}`);
   }
 
   const onDelete = async (rows: IDataRow[]) => {

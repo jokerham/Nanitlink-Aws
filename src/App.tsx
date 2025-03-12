@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Fragment, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DefaultLayout from './layout/default';
 import AdminLayout from './layout/admin';
@@ -15,16 +15,27 @@ const App: React.FC = () => {
       <Routes>
         {/* Default Layout */}
         <Route path="/" element={<DefaultLayout />}>
-          {modulesConfig.modules.map((module) => (
-            <Route
-              key={module.name}
-              path={`${module.name}/:action`}
-              element={
-                <Suspense fallback={<div>Loading...</div>}>
-                  {React.createElement(loadModule(module.name))}
-                </Suspense>
-              }
-            />
+          {modulesConfig.modules.map((module, index) => (
+            <Fragment key={index}>
+              <Route
+                key={module.name}
+                path={`${module.name}/:action/:id`}
+                element={
+                  <Suspense fallback={<div>Loading...</div>}>
+                    {React.createElement(loadModule(module.name))}
+                  </Suspense>
+                }
+              />
+              <Route
+                key={module.name}
+                path={`${module.name}/:action`}
+                element={
+                  <Suspense fallback={<div>Loading...</div>}>
+                    {React.createElement(loadModule(module.name))}
+                  </Suspense>
+                }
+              />
+            </Fragment>
           ))}
           <Route path="*" element={<PageNotFound/>}/>
         </Route>
@@ -33,16 +44,27 @@ const App: React.FC = () => {
         <Route path="admin" element={<AdminLayout />}>
           {modulesConfig.modules
             .filter((module) => module.hasAdmin)
-            .map((module) => (
-              <Route
-                key={module.name}
-                path={`${module.name}/:action`}
-                element={
-                  <Suspense fallback={<div>Loading...</div>}>
-                    {React.createElement(loadAdminModule(module.name))}
-                  </Suspense>
-                }
-              />
+            .map((module, index) => (
+              <Fragment key={index}>
+                <Route
+                  key={module.name}
+                  path={`${module.name}/:action/:id`}
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      {React.createElement(loadAdminModule(module.name))}
+                    </Suspense>
+                  }
+                />
+                <Route
+                  key={module.name}
+                  path={`${module.name}/:action`}
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      {React.createElement(loadAdminModule(module.name))}
+                    </Suspense>
+                  }
+                />
+              </Fragment>
             ))}
           <Route path="*" element={<PageNotFound/>}/>
         </Route>
