@@ -218,51 +218,6 @@ export const listMedia = /* GraphQL */ `query ListMedia(
   }
 }
 ` as GeneratedQuery<APITypes.ListMediaQueryVariables, APITypes.ListMediaQuery>;
-export const getMenu = /* GraphQL */ `query GetMenu($id: ID!) {
-  getMenu(id: $id) {
-    id
-    name
-    parent {
-      id
-      name
-      link
-      createdAt
-      updatedAt
-      menuChildrenId
-      __typename
-    }
-    children {
-      nextToken
-      __typename
-    }
-    link
-    createdAt
-    updatedAt
-    menuChildrenId
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetMenuQueryVariables, APITypes.GetMenuQuery>;
-export const listMenus = /* GraphQL */ `query ListMenus(
-  $filter: ModelMenuFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listMenus(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      name
-      link
-      createdAt
-      updatedAt
-      menuChildrenId
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListMenusQueryVariables, APITypes.ListMenusQuery>;
 export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
   getArticle(id: $id) {
     id
@@ -574,4 +529,94 @@ export const postTagsByTagId = /* GraphQL */ `query PostTagsByTagId(
 ` as GeneratedQuery<
   APITypes.PostTagsByTagIdQueryVariables,
   APITypes.PostTagsByTagIdQuery
+>;
+export const getMenu = /* GraphQL */ `query GetMenu($id: ID!) {
+  getMenu(id: $id) {
+    id
+    name
+    module
+    moduleId
+    parentId
+    parent {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
+    children {
+      nextToken
+      __typename
+    }
+    link
+    sortOrder
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetMenuQueryVariables, APITypes.GetMenuQuery>;
+export const listMenus = /* GraphQL */ `query ListMenus(
+  $filter: ModelMenuFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listMenus(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListMenusQueryVariables, APITypes.ListMenusQuery>;
+export const menusByParentIdAndName = /* GraphQL */ `query MenusByParentIdAndName(
+  $parentId: ID!
+  $name: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelMenuFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  menusByParentIdAndName(
+    parentId: $parentId
+    name: $name
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.MenusByParentIdAndNameQueryVariables,
+  APITypes.MenusByParentIdAndNameQuery
 >;

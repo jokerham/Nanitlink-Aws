@@ -20,7 +20,7 @@ const AdminAuthorized = ({children}: IAdminAuthorizedProps) => {
     getCurrentUser().then((user) => {
       if (user) {
         getMemberDetail(user.userId).then((attributes) => {
-          if (attributes.user && attributes.user.userGroups.includes('ADMIN')) {
+          if (attributes.user && attributes.user.userGroups.includes('Admin')) {
             setIsAdmin(true);
             setUserAttributes(attributes.user);
             setLoading(false);

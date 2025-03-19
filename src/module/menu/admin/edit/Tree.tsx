@@ -1,57 +1,38 @@
 import { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 import { Tree as ArboristTree, NodeApi } from 'react-arborist';
-import { RowBox } from 'component/customMui';
 import { FaFolder, FaFolderOpen, FaHome, FaPlusCircle } from 'react-icons/fa';
 import { CgMenuBoxed } from 'react-icons/cg';
-import { Box} from '@mui/material';
 import useResizeObserver from 'use-resize-observer';
+import { RowBox } from 'component/customMui';
+import { ActionButton, ActionTypography, ContainedButton, SearchTextField, TreeNodeLabel, TreeNodeRowBox } from './Components';
+import { gqListMenuTree } from 'function/amplify/graphql/menu/gqListMenu';
+import Tab from './Tab';
 import { IMenu, NodeProps } from './types';
 import 'extension/nodeApiExt';
-import Tab from './Tab';
-import { ActionButton, ActionTypography, ContainedButton, SearchTextField, TreeNodeLabel, TreeNodeRowBox } from './Components';
-
-const initialMenuData = [
-  { id: 'dashboard', name: 'Dashboard', module: 'page', moduleId: 'Dashboard', children: [], navigateTo: '/admin'},
-  { id: 'menu', name: 'Menu', module: 'page', moduleId: 'Menu', children: [
-    { id: 'menu-editor', name: 'Menu Editor', module: 'page', moduleId: 'Menu Editor', navigateTo: '/admin/menu/edit' },
-    { id: 'site-design', name: 'Site Design', module: 'page', moduleId: 'Site Design', navigateTo: '/admin/site/design' },
-    { id: 'layouts', name: 'Layouts', module: 'page', moduleId: 'Layouts', navigateTo: '/admin/layout/list' }, ], },
-  { id: 'member', name: 'Member', module: 'page', moduleId: 'Member', children: [
-    { id: 'member-list', name: 'Member List', module: 'page', moduleId: 'Member List', navigateTo: '/admin/member/list' },
-    { id: 'member-setting', name: 'Member Setting', module: 'page', moduleId: 'Member Setting', navigateTo: '/admin/member/setting' },
-    { id: 'member-group', name: 'Member Group', module: 'page', moduleId: 'Member Group', navigateTo: '/admin/member/group' },
-    { id: 'member-point', name: 'Point', module: 'page', moduleId: 'Point', navigateTo: '/admin/point' }, ], },
-  { id: 'content', name: 'Content', module: 'page', moduleId: 'Content', children: [
-    { id: 'document', name: 'Document', module: 'page', moduleId: 'Document', navigateTo: '/admin/document/list' },
-    { id: 'comment', name: 'Comment', module: 'page', moduleId: 'Comment', navigateTo: '/admin/comment/list' },
-    { id: 'file', name: 'File', module: 'page', moduleId: 'File', navigateTo: '/admin/file/list' },
-    { id: 'poll', name: 'Poll', module: 'page', moduleId: 'Poll', navigateTo: '/admin/poll/list' },
-    { id: 'language', name: 'Multilingual', module: 'page', moduleId: 'Multilingual', navigateTo: '/admin/language/list' },
-    { id: 'trash', name: 'Trash', module: 'page', moduleId: 'Trash', navigateTo: '/admin/trash/list' },
-    { id: 'spam', name: 'SpamFilter', module: 'page', moduleId: 'SpamFilter', navigateTo: '/admin/spam/list' }, ], },
-  { id: 'favorite', name: 'Favorite', module: 'page', moduleId: 'Favorite', children: [] },
-  { id: 'settings', name: 'Settings', module: 'page', moduleId: 'Settings', children: [
-    { id: 'setting-general', name: 'General', module: 'page', moduleId: 'General', navigateTo: '/admin/setting/general' },
-    { id: 'admin-menu', name: 'Admin Setup', module: 'page', moduleId: 'Admin Setup', navigateTo: '/admin/setting/menu' },
-    { id: 'setting-file', name: 'File Uplaod', module: 'page', moduleId: 'File Uplaod', navigateTo: '/admin/setting/file' }, ], },
-  { id: 'advanced', name: 'Advanced', module: 'page', moduleId: 'Advanced', children: [] },
-] as IMenu[];
 
 interface ITreeProps { 
   onAddMenu: () => void,
   onSelectNode: (node: any) => void 
 }
 
+const initialTeeProps = {
+  data: [] as IMenu[],
+  indent: 20,
+  padding: 0,
+  height: 0,
+  width: 0,
+  rowHeight: 26,
+};
+
 const Tree = ({ onAddMenu, onSelectNode }: ITreeProps) => {
   const { ref, width, height } = useResizeObserver();
-  const [treeProps, setTreeProps] = useState({
-    data: initialMenuData,
-    indent: 20,
-    padding: 0,
-    height: 0,
-    width: 0,
-    rowHeight: 26,
-  });
+  const [treeProps, setTreeProps] = useState(initialTeeProps);
+
+  const fetchMenu = async () => {
+    const data = await gqListMenuTree(-1, null);
+    setTreeProps((prev) => ({ ...prev, data }));
+  };
 
   useEffect(() => {
     setTreeProps((prev) => ({
@@ -60,6 +41,10 @@ const Tree = ({ onAddMenu, onSelectNode }: ITreeProps) => {
       height: (height ?? prev.height) - 15 
     }));
   }, [width, height]);
+
+  useEffect(() => {
+    fetchMenu();
+  }, []);
 
   return (
     <Tab

@@ -5,17 +5,19 @@ import { useRef } from 'react';
 import { ContainedButton, ContainedGrayButton } from './Components';
 import Tab from './Tab';
 
-interface IEditFormProps {
+export interface IAddFormProps {
+  parentId?: string;
   onClose: () => void;
   onSubmitHandler: (values: FormikValues) => void;
 }
 
 const initialFields: TFieldSetting[] = [
+  { name: 'parentId', label: 'Parent Menu Id', type: EFieldType.Hidden },
   { name: 'module', label: 'Module', type: EFieldType.Select, options: {
     multiple: false, sort: true, data: [
-      { label: 'Article', value: 'article' },
-      { label: 'Board', value: 'board' },
-      { label: 'Link', value: 'link' },
+      { label: 'Article', value: 'Article' },
+      { label: 'Board', value: 'Board' },
+      { label: 'Link', value: 'Link' },
     ]
   }},
   { name: 'name', label: 'Name', type: EFieldType.TextField },
@@ -30,7 +32,7 @@ const initialValues = {
   moduleId: '',
 };
 
-const AddForm = ({ onClose, onSubmitHandler }: IEditFormProps) => {
+const AddForm = ({ parentId, onClose, onSubmitHandler }: IAddFormProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const formBuilderRef = useRef<FormBuilderHandle>(null);
   
@@ -47,7 +49,7 @@ const AddForm = ({ onClose, onSubmitHandler }: IEditFormProps) => {
   const formBuilderProps: IFormBuilderProps = {
     variant: EVariant.SmallSize,
     formikConfig: {
-      initialValues: initialValues,
+      initialValues: { parentId, ...initialValues },
       onSubmit: onSubmitHandler,
     },
     sections: [{ seq: 0, fields: initialFields }],

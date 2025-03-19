@@ -123,7 +123,8 @@ export const ContainedButton = (props: ButtonProps) => {
 export const TreeNodeRowBox = styled(RowBox)({
   alignItems: 'center',
   borderRadius: '5px',
-  padding: '5px',
+  margin: '4px 0',
+  padding: '4px 5px 3px 5px',
   transition: 'background-color 0.5s ease',
   cursor: 'pointer',
   '&:hover': {

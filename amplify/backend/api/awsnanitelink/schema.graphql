@@ -42,7 +42,7 @@ enum PostStatus {
 
 enum PostType {
   BOARD
-  PAGE
+  ARTICLE
 }
 
 type Comment 
@@ -76,14 +76,18 @@ type Media
 type Menu
   @model 
   @auth(rules: [
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
     { allow: public, operations: [read] }
   ]) {
   id: ID!
   name: String!
-  parent: Menu @belongsTo
-  children: [Menu] @hasMany
-  link: String!
+  module: String
+  moduleId: String
+  parentId: ID @index(name: "byParent", sortKeyFields: ["name"])
+  parent: Menu @belongsTo(fields: ["parentId"])
+  children: [Menu] @hasMany(indexName: "byParent", fields: ["id"])
+  link: String
+  sortOrder: Int!
 }
 
 type Article

@@ -392,90 +392,6 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia($filter: 
   APITypes.OnDeleteMediaSubscriptionVariables,
   APITypes.OnDeleteMediaSubscription
 >;
-export const onCreateMenu = /* GraphQL */ `subscription OnCreateMenu($filter: ModelSubscriptionMenuFilterInput) {
-  onCreateMenu(filter: $filter) {
-    id
-    name
-    parent {
-      id
-      name
-      link
-      createdAt
-      updatedAt
-      menuChildrenId
-      __typename
-    }
-    children {
-      nextToken
-      __typename
-    }
-    link
-    createdAt
-    updatedAt
-    menuChildrenId
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateMenuSubscriptionVariables,
-  APITypes.OnCreateMenuSubscription
->;
-export const onUpdateMenu = /* GraphQL */ `subscription OnUpdateMenu($filter: ModelSubscriptionMenuFilterInput) {
-  onUpdateMenu(filter: $filter) {
-    id
-    name
-    parent {
-      id
-      name
-      link
-      createdAt
-      updatedAt
-      menuChildrenId
-      __typename
-    }
-    children {
-      nextToken
-      __typename
-    }
-    link
-    createdAt
-    updatedAt
-    menuChildrenId
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateMenuSubscriptionVariables,
-  APITypes.OnUpdateMenuSubscription
->;
-export const onDeleteMenu = /* GraphQL */ `subscription OnDeleteMenu($filter: ModelSubscriptionMenuFilterInput) {
-  onDeleteMenu(filter: $filter) {
-    id
-    name
-    parent {
-      id
-      name
-      link
-      createdAt
-      updatedAt
-      menuChildrenId
-      __typename
-    }
-    children {
-      nextToken
-      __typename
-    }
-    link
-    createdAt
-    updatedAt
-    menuChildrenId
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteMenuSubscriptionVariables,
-  APITypes.OnDeleteMenuSubscription
->;
 export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onCreateArticle(filter: $filter) {
     id
@@ -868,4 +784,106 @@ export const onDeletePostTags = /* GraphQL */ `subscription OnDeletePostTags($fi
 ` as GeneratedSubscription<
   APITypes.OnDeletePostTagsSubscriptionVariables,
   APITypes.OnDeletePostTagsSubscription
+>;
+export const onCreateMenu = /* GraphQL */ `subscription OnCreateMenu($filter: ModelSubscriptionMenuFilterInput) {
+  onCreateMenu(filter: $filter) {
+    id
+    name
+    module
+    moduleId
+    parentId
+    parent {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
+    children {
+      nextToken
+      __typename
+    }
+    link
+    sortOrder
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateMenuSubscriptionVariables,
+  APITypes.OnCreateMenuSubscription
+>;
+export const onUpdateMenu = /* GraphQL */ `subscription OnUpdateMenu($filter: ModelSubscriptionMenuFilterInput) {
+  onUpdateMenu(filter: $filter) {
+    id
+    name
+    module
+    moduleId
+    parentId
+    parent {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
+    children {
+      nextToken
+      __typename
+    }
+    link
+    sortOrder
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateMenuSubscriptionVariables,
+  APITypes.OnUpdateMenuSubscription
+>;
+export const onDeleteMenu = /* GraphQL */ `subscription OnDeleteMenu($filter: ModelSubscriptionMenuFilterInput) {
+  onDeleteMenu(filter: $filter) {
+    id
+    name
+    module
+    moduleId
+    parentId
+    parent {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
+    children {
+      nextToken
+      __typename
+    }
+    link
+    sortOrder
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteMenuSubscriptionVariables,
+  APITypes.OnDeleteMenuSubscription
 >;

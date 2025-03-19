@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tree from "./Tree";
-import AddForm from "./AddForm";
-import EditForm from "./EditForm";
+import AddForm, { IAddFormProps } from "./AddForm";
+import EditForm, { IEditFormProps } from "./EditForm";
 import Menu from "./Menu";
 import { Box } from "@mui/material";
 import { IMenu } from "./types";
 import { FormikValues } from "formik";
 import Permission from "./Permission";
 import { showToast } from "function/showToast";
+import { gqAddMenu, IAddMenuInput } from "function/amplify/graphql/menu/gqAddMenu";
+import { gqDeleteMenu } from "function/amplify/graphql/menu/gqDeleteMenu";
+import { gqUpdateMenu, IUpdateMenuInput } from "function/amplify/graphql/menu/gqUpdateMenu";
 
 enum EState {
   default,
@@ -43,14 +46,17 @@ const initFlags: Record<ETab, boolean> = {
 }
 
 const Edit: React.FC = () => {
-  const [selectedNode, setSelectedNode] = useState(null);
+  const [refreshKey, setRefreshKey] = useState<number>(0);
+  const [selectedNode, setSelectedNode] = useState<IMenu|null>(null);
   const [openFlags, setOpenFlags] = useState<Record<ETab, boolean>>(initFlags)
+  const [parentId, setParentId] = useState<string|undefined>(undefined);
 
   const setFlag = (tab: ETab, flag: boolean) => {
     setOpenFlags((prev) => ({ ...prev, [tab]: flag }));
   };
 
   const handleAddMenu = () => {
+    setParentId(undefined);
     setState(EState.default);
     setState(EState.add); 
   };
@@ -92,12 +98,22 @@ const Edit: React.FC = () => {
   }
 
   const menuProps = {
-    onEditNode: (node: IMenu) => { setState(EState.edit); },
-    onAddMenu: () => { setState(EState.add); },
+    onEditNode: (node: IMenu) => { 
+      setState(EState.edit); 
+    },
+    onAddMenu: (node: IMenu) => {
+      setParentId(node.id);
+      setState(EState.add); 
+    },
     onCut: (node: IMenu) => { showNotImplementedToast() },
     onCopy: (node: IMenu) => { showNotImplementedToast() },
     onPaste: (node: IMenu) => { showNotImplementedToast() },
-    onDelete: (node: IMenu) => { showNotImplementedToast() },
+    onDelete: async (node: IMenu) => { 
+      await gqDeleteMenu(node.id);
+      setSelectedNode(null);
+      setState(EState.default);
+      setRefreshKey((prev) => prev + 1);
+    },
     onSetHomepage: (node: IMenu) => { showNotImplementedToast() },
     onMenuLinkImage: (node: IMenu) => { showNotImplementedToast() },
     onDesign: (node: IMenu) => { showNotImplementedToast() },
@@ -106,26 +122,50 @@ const Edit: React.FC = () => {
     onClose: () => { setState(EState.default); },
   };
 
-  const addFormProps = {
-    onClose: () => { setFlag(ETab.add, false); },
-    onSubmitHandler: (values: FormikValues) => { console.log(values); }
-  }
-
-  const editFormProps = {
-    onClose: () => { setFlag(ETab.edit, false); },
-    onSubmitHandler: (values: FormikValues) => { console.log(values); }
-  }
-
   const permissionProps = {
     onClose: () => { setFlag(ETab.permission, false); },
     onSubmitHandler: (values: FormikValues) => { console.log(values); }
   }
 
+  const addFormProps = {
+    onClose: () => {
+      setFlag(ETab.add, false);
+    },
+    onSubmitHandler: async (values: FormikValues) => {
+      const input: IAddMenuInput = {
+        parentId: values.parentId,
+        name: values.name,
+        module: values.module,
+        moduleId: values.moduleId,
+        link: values.link,
+      }
+      await gqAddMenu(input);
+      setState(EState.default);
+      setRefreshKey((prev) => prev + 1);
+    }
+  };
+
+  const editFormProps = {
+    onClose: () => {
+      setFlag(ETab.edit, false);
+    },
+    onSubmitHandler: async (values: FormikValues) => {
+      const update: IUpdateMenuInput= {
+        id: values.id,
+        name: values.name,
+        moduleId: values.moduleId,
+      }
+      await gqUpdateMenu(update);
+      setState(EState.default);
+      setRefreshKey((prev) => prev + 1);
+    }
+  };
+
   return (
     <Box display="flex" height="100%" gap={2}>
-      <Tree onAddMenu={handleAddMenu} onSelectNode={handleSelectNode} />
+      <Tree key={refreshKey} onAddMenu={handleAddMenu} onSelectNode={handleSelectNode} />
       {openFlags[ETab.menu] && selectedNode && <Menu node={selectedNode} {...menuProps}/>}
-      {openFlags[ETab.add] && <AddForm {...addFormProps} />}
+      {openFlags[ETab.add] && <AddForm parentId={parentId} {...addFormProps} />}
       {openFlags[ETab.edit] && selectedNode &&  <EditForm node={selectedNode} {...editFormProps} />}
       {openFlags[ETab.permission] && selectedNode &&  <Permission node={selectedNode} {...permissionProps} />}
     </Box>

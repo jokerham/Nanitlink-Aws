@@ -139,7 +139,7 @@ export enum PostStatus {
 
 export enum PostType {
   BOARD = "BOARD",
-  PAGE = "PAGE",
+  ARTICLE = "ARTICLE",
 }
 
 
@@ -313,31 +313,52 @@ export type DeleteMediaInput = {
 export type CreateMenuInput = {
   id?: string | null,
   name: string,
-  link: string,
-  menuChildrenId?: string | null,
+  module?: string | null,
+  moduleId?: string | null,
+  parentId?: string | null,
+  link?: string | null,
+  sortOrder: number,
 };
 
 export type ModelMenuConditionInput = {
   name?: ModelStringInput | null,
+  module?: ModelStringInput | null,
+  moduleId?: ModelStringInput | null,
+  parentId?: ModelIDInput | null,
   link?: ModelStringInput | null,
+  sortOrder?: ModelIntInput | null,
   and?: Array< ModelMenuConditionInput | null > | null,
   or?: Array< ModelMenuConditionInput | null > | null,
   not?: ModelMenuConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  menuChildrenId?: ModelIDInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type Menu = {
   __typename: "Menu",
   id: string,
   name: string,
+  module?: string | null,
+  moduleId?: string | null,
+  parentId?: string | null,
   parent?: Menu | null,
   children?: ModelMenuConnection | null,
-  link: string,
+  link?: string | null,
+  sortOrder: number,
   createdAt: string,
   updatedAt: string,
-  menuChildrenId?: string | null,
 };
 
 export type ModelMenuConnection = {
@@ -349,8 +370,11 @@ export type ModelMenuConnection = {
 export type UpdateMenuInput = {
   id: string,
   name?: string | null,
+  module?: string | null,
+  moduleId?: string | null,
+  parentId?: string | null,
   link?: string | null,
-  menuChildrenId?: string | null,
+  sortOrder?: number | null,
 };
 
 export type DeleteMenuInput = {
@@ -609,18 +633,6 @@ export type ModelMediaFilterInput = {
   authorId?: ModelStringInput | null,
 };
 
-export type ModelMenuFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  link?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelMenuFilterInput | null > | null,
-  or?: Array< ModelMenuFilterInput | null > | null,
-  not?: ModelMenuFilterInput | null,
-  menuChildrenId?: ModelIDInput | null,
-};
-
 export type ModelArticleFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -724,6 +736,31 @@ export enum ModelSortDirection {
 }
 
 
+export type ModelMenuFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  module?: ModelStringInput | null,
+  moduleId?: ModelStringInput | null,
+  parentId?: ModelIDInput | null,
+  link?: ModelStringInput | null,
+  sortOrder?: ModelIntInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelMenuFilterInput | null > | null,
+  or?: Array< ModelMenuFilterInput | null > | null,
+  not?: ModelMenuFilterInput | null,
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
 export type ModelSubscriptionBoardFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -802,17 +839,6 @@ export type ModelSubscriptionMediaFilterInput = {
   authorId?: ModelStringInput | null,
 };
 
-export type ModelSubscriptionMenuFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  link?: ModelSubscriptionStringInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionMenuFilterInput | null > | null,
-  or?: Array< ModelSubscriptionMenuFilterInput | null > | null,
-  menuChildrenId?: ModelSubscriptionIDInput | null,
-};
-
 export type ModelSubscriptionArticleFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -873,6 +899,32 @@ export type ModelSubscriptionPostTagsFilterInput = {
   and?: Array< ModelSubscriptionPostTagsFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostTagsFilterInput | null > | null,
   authorId?: ModelStringInput | null,
+};
+
+export type ModelSubscriptionMenuFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  module?: ModelSubscriptionStringInput | null,
+  moduleId?: ModelSubscriptionStringInput | null,
+  parentId?: ModelSubscriptionIDInput | null,
+  link?: ModelSubscriptionStringInput | null,
+  sortOrder?: ModelSubscriptionIntInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionMenuFilterInput | null > | null,
+  or?: Array< ModelSubscriptionMenuFilterInput | null > | null,
+};
+
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
 };
 
 export type CreateBoardMutationVariables = {
@@ -1293,23 +1345,29 @@ export type CreateMenuMutation = {
     __typename: "Menu",
     id: string,
     name: string,
+    module?: string | null,
+    moduleId?: string | null,
+    parentId?: string | null,
     parent?:  {
       __typename: "Menu",
       id: string,
       name: string,
-      link: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
       createdAt: string,
       updatedAt: string,
-      menuChildrenId?: string | null,
     } | null,
     children?:  {
       __typename: "ModelMenuConnection",
       nextToken?: string | null,
     } | null,
-    link: string,
+    link?: string | null,
+    sortOrder: number,
     createdAt: string,
     updatedAt: string,
-    menuChildrenId?: string | null,
   } | null,
 };
 
@@ -1323,23 +1381,29 @@ export type UpdateMenuMutation = {
     __typename: "Menu",
     id: string,
     name: string,
+    module?: string | null,
+    moduleId?: string | null,
+    parentId?: string | null,
     parent?:  {
       __typename: "Menu",
       id: string,
       name: string,
-      link: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
       createdAt: string,
       updatedAt: string,
-      menuChildrenId?: string | null,
     } | null,
     children?:  {
       __typename: "ModelMenuConnection",
       nextToken?: string | null,
     } | null,
-    link: string,
+    link?: string | null,
+    sortOrder: number,
     createdAt: string,
     updatedAt: string,
-    menuChildrenId?: string | null,
   } | null,
 };
 
@@ -1353,23 +1417,29 @@ export type DeleteMenuMutation = {
     __typename: "Menu",
     id: string,
     name: string,
+    module?: string | null,
+    moduleId?: string | null,
+    parentId?: string | null,
     parent?:  {
       __typename: "Menu",
       id: string,
       name: string,
-      link: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
       createdAt: string,
       updatedAt: string,
-      menuChildrenId?: string | null,
     } | null,
     children?:  {
       __typename: "ModelMenuConnection",
       nextToken?: string | null,
     } | null,
-    link: string,
+    link?: string | null,
+    sortOrder: number,
     createdAt: string,
     updatedAt: string,
-    menuChildrenId?: string | null,
   } | null,
 };
 
@@ -2015,57 +2085,6 @@ export type ListMediaQuery = {
   } | null,
 };
 
-export type GetMenuQueryVariables = {
-  id: string,
-};
-
-export type GetMenuQuery = {
-  getMenu?:  {
-    __typename: "Menu",
-    id: string,
-    name: string,
-    parent?:  {
-      __typename: "Menu",
-      id: string,
-      name: string,
-      link: string,
-      createdAt: string,
-      updatedAt: string,
-      menuChildrenId?: string | null,
-    } | null,
-    children?:  {
-      __typename: "ModelMenuConnection",
-      nextToken?: string | null,
-    } | null,
-    link: string,
-    createdAt: string,
-    updatedAt: string,
-    menuChildrenId?: string | null,
-  } | null,
-};
-
-export type ListMenusQueryVariables = {
-  filter?: ModelMenuFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListMenusQuery = {
-  listMenus?:  {
-    __typename: "ModelMenuConnection",
-    items:  Array< {
-      __typename: "Menu",
-      id: string,
-      name: string,
-      link: string,
-      createdAt: string,
-      updatedAt: string,
-      menuChildrenId?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type GetArticleQueryVariables = {
   id: string,
 };
@@ -2369,6 +2388,94 @@ export type PostTagsByTagIdQuery = {
       createdAt: string,
       updatedAt: string,
       authorId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetMenuQueryVariables = {
+  id: string,
+};
+
+export type GetMenuQuery = {
+  getMenu?:  {
+    __typename: "Menu",
+    id: string,
+    name: string,
+    module?: string | null,
+    moduleId?: string | null,
+    parentId?: string | null,
+    parent?:  {
+      __typename: "Menu",
+      id: string,
+      name: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    children?:  {
+      __typename: "ModelMenuConnection",
+      nextToken?: string | null,
+    } | null,
+    link?: string | null,
+    sortOrder: number,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListMenusQueryVariables = {
+  filter?: ModelMenuFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListMenusQuery = {
+  listMenus?:  {
+    __typename: "ModelMenuConnection",
+    items:  Array< {
+      __typename: "Menu",
+      id: string,
+      name: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type MenusByParentIdAndNameQueryVariables = {
+  parentId: string,
+  name?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelMenuFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type MenusByParentIdAndNameQuery = {
+  menusByParentIdAndName?:  {
+    __typename: "ModelMenuConnection",
+    items:  Array< {
+      __typename: "Menu",
+      id: string,
+      name: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2770,93 +2877,6 @@ export type OnDeleteMediaSubscription = {
   } | null,
 };
 
-export type OnCreateMenuSubscriptionVariables = {
-  filter?: ModelSubscriptionMenuFilterInput | null,
-};
-
-export type OnCreateMenuSubscription = {
-  onCreateMenu?:  {
-    __typename: "Menu",
-    id: string,
-    name: string,
-    parent?:  {
-      __typename: "Menu",
-      id: string,
-      name: string,
-      link: string,
-      createdAt: string,
-      updatedAt: string,
-      menuChildrenId?: string | null,
-    } | null,
-    children?:  {
-      __typename: "ModelMenuConnection",
-      nextToken?: string | null,
-    } | null,
-    link: string,
-    createdAt: string,
-    updatedAt: string,
-    menuChildrenId?: string | null,
-  } | null,
-};
-
-export type OnUpdateMenuSubscriptionVariables = {
-  filter?: ModelSubscriptionMenuFilterInput | null,
-};
-
-export type OnUpdateMenuSubscription = {
-  onUpdateMenu?:  {
-    __typename: "Menu",
-    id: string,
-    name: string,
-    parent?:  {
-      __typename: "Menu",
-      id: string,
-      name: string,
-      link: string,
-      createdAt: string,
-      updatedAt: string,
-      menuChildrenId?: string | null,
-    } | null,
-    children?:  {
-      __typename: "ModelMenuConnection",
-      nextToken?: string | null,
-    } | null,
-    link: string,
-    createdAt: string,
-    updatedAt: string,
-    menuChildrenId?: string | null,
-  } | null,
-};
-
-export type OnDeleteMenuSubscriptionVariables = {
-  filter?: ModelSubscriptionMenuFilterInput | null,
-};
-
-export type OnDeleteMenuSubscription = {
-  onDeleteMenu?:  {
-    __typename: "Menu",
-    id: string,
-    name: string,
-    parent?:  {
-      __typename: "Menu",
-      id: string,
-      name: string,
-      link: string,
-      createdAt: string,
-      updatedAt: string,
-      menuChildrenId?: string | null,
-    } | null,
-    children?:  {
-      __typename: "ModelMenuConnection",
-      nextToken?: string | null,
-    } | null,
-    link: string,
-    createdAt: string,
-    updatedAt: string,
-    menuChildrenId?: string | null,
-  } | null,
-};
-
 export type OnCreateArticleSubscriptionVariables = {
   filter?: ModelSubscriptionArticleFilterInput | null,
 };
@@ -3253,5 +3273,110 @@ export type OnDeletePostTagsSubscription = {
     createdAt: string,
     updatedAt: string,
     authorId?: string | null,
+  } | null,
+};
+
+export type OnCreateMenuSubscriptionVariables = {
+  filter?: ModelSubscriptionMenuFilterInput | null,
+};
+
+export type OnCreateMenuSubscription = {
+  onCreateMenu?:  {
+    __typename: "Menu",
+    id: string,
+    name: string,
+    module?: string | null,
+    moduleId?: string | null,
+    parentId?: string | null,
+    parent?:  {
+      __typename: "Menu",
+      id: string,
+      name: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    children?:  {
+      __typename: "ModelMenuConnection",
+      nextToken?: string | null,
+    } | null,
+    link?: string | null,
+    sortOrder: number,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateMenuSubscriptionVariables = {
+  filter?: ModelSubscriptionMenuFilterInput | null,
+};
+
+export type OnUpdateMenuSubscription = {
+  onUpdateMenu?:  {
+    __typename: "Menu",
+    id: string,
+    name: string,
+    module?: string | null,
+    moduleId?: string | null,
+    parentId?: string | null,
+    parent?:  {
+      __typename: "Menu",
+      id: string,
+      name: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    children?:  {
+      __typename: "ModelMenuConnection",
+      nextToken?: string | null,
+    } | null,
+    link?: string | null,
+    sortOrder: number,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteMenuSubscriptionVariables = {
+  filter?: ModelSubscriptionMenuFilterInput | null,
+};
+
+export type OnDeleteMenuSubscription = {
+  onDeleteMenu?:  {
+    __typename: "Menu",
+    id: string,
+    name: string,
+    module?: string | null,
+    moduleId?: string | null,
+    parentId?: string | null,
+    parent?:  {
+      __typename: "Menu",
+      id: string,
+      name: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    children?:  {
+      __typename: "ModelMenuConnection",
+      nextToken?: string | null,
+    } | null,
+    link?: string | null,
+    sortOrder: number,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };

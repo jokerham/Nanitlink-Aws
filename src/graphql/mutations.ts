@@ -435,13 +435,19 @@ export const createMenu = /* GraphQL */ `mutation CreateMenu(
   createMenu(input: $input, condition: $condition) {
     id
     name
+    module
+    moduleId
+    parentId
     parent {
       id
       name
+      module
+      moduleId
+      parentId
       link
+      sortOrder
       createdAt
       updatedAt
-      menuChildrenId
       __typename
     }
     children {
@@ -449,9 +455,9 @@ export const createMenu = /* GraphQL */ `mutation CreateMenu(
       __typename
     }
     link
+    sortOrder
     createdAt
     updatedAt
-    menuChildrenId
     __typename
   }
 }
@@ -466,13 +472,19 @@ export const updateMenu = /* GraphQL */ `mutation UpdateMenu(
   updateMenu(input: $input, condition: $condition) {
     id
     name
+    module
+    moduleId
+    parentId
     parent {
       id
       name
+      module
+      moduleId
+      parentId
       link
+      sortOrder
       createdAt
       updatedAt
-      menuChildrenId
       __typename
     }
     children {
@@ -480,9 +492,9 @@ export const updateMenu = /* GraphQL */ `mutation UpdateMenu(
       __typename
     }
     link
+    sortOrder
     createdAt
     updatedAt
-    menuChildrenId
     __typename
   }
 }
@@ -497,13 +509,19 @@ export const deleteMenu = /* GraphQL */ `mutation DeleteMenu(
   deleteMenu(input: $input, condition: $condition) {
     id
     name
+    module
+    moduleId
+    parentId
     parent {
       id
       name
+      module
+      moduleId
+      parentId
       link
+      sortOrder
       createdAt
       updatedAt
-      menuChildrenId
       __typename
     }
     children {
@@ -511,9 +529,9 @@ export const deleteMenu = /* GraphQL */ `mutation DeleteMenu(
       __typename
     }
     link
+    sortOrder
     createdAt
     updatedAt
-    menuChildrenId
     __typename
   }
 }

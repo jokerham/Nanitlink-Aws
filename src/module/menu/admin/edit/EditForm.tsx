@@ -6,7 +6,7 @@ import { RowBox } from 'component/customMui';
 import { ContainedButton, ContainedGrayButton } from './Components';
 import { useRef } from 'react';
 
-interface IEditFormProps {
+export interface IEditFormProps {
   node: IMenu,
   onClose: () => void,
   onSubmitHandler: (values: FormikValues) => void,
@@ -16,12 +16,13 @@ const EditForm = ({ node, onClose, onSubmitHandler }: IEditFormProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   
   const initialValues = {
+    id: node.id,
     name: node.name,
     moduleId: node.moduleId,
   }
 
   const formBuilderProps: IFormBuilderProps = {
-    variant: EVariant.Default,
+    variant: EVariant.SmallSize,
     formikConfig: {
       initialValues: initialValues,
       onSubmit: onSubmitHandler,
@@ -30,6 +31,7 @@ const EditForm = ({ node, onClose, onSubmitHandler }: IEditFormProps) => {
       {
         seq: 0,
         fields: [
+          { name: 'id', label: 'ID', type: EFieldType.Hidden, },
           { name: 'name', label: 'Name', type: EFieldType.TextField, },
           { name: 'moduleId', label: 'Module Id', type: EFieldType.TextField, },
         ]

@@ -50,13 +50,13 @@ const Menu = ({
     <Tab
       title={node.name}
       titleIcon={<FiExternalLink/>}
-      titleIconHref={node.navigateTo}
+      titleIconHref={node.link}
       onClose={onClose}
       contentComponent={
         <Fragment>
           <Box>
             <BaseTypography>
-              <b>Menu Type:</b> Board
+              <b>Menu Type:</b> {node.module}
             </BaseTypography>
           </Box>
           <Divider />

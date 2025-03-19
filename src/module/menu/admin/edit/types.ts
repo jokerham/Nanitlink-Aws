@@ -12,7 +12,7 @@ export interface IMenu {
   active?: boolean,
   module?: string;
   moduleId?: string;
-  navigateTo?: string,
+  link?: string,
 };
 
 interface NodeAdditionalProps {
@@ -22,7 +22,7 @@ interface NodeAdditionalProps {
 export interface IMenuProps {
   node: IMenu,
   onEditNode: TNodeFunction,
-  onAddMenu: TGeneralFunction,
+  onAddMenu: TNodeFunction,
   onCut: TNodeFunction,
   onCopy: TNodeFunction,
   onPaste: TNodeFunction,
