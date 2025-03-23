@@ -1,8 +1,8 @@
-import { AppBar, Box, Button, Container, Toolbar, Typography, Link } from "@mui/material";
+import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FaSignInAlt, FaUser } from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import SignInDialog from "component/dialog/signInDialog";
 import Authorized, { useUser } from "component/amplify/Authorized";
 import SignInUserMenu from "component/popover/signInUserMenu";
@@ -78,7 +78,7 @@ const Header = () => {
     <AppBar position="static">
       <Container>
         <Toolbar>
-          <Button component={Link} href="/">
+          <Button component={Link} to="/">
             <Typography variant="h3">Nanitelink</Typography>
           </Button>
           {menu.map((item, index) => {
