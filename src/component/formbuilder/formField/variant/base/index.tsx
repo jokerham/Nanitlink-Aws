@@ -6,6 +6,7 @@ import { FormPassword } from "./FormPassword";
 import { FormTextArea } from "./FormTextArea";
 import { FormRadio } from "./FormRadio";
 import { FormFile } from "../base/formFile";
+import { FormCustomField } from "./FormCustom";
 
 export const Base = (props: TFieldSetting) => {
   switch (props.type) {
@@ -23,6 +24,8 @@ export const Base = (props: TFieldSetting) => {
       return <FormTextField {...props}/>
     case EFieldType.Select:
       return <FormSelect {...props}/>
+    case EFieldType.Custom:
+      return <FormCustomField {...props}/>
     default:
       return <></>;
   }
