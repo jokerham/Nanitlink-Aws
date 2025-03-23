@@ -6,7 +6,7 @@ input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONL
 type Board
   @model 
   @auth(rules: [
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete] }, # Only Admins can mutate
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] }, # Only Admins can mutate
     { allow: public, operations: [read] } # Everyone can read (guests included)
   ]) {
   id: ID!
@@ -18,14 +18,15 @@ type Board
 type Post 
   @model 
   @auth(rules: [
-    { allow: owner, ownerField: "authorId", operations: [create, update, delete] },
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: owner, ownerField: "authorId", operations: [read, create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
     { allow: public, operations: [read] }
   ]) {
   id: ID!
   title: String!
   content: String!
-  board: Board @belongsTo
+  article: Article @hasOne
+  board: Board @hasOne
   authorId: String!
   comments: [Comment] @hasMany
   attachments: [Media] @hasMany
@@ -48,8 +49,8 @@ enum PostType {
 type Comment 
   @model 
   @auth(rules: [
-    { allow: owner, ownerField: "authorId", operations: [create, update, delete] },
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete] }, 
+    { allow: owner, ownerField: "authorId", operations: [read, create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] }, 
     { allow: public, operations: [read] }
   ]) {
   id: ID!
@@ -62,8 +63,8 @@ type Comment
 type Media
   @model 
   @auth(rules: [
-    { allow: owner, ownerField: "authorId", operations: [create, update, delete] },
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: owner, ownerField: "authorId", operations: [read, create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
     { allow: public, operations: [read] }
   ]) {
   id: ID!
@@ -93,7 +94,7 @@ type Menu
 type Article
   @model 
   @auth(rules: [
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
     { allow: public, operations: [read] }
   ]) {
   id: ID!
@@ -104,7 +105,7 @@ type Article
 type Category
   @model 
   @auth(rules: [
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
     { allow: public, operations: [read] }
   ]) {
   id: ID!
@@ -115,8 +116,8 @@ type Category
 type Tag
   @model 
   @auth(rules: [
-    { allow: owner, ownerField: "authorId", operations: [create, update, delete] },
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: owner, ownerField: "authorId", operations: [read, create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
     { allow: public, operations: [read] }
   ]) {
   id: ID!
@@ -127,7 +128,7 @@ type Tag
 type SiteSetting
   @model 
   @auth(rules: [
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
     { allow: public, operations: [read] }
   ]) {
   key: ID!
@@ -137,7 +138,7 @@ type SiteSetting
 type ActivityLog
   @model 
   @auth(rules: [
-    { allow: owner, ownerField: "userId", operations: [create, update, delete] },
+    { allow: owner, ownerField: "userId", operations: [read, create, update, delete] },
     { allow: public, operations: [read] }
   ]) {
   id: ID!
