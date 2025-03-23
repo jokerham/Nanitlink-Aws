@@ -28,7 +28,7 @@ const App: React.FC = () => {
               />
               <Route
                 key={module.name}
-                path={`${module.name}/:action`}
+                path={`${module.name}/:id`}
                 element={
                   <Suspense fallback={<div>Loading...</div>}>
                     {React.createElement(loadModule(module.name))}
