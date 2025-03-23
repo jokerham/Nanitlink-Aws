@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Tree from "./Tree";
-import AddForm, { IAddFormProps } from "./AddForm";
-import EditForm, { IEditFormProps } from "./EditForm";
+import AddForm from "./AddForm";
+import EditForm from "./EditForm";
 import Menu from "./Menu";
 import { Box } from "@mui/material";
 import { IMenu } from "./types";
@@ -140,6 +140,17 @@ const Edit: React.FC = () => {
         link: values.link,
       }
       await gqAddMenu(input);
+      /**
+       * 1) based on module, 
+       * 2) find the module folder where the folder is /module/{moduleName}
+       * 3) import defaultCreate.ts (if not imported)
+       * 4) call and await createDefault
+       */
+      if (values.module) {
+        const { createDefault } = await import(`module/${values.module.toLowerCase()}/defaultCreate`);
+        await createDefault({id: values.moduleId, name: values.name});
+      }
+
       setState(EState.default);
       setRefreshKey((prev) => prev + 1);
     }
