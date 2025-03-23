@@ -79,6 +79,14 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     id
     title
     content
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
     board {
       id
       name
@@ -106,6 +114,8 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     updatedAt
     boardPostsId
     categoryPostsId
+    postArticleId
+    postBoardId
     __typename
   }
 }
@@ -121,6 +131,14 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     id
     title
     content
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
     board {
       id
       name
@@ -148,6 +166,8 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     updatedAt
     boardPostsId
     categoryPostsId
+    postArticleId
+    postBoardId
     __typename
   }
 }
@@ -163,6 +183,14 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
     id
     title
     content
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
     board {
       id
       name
@@ -190,6 +218,8 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
     updatedAt
     boardPostsId
     categoryPostsId
+    postArticleId
+    postBoardId
     __typename
   }
 }
@@ -214,6 +244,8 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     authorId
@@ -249,6 +281,8 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     authorId
@@ -284,6 +318,8 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     authorId
@@ -321,6 +357,8 @@ export const createMedia = /* GraphQL */ `mutation CreateMedia(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     comment {
@@ -363,6 +401,8 @@ export const updateMedia = /* GraphQL */ `mutation UpdateMedia(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     comment {
@@ -405,6 +445,8 @@ export const deleteMedia = /* GraphQL */ `mutation DeleteMedia(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     comment {
@@ -557,6 +599,8 @@ export const createArticle = /* GraphQL */ `mutation CreateArticle(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     createdAt
@@ -587,6 +631,8 @@ export const updateArticle = /* GraphQL */ `mutation UpdateArticle(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     createdAt
@@ -617,6 +663,8 @@ export const deleteArticle = /* GraphQL */ `mutation DeleteArticle(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     createdAt
@@ -876,6 +924,8 @@ export const createPostTags = /* GraphQL */ `mutation CreatePostTags(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     tag {
@@ -915,6 +965,8 @@ export const updatePostTags = /* GraphQL */ `mutation UpdatePostTags(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     tag {
@@ -954,6 +1006,8 @@ export const deletePostTags = /* GraphQL */ `mutation DeletePostTags(
       updatedAt
       boardPostsId
       categoryPostsId
+      postArticleId
+      postBoardId
       __typename
     }
     tag {
