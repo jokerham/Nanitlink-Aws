@@ -79,6 +79,7 @@ export type Post = {
   id: string,
   title: string,
   content: string,
+  article?: Article | null,
   board?: Board | null,
   authorId: string,
   comments?: ModelCommentConnection | null,
@@ -90,6 +91,18 @@ export type Post = {
   updatedAt: string,
   boardPostsId?: string | null,
   categoryPostsId?: string | null,
+  postArticleId?: string | null,
+  postBoardId?: string | null,
+};
+
+export type Article = {
+  __typename: "Article",
+  id: string,
+  name: string,
+  post?: Post | null,
+  createdAt: string,
+  updatedAt: string,
+  articlePostId?: string | null,
 };
 
 export type ModelCommentConnection = {
@@ -190,6 +203,8 @@ export type CreatePostInput = {
   postType: PostType,
   boardPostsId?: string | null,
   categoryPostsId?: string | null,
+  postArticleId?: string | null,
+  postBoardId?: string | null,
 };
 
 export type ModelPostConditionInput = {
@@ -205,6 +220,8 @@ export type ModelPostConditionInput = {
   updatedAt?: ModelStringInput | null,
   boardPostsId?: ModelIDInput | null,
   categoryPostsId?: ModelIDInput | null,
+  postArticleId?: ModelIDInput | null,
+  postBoardId?: ModelIDInput | null,
 };
 
 export type ModelPostStatusInput = {
@@ -242,6 +259,8 @@ export type UpdatePostInput = {
   postType?: PostType | null,
   boardPostsId?: string | null,
   categoryPostsId?: string | null,
+  postArticleId?: string | null,
+  postBoardId?: string | null,
 };
 
 export type DeletePostInput = {
@@ -395,16 +414,6 @@ export type ModelArticleConditionInput = {
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   articlePostId?: ModelIDInput | null,
-};
-
-export type Article = {
-  __typename: "Article",
-  id: string,
-  name: string,
-  post?: Post | null,
-  createdAt: string,
-  updatedAt: string,
-  articlePostId?: string | null,
 };
 
 export type UpdateArticleInput = {
@@ -605,6 +614,8 @@ export type ModelPostFilterInput = {
   not?: ModelPostFilterInput | null,
   boardPostsId?: ModelIDInput | null,
   categoryPostsId?: ModelIDInput | null,
+  postArticleId?: ModelIDInput | null,
+  postBoardId?: ModelIDInput | null,
 };
 
 export type ModelCommentFilterInput = {
@@ -632,6 +643,37 @@ export type ModelMediaFilterInput = {
   commentAttachmentsId?: ModelIDInput | null,
   authorId?: ModelStringInput | null,
 };
+
+export type ModelMenuFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  module?: ModelStringInput | null,
+  moduleId?: ModelStringInput | null,
+  parentId?: ModelIDInput | null,
+  link?: ModelStringInput | null,
+  sortOrder?: ModelIntInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelMenuFilterInput | null > | null,
+  or?: Array< ModelMenuFilterInput | null > | null,
+  not?: ModelMenuFilterInput | null,
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelArticleFilterInput = {
   id?: ModelIDInput | null,
@@ -730,37 +772,6 @@ export type ModelPostTagsFilterInput = {
   authorId?: ModelStringInput | null,
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-
-export type ModelMenuFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  module?: ModelStringInput | null,
-  moduleId?: ModelStringInput | null,
-  parentId?: ModelIDInput | null,
-  link?: ModelStringInput | null,
-  sortOrder?: ModelIntInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelMenuFilterInput | null > | null,
-  or?: Array< ModelMenuFilterInput | null > | null,
-  not?: ModelMenuFilterInput | null,
-};
-
-export type ModelStringKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-};
-
 export type ModelSubscriptionBoardFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -814,6 +825,8 @@ export type ModelSubscriptionPostFilterInput = {
   or?: Array< ModelSubscriptionPostFilterInput | null > | null,
   postCommentsId?: ModelSubscriptionIDInput | null,
   postAttachmentsId?: ModelSubscriptionIDInput | null,
+  postArticleId?: ModelSubscriptionIDInput | null,
+  postBoardId?: ModelSubscriptionIDInput | null,
   authorId?: ModelStringInput | null,
 };
 
@@ -837,6 +850,32 @@ export type ModelSubscriptionMediaFilterInput = {
   and?: Array< ModelSubscriptionMediaFilterInput | null > | null,
   or?: Array< ModelSubscriptionMediaFilterInput | null > | null,
   authorId?: ModelStringInput | null,
+};
+
+export type ModelSubscriptionMenuFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  module?: ModelSubscriptionStringInput | null,
+  moduleId?: ModelSubscriptionStringInput | null,
+  parentId?: ModelSubscriptionIDInput | null,
+  link?: ModelSubscriptionStringInput | null,
+  sortOrder?: ModelSubscriptionIntInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionMenuFilterInput | null > | null,
+  or?: Array< ModelSubscriptionMenuFilterInput | null > | null,
+};
+
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
 };
 
 export type ModelSubscriptionArticleFilterInput = {
@@ -899,32 +938,6 @@ export type ModelSubscriptionPostTagsFilterInput = {
   and?: Array< ModelSubscriptionPostTagsFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostTagsFilterInput | null > | null,
   authorId?: ModelStringInput | null,
-};
-
-export type ModelSubscriptionMenuFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  module?: ModelSubscriptionStringInput | null,
-  moduleId?: ModelSubscriptionStringInput | null,
-  parentId?: ModelSubscriptionIDInput | null,
-  link?: ModelSubscriptionStringInput | null,
-  sortOrder?: ModelSubscriptionIntInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionMenuFilterInput | null > | null,
-  or?: Array< ModelSubscriptionMenuFilterInput | null > | null,
-};
-
-export type ModelSubscriptionIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
 };
 
 export type CreateBoardMutationVariables = {
@@ -998,6 +1011,14 @@ export type CreatePostMutation = {
     id: string,
     title: string,
     content: string,
+    article?:  {
+      __typename: "Article",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      articlePostId?: string | null,
+    } | null,
     board?:  {
       __typename: "Board",
       id: string,
@@ -1025,6 +1046,8 @@ export type CreatePostMutation = {
     updatedAt: string,
     boardPostsId?: string | null,
     categoryPostsId?: string | null,
+    postArticleId?: string | null,
+    postBoardId?: string | null,
   } | null,
 };
 
@@ -1039,6 +1062,14 @@ export type UpdatePostMutation = {
     id: string,
     title: string,
     content: string,
+    article?:  {
+      __typename: "Article",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      articlePostId?: string | null,
+    } | null,
     board?:  {
       __typename: "Board",
       id: string,
@@ -1066,6 +1097,8 @@ export type UpdatePostMutation = {
     updatedAt: string,
     boardPostsId?: string | null,
     categoryPostsId?: string | null,
+    postArticleId?: string | null,
+    postBoardId?: string | null,
   } | null,
 };
 
@@ -1080,6 +1113,14 @@ export type DeletePostMutation = {
     id: string,
     title: string,
     content: string,
+    article?:  {
+      __typename: "Article",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      articlePostId?: string | null,
+    } | null,
     board?:  {
       __typename: "Board",
       id: string,
@@ -1107,6 +1148,8 @@ export type DeletePostMutation = {
     updatedAt: string,
     boardPostsId?: string | null,
     categoryPostsId?: string | null,
+    postArticleId?: string | null,
+    postBoardId?: string | null,
   } | null,
 };
 
@@ -1131,6 +1174,8 @@ export type CreateCommentMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     authorId: string,
     content: string,
@@ -1165,6 +1210,8 @@ export type UpdateCommentMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     authorId: string,
     content: string,
@@ -1199,6 +1246,8 @@ export type DeleteCommentMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     authorId: string,
     content: string,
@@ -1235,6 +1284,8 @@ export type CreateMediaMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     comment?:  {
       __typename: "Comment",
@@ -1276,6 +1327,8 @@ export type UpdateMediaMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     comment?:  {
       __typename: "Comment",
@@ -1317,6 +1370,8 @@ export type DeleteMediaMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     comment?:  {
       __typename: "Comment",
@@ -1465,6 +1520,8 @@ export type CreateArticleMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1494,6 +1551,8 @@ export type UpdateArticleMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1523,6 +1582,8 @@ export type DeleteArticleMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1769,6 +1830,8 @@ export type CreatePostTagsMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     },
     tag:  {
       __typename: "Tag",
@@ -1807,6 +1870,8 @@ export type UpdatePostTagsMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     },
     tag:  {
       __typename: "Tag",
@@ -1845,6 +1910,8 @@ export type DeletePostTagsMutation = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     },
     tag:  {
       __typename: "Tag",
@@ -1910,6 +1977,14 @@ export type GetPostQuery = {
     id: string,
     title: string,
     content: string,
+    article?:  {
+      __typename: "Article",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      articlePostId?: string | null,
+    } | null,
     board?:  {
       __typename: "Board",
       id: string,
@@ -1937,6 +2012,8 @@ export type GetPostQuery = {
     updatedAt: string,
     boardPostsId?: string | null,
     categoryPostsId?: string | null,
+    postArticleId?: string | null,
+    postBoardId?: string | null,
   } | null,
 };
 
@@ -1961,6 +2038,8 @@ export type ListPostsQuery = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1986,6 +2065,8 @@ export type GetCommentQuery = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     authorId: string,
     content: string,
@@ -2043,6 +2124,8 @@ export type GetMediaQuery = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     comment?:  {
       __typename: "Comment",
@@ -2085,6 +2168,94 @@ export type ListMediaQuery = {
   } | null,
 };
 
+export type GetMenuQueryVariables = {
+  id: string,
+};
+
+export type GetMenuQuery = {
+  getMenu?:  {
+    __typename: "Menu",
+    id: string,
+    name: string,
+    module?: string | null,
+    moduleId?: string | null,
+    parentId?: string | null,
+    parent?:  {
+      __typename: "Menu",
+      id: string,
+      name: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    children?:  {
+      __typename: "ModelMenuConnection",
+      nextToken?: string | null,
+    } | null,
+    link?: string | null,
+    sortOrder: number,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListMenusQueryVariables = {
+  filter?: ModelMenuFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListMenusQuery = {
+  listMenus?:  {
+    __typename: "ModelMenuConnection",
+    items:  Array< {
+      __typename: "Menu",
+      id: string,
+      name: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type MenusByParentIdAndNameQueryVariables = {
+  parentId: string,
+  name?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelMenuFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type MenusByParentIdAndNameQuery = {
+  menusByParentIdAndName?:  {
+    __typename: "ModelMenuConnection",
+    items:  Array< {
+      __typename: "Menu",
+      id: string,
+      name: string,
+      module?: string | null,
+      moduleId?: string | null,
+      parentId?: string | null,
+      link?: string | null,
+      sortOrder: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetArticleQueryVariables = {
   id: string,
 };
@@ -2106,6 +2277,8 @@ export type GetArticleQuery = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2308,6 +2481,8 @@ export type GetPostTagsQuery = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     },
     tag:  {
       __typename: "Tag",
@@ -2393,94 +2568,6 @@ export type PostTagsByTagIdQuery = {
   } | null,
 };
 
-export type GetMenuQueryVariables = {
-  id: string,
-};
-
-export type GetMenuQuery = {
-  getMenu?:  {
-    __typename: "Menu",
-    id: string,
-    name: string,
-    module?: string | null,
-    moduleId?: string | null,
-    parentId?: string | null,
-    parent?:  {
-      __typename: "Menu",
-      id: string,
-      name: string,
-      module?: string | null,
-      moduleId?: string | null,
-      parentId?: string | null,
-      link?: string | null,
-      sortOrder: number,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    children?:  {
-      __typename: "ModelMenuConnection",
-      nextToken?: string | null,
-    } | null,
-    link?: string | null,
-    sortOrder: number,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListMenusQueryVariables = {
-  filter?: ModelMenuFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListMenusQuery = {
-  listMenus?:  {
-    __typename: "ModelMenuConnection",
-    items:  Array< {
-      __typename: "Menu",
-      id: string,
-      name: string,
-      module?: string | null,
-      moduleId?: string | null,
-      parentId?: string | null,
-      link?: string | null,
-      sortOrder: number,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type MenusByParentIdAndNameQueryVariables = {
-  parentId: string,
-  name?: ModelStringKeyConditionInput | null,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelMenuFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type MenusByParentIdAndNameQuery = {
-  menusByParentIdAndName?:  {
-    __typename: "ModelMenuConnection",
-    items:  Array< {
-      __typename: "Menu",
-      id: string,
-      name: string,
-      module?: string | null,
-      moduleId?: string | null,
-      parentId?: string | null,
-      link?: string | null,
-      sortOrder: number,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type OnCreateBoardSubscriptionVariables = {
   filter?: ModelSubscriptionBoardFilterInput | null,
 };
@@ -2540,6 +2627,7 @@ export type OnDeleteBoardSubscription = {
 
 export type OnCreatePostSubscriptionVariables = {
   filter?: ModelSubscriptionPostFilterInput | null,
+  authorId?: string | null,
 };
 
 export type OnCreatePostSubscription = {
@@ -2548,6 +2636,14 @@ export type OnCreatePostSubscription = {
     id: string,
     title: string,
     content: string,
+    article?:  {
+      __typename: "Article",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      articlePostId?: string | null,
+    } | null,
     board?:  {
       __typename: "Board",
       id: string,
@@ -2575,11 +2671,14 @@ export type OnCreatePostSubscription = {
     updatedAt: string,
     boardPostsId?: string | null,
     categoryPostsId?: string | null,
+    postArticleId?: string | null,
+    postBoardId?: string | null,
   } | null,
 };
 
 export type OnUpdatePostSubscriptionVariables = {
   filter?: ModelSubscriptionPostFilterInput | null,
+  authorId?: string | null,
 };
 
 export type OnUpdatePostSubscription = {
@@ -2588,6 +2687,14 @@ export type OnUpdatePostSubscription = {
     id: string,
     title: string,
     content: string,
+    article?:  {
+      __typename: "Article",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      articlePostId?: string | null,
+    } | null,
     board?:  {
       __typename: "Board",
       id: string,
@@ -2615,11 +2722,14 @@ export type OnUpdatePostSubscription = {
     updatedAt: string,
     boardPostsId?: string | null,
     categoryPostsId?: string | null,
+    postArticleId?: string | null,
+    postBoardId?: string | null,
   } | null,
 };
 
 export type OnDeletePostSubscriptionVariables = {
   filter?: ModelSubscriptionPostFilterInput | null,
+  authorId?: string | null,
 };
 
 export type OnDeletePostSubscription = {
@@ -2628,6 +2738,14 @@ export type OnDeletePostSubscription = {
     id: string,
     title: string,
     content: string,
+    article?:  {
+      __typename: "Article",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      articlePostId?: string | null,
+    } | null,
     board?:  {
       __typename: "Board",
       id: string,
@@ -2655,11 +2773,14 @@ export type OnDeletePostSubscription = {
     updatedAt: string,
     boardPostsId?: string | null,
     categoryPostsId?: string | null,
+    postArticleId?: string | null,
+    postBoardId?: string | null,
   } | null,
 };
 
 export type OnCreateCommentSubscriptionVariables = {
   filter?: ModelSubscriptionCommentFilterInput | null,
+  authorId?: string | null,
 };
 
 export type OnCreateCommentSubscription = {
@@ -2678,6 +2799,8 @@ export type OnCreateCommentSubscription = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     authorId: string,
     content: string,
@@ -2693,6 +2816,7 @@ export type OnCreateCommentSubscription = {
 
 export type OnUpdateCommentSubscriptionVariables = {
   filter?: ModelSubscriptionCommentFilterInput | null,
+  authorId?: string | null,
 };
 
 export type OnUpdateCommentSubscription = {
@@ -2711,6 +2835,8 @@ export type OnUpdateCommentSubscription = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     authorId: string,
     content: string,
@@ -2726,6 +2852,7 @@ export type OnUpdateCommentSubscription = {
 
 export type OnDeleteCommentSubscriptionVariables = {
   filter?: ModelSubscriptionCommentFilterInput | null,
+  authorId?: string | null,
 };
 
 export type OnDeleteCommentSubscription = {
@@ -2744,6 +2871,8 @@ export type OnDeleteCommentSubscription = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     authorId: string,
     content: string,
@@ -2759,6 +2888,7 @@ export type OnDeleteCommentSubscription = {
 
 export type OnCreateMediaSubscriptionVariables = {
   filter?: ModelSubscriptionMediaFilterInput | null,
+  authorId?: string | null,
 };
 
 export type OnCreateMediaSubscription = {
@@ -2779,6 +2909,8 @@ export type OnCreateMediaSubscription = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     comment?:  {
       __typename: "Comment",
@@ -2799,6 +2931,7 @@ export type OnCreateMediaSubscription = {
 
 export type OnUpdateMediaSubscriptionVariables = {
   filter?: ModelSubscriptionMediaFilterInput | null,
+  authorId?: string | null,
 };
 
 export type OnUpdateMediaSubscription = {
@@ -2819,6 +2952,8 @@ export type OnUpdateMediaSubscription = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     comment?:  {
       __typename: "Comment",
@@ -2839,6 +2974,7 @@ export type OnUpdateMediaSubscription = {
 
 export type OnDeleteMediaSubscriptionVariables = {
   filter?: ModelSubscriptionMediaFilterInput | null,
+  authorId?: string | null,
 };
 
 export type OnDeleteMediaSubscription = {
@@ -2859,6 +2995,8 @@ export type OnDeleteMediaSubscription = {
       updatedAt: string,
       boardPostsId?: string | null,
       categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
     } | null,
     comment?:  {
       __typename: "Comment",
@@ -2873,405 +3011,6 @@ export type OnDeleteMediaSubscription = {
     updatedAt: string,
     postAttachmentsId?: string | null,
     commentAttachmentsId?: string | null,
-    authorId?: string | null,
-  } | null,
-};
-
-export type OnCreateArticleSubscriptionVariables = {
-  filter?: ModelSubscriptionArticleFilterInput | null,
-};
-
-export type OnCreateArticleSubscription = {
-  onCreateArticle?:  {
-    __typename: "Article",
-    id: string,
-    name: string,
-    post?:  {
-      __typename: "Post",
-      id: string,
-      title: string,
-      content: string,
-      authorId: string,
-      status: PostStatus,
-      postType: PostType,
-      createdAt: string,
-      updatedAt: string,
-      boardPostsId?: string | null,
-      categoryPostsId?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    articlePostId?: string | null,
-  } | null,
-};
-
-export type OnUpdateArticleSubscriptionVariables = {
-  filter?: ModelSubscriptionArticleFilterInput | null,
-};
-
-export type OnUpdateArticleSubscription = {
-  onUpdateArticle?:  {
-    __typename: "Article",
-    id: string,
-    name: string,
-    post?:  {
-      __typename: "Post",
-      id: string,
-      title: string,
-      content: string,
-      authorId: string,
-      status: PostStatus,
-      postType: PostType,
-      createdAt: string,
-      updatedAt: string,
-      boardPostsId?: string | null,
-      categoryPostsId?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    articlePostId?: string | null,
-  } | null,
-};
-
-export type OnDeleteArticleSubscriptionVariables = {
-  filter?: ModelSubscriptionArticleFilterInput | null,
-};
-
-export type OnDeleteArticleSubscription = {
-  onDeleteArticle?:  {
-    __typename: "Article",
-    id: string,
-    name: string,
-    post?:  {
-      __typename: "Post",
-      id: string,
-      title: string,
-      content: string,
-      authorId: string,
-      status: PostStatus,
-      postType: PostType,
-      createdAt: string,
-      updatedAt: string,
-      boardPostsId?: string | null,
-      categoryPostsId?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    articlePostId?: string | null,
-  } | null,
-};
-
-export type OnCreateCategorySubscriptionVariables = {
-  filter?: ModelSubscriptionCategoryFilterInput | null,
-};
-
-export type OnCreateCategorySubscription = {
-  onCreateCategory?:  {
-    __typename: "Category",
-    id: string,
-    name: string,
-    posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateCategorySubscriptionVariables = {
-  filter?: ModelSubscriptionCategoryFilterInput | null,
-};
-
-export type OnUpdateCategorySubscription = {
-  onUpdateCategory?:  {
-    __typename: "Category",
-    id: string,
-    name: string,
-    posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteCategorySubscriptionVariables = {
-  filter?: ModelSubscriptionCategoryFilterInput | null,
-};
-
-export type OnDeleteCategorySubscription = {
-  onDeleteCategory?:  {
-    __typename: "Category",
-    id: string,
-    name: string,
-    posts?:  {
-      __typename: "ModelPostConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateTagSubscriptionVariables = {
-  filter?: ModelSubscriptionTagFilterInput | null,
-};
-
-export type OnCreateTagSubscription = {
-  onCreateTag?:  {
-    __typename: "Tag",
-    id: string,
-    name: string,
-    posts?:  {
-      __typename: "ModelPostTagsConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    authorId?: string | null,
-  } | null,
-};
-
-export type OnUpdateTagSubscriptionVariables = {
-  filter?: ModelSubscriptionTagFilterInput | null,
-};
-
-export type OnUpdateTagSubscription = {
-  onUpdateTag?:  {
-    __typename: "Tag",
-    id: string,
-    name: string,
-    posts?:  {
-      __typename: "ModelPostTagsConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    authorId?: string | null,
-  } | null,
-};
-
-export type OnDeleteTagSubscriptionVariables = {
-  filter?: ModelSubscriptionTagFilterInput | null,
-};
-
-export type OnDeleteTagSubscription = {
-  onDeleteTag?:  {
-    __typename: "Tag",
-    id: string,
-    name: string,
-    posts?:  {
-      __typename: "ModelPostTagsConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    authorId?: string | null,
-  } | null,
-};
-
-export type OnCreateSiteSettingSubscriptionVariables = {
-  filter?: ModelSubscriptionSiteSettingFilterInput | null,
-};
-
-export type OnCreateSiteSettingSubscription = {
-  onCreateSiteSetting?:  {
-    __typename: "SiteSetting",
-    key: string,
-    value: string,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateSiteSettingSubscriptionVariables = {
-  filter?: ModelSubscriptionSiteSettingFilterInput | null,
-};
-
-export type OnUpdateSiteSettingSubscription = {
-  onUpdateSiteSetting?:  {
-    __typename: "SiteSetting",
-    key: string,
-    value: string,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteSiteSettingSubscriptionVariables = {
-  filter?: ModelSubscriptionSiteSettingFilterInput | null,
-};
-
-export type OnDeleteSiteSettingSubscription = {
-  onDeleteSiteSetting?:  {
-    __typename: "SiteSetting",
-    key: string,
-    value: string,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateActivityLogSubscriptionVariables = {
-  filter?: ModelSubscriptionActivityLogFilterInput | null,
-};
-
-export type OnCreateActivityLogSubscription = {
-  onCreateActivityLog?:  {
-    __typename: "ActivityLog",
-    id: string,
-    userId: string,
-    action: string,
-    timestamp?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateActivityLogSubscriptionVariables = {
-  filter?: ModelSubscriptionActivityLogFilterInput | null,
-};
-
-export type OnUpdateActivityLogSubscription = {
-  onUpdateActivityLog?:  {
-    __typename: "ActivityLog",
-    id: string,
-    userId: string,
-    action: string,
-    timestamp?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteActivityLogSubscriptionVariables = {
-  filter?: ModelSubscriptionActivityLogFilterInput | null,
-};
-
-export type OnDeleteActivityLogSubscription = {
-  onDeleteActivityLog?:  {
-    __typename: "ActivityLog",
-    id: string,
-    userId: string,
-    action: string,
-    timestamp?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreatePostTagsSubscriptionVariables = {
-  filter?: ModelSubscriptionPostTagsFilterInput | null,
-};
-
-export type OnCreatePostTagsSubscription = {
-  onCreatePostTags?:  {
-    __typename: "PostTags",
-    id: string,
-    postId: string,
-    tagId: string,
-    post:  {
-      __typename: "Post",
-      id: string,
-      title: string,
-      content: string,
-      authorId: string,
-      status: PostStatus,
-      postType: PostType,
-      createdAt: string,
-      updatedAt: string,
-      boardPostsId?: string | null,
-      categoryPostsId?: string | null,
-    },
-    tag:  {
-      __typename: "Tag",
-      id: string,
-      name: string,
-      createdAt: string,
-      updatedAt: string,
-      authorId?: string | null,
-    },
-    createdAt: string,
-    updatedAt: string,
-    authorId?: string | null,
-  } | null,
-};
-
-export type OnUpdatePostTagsSubscriptionVariables = {
-  filter?: ModelSubscriptionPostTagsFilterInput | null,
-};
-
-export type OnUpdatePostTagsSubscription = {
-  onUpdatePostTags?:  {
-    __typename: "PostTags",
-    id: string,
-    postId: string,
-    tagId: string,
-    post:  {
-      __typename: "Post",
-      id: string,
-      title: string,
-      content: string,
-      authorId: string,
-      status: PostStatus,
-      postType: PostType,
-      createdAt: string,
-      updatedAt: string,
-      boardPostsId?: string | null,
-      categoryPostsId?: string | null,
-    },
-    tag:  {
-      __typename: "Tag",
-      id: string,
-      name: string,
-      createdAt: string,
-      updatedAt: string,
-      authorId?: string | null,
-    },
-    createdAt: string,
-    updatedAt: string,
-    authorId?: string | null,
-  } | null,
-};
-
-export type OnDeletePostTagsSubscriptionVariables = {
-  filter?: ModelSubscriptionPostTagsFilterInput | null,
-};
-
-export type OnDeletePostTagsSubscription = {
-  onDeletePostTags?:  {
-    __typename: "PostTags",
-    id: string,
-    postId: string,
-    tagId: string,
-    post:  {
-      __typename: "Post",
-      id: string,
-      title: string,
-      content: string,
-      authorId: string,
-      status: PostStatus,
-      postType: PostType,
-      createdAt: string,
-      updatedAt: string,
-      boardPostsId?: string | null,
-      categoryPostsId?: string | null,
-    },
-    tag:  {
-      __typename: "Tag",
-      id: string,
-      name: string,
-      createdAt: string,
-      updatedAt: string,
-      authorId?: string | null,
-    },
-    createdAt: string,
-    updatedAt: string,
     authorId?: string | null,
   } | null,
 };
@@ -3378,5 +3117,425 @@ export type OnDeleteMenuSubscription = {
     sortOrder: number,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type OnCreateArticleSubscriptionVariables = {
+  filter?: ModelSubscriptionArticleFilterInput | null,
+};
+
+export type OnCreateArticleSubscription = {
+  onCreateArticle?:  {
+    __typename: "Article",
+    id: string,
+    name: string,
+    post?:  {
+      __typename: "Post",
+      id: string,
+      title: string,
+      content: string,
+      authorId: string,
+      status: PostStatus,
+      postType: PostType,
+      createdAt: string,
+      updatedAt: string,
+      boardPostsId?: string | null,
+      categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    articlePostId?: string | null,
+  } | null,
+};
+
+export type OnUpdateArticleSubscriptionVariables = {
+  filter?: ModelSubscriptionArticleFilterInput | null,
+};
+
+export type OnUpdateArticleSubscription = {
+  onUpdateArticle?:  {
+    __typename: "Article",
+    id: string,
+    name: string,
+    post?:  {
+      __typename: "Post",
+      id: string,
+      title: string,
+      content: string,
+      authorId: string,
+      status: PostStatus,
+      postType: PostType,
+      createdAt: string,
+      updatedAt: string,
+      boardPostsId?: string | null,
+      categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    articlePostId?: string | null,
+  } | null,
+};
+
+export type OnDeleteArticleSubscriptionVariables = {
+  filter?: ModelSubscriptionArticleFilterInput | null,
+};
+
+export type OnDeleteArticleSubscription = {
+  onDeleteArticle?:  {
+    __typename: "Article",
+    id: string,
+    name: string,
+    post?:  {
+      __typename: "Post",
+      id: string,
+      title: string,
+      content: string,
+      authorId: string,
+      status: PostStatus,
+      postType: PostType,
+      createdAt: string,
+      updatedAt: string,
+      boardPostsId?: string | null,
+      categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    articlePostId?: string | null,
+  } | null,
+};
+
+export type OnCreateCategorySubscriptionVariables = {
+  filter?: ModelSubscriptionCategoryFilterInput | null,
+};
+
+export type OnCreateCategorySubscription = {
+  onCreateCategory?:  {
+    __typename: "Category",
+    id: string,
+    name: string,
+    posts?:  {
+      __typename: "ModelPostConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCategorySubscriptionVariables = {
+  filter?: ModelSubscriptionCategoryFilterInput | null,
+};
+
+export type OnUpdateCategorySubscription = {
+  onUpdateCategory?:  {
+    __typename: "Category",
+    id: string,
+    name: string,
+    posts?:  {
+      __typename: "ModelPostConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCategorySubscriptionVariables = {
+  filter?: ModelSubscriptionCategoryFilterInput | null,
+};
+
+export type OnDeleteCategorySubscription = {
+  onDeleteCategory?:  {
+    __typename: "Category",
+    id: string,
+    name: string,
+    posts?:  {
+      __typename: "ModelPostConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateTagSubscriptionVariables = {
+  filter?: ModelSubscriptionTagFilterInput | null,
+  authorId?: string | null,
+};
+
+export type OnCreateTagSubscription = {
+  onCreateTag?:  {
+    __typename: "Tag",
+    id: string,
+    name: string,
+    posts?:  {
+      __typename: "ModelPostTagsConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorId?: string | null,
+  } | null,
+};
+
+export type OnUpdateTagSubscriptionVariables = {
+  filter?: ModelSubscriptionTagFilterInput | null,
+  authorId?: string | null,
+};
+
+export type OnUpdateTagSubscription = {
+  onUpdateTag?:  {
+    __typename: "Tag",
+    id: string,
+    name: string,
+    posts?:  {
+      __typename: "ModelPostTagsConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorId?: string | null,
+  } | null,
+};
+
+export type OnDeleteTagSubscriptionVariables = {
+  filter?: ModelSubscriptionTagFilterInput | null,
+  authorId?: string | null,
+};
+
+export type OnDeleteTagSubscription = {
+  onDeleteTag?:  {
+    __typename: "Tag",
+    id: string,
+    name: string,
+    posts?:  {
+      __typename: "ModelPostTagsConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    authorId?: string | null,
+  } | null,
+};
+
+export type OnCreateSiteSettingSubscriptionVariables = {
+  filter?: ModelSubscriptionSiteSettingFilterInput | null,
+};
+
+export type OnCreateSiteSettingSubscription = {
+  onCreateSiteSetting?:  {
+    __typename: "SiteSetting",
+    key: string,
+    value: string,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateSiteSettingSubscriptionVariables = {
+  filter?: ModelSubscriptionSiteSettingFilterInput | null,
+};
+
+export type OnUpdateSiteSettingSubscription = {
+  onUpdateSiteSetting?:  {
+    __typename: "SiteSetting",
+    key: string,
+    value: string,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteSiteSettingSubscriptionVariables = {
+  filter?: ModelSubscriptionSiteSettingFilterInput | null,
+};
+
+export type OnDeleteSiteSettingSubscription = {
+  onDeleteSiteSetting?:  {
+    __typename: "SiteSetting",
+    key: string,
+    value: string,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateActivityLogSubscriptionVariables = {
+  filter?: ModelSubscriptionActivityLogFilterInput | null,
+  userId?: string | null,
+};
+
+export type OnCreateActivityLogSubscription = {
+  onCreateActivityLog?:  {
+    __typename: "ActivityLog",
+    id: string,
+    userId: string,
+    action: string,
+    timestamp?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateActivityLogSubscriptionVariables = {
+  filter?: ModelSubscriptionActivityLogFilterInput | null,
+  userId?: string | null,
+};
+
+export type OnUpdateActivityLogSubscription = {
+  onUpdateActivityLog?:  {
+    __typename: "ActivityLog",
+    id: string,
+    userId: string,
+    action: string,
+    timestamp?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteActivityLogSubscriptionVariables = {
+  filter?: ModelSubscriptionActivityLogFilterInput | null,
+  userId?: string | null,
+};
+
+export type OnDeleteActivityLogSubscription = {
+  onDeleteActivityLog?:  {
+    __typename: "ActivityLog",
+    id: string,
+    userId: string,
+    action: string,
+    timestamp?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreatePostTagsSubscriptionVariables = {
+  filter?: ModelSubscriptionPostTagsFilterInput | null,
+  authorId?: string | null,
+};
+
+export type OnCreatePostTagsSubscription = {
+  onCreatePostTags?:  {
+    __typename: "PostTags",
+    id: string,
+    postId: string,
+    tagId: string,
+    post:  {
+      __typename: "Post",
+      id: string,
+      title: string,
+      content: string,
+      authorId: string,
+      status: PostStatus,
+      postType: PostType,
+      createdAt: string,
+      updatedAt: string,
+      boardPostsId?: string | null,
+      categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
+    },
+    tag:  {
+      __typename: "Tag",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      authorId?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+    authorId?: string | null,
+  } | null,
+};
+
+export type OnUpdatePostTagsSubscriptionVariables = {
+  filter?: ModelSubscriptionPostTagsFilterInput | null,
+  authorId?: string | null,
+};
+
+export type OnUpdatePostTagsSubscription = {
+  onUpdatePostTags?:  {
+    __typename: "PostTags",
+    id: string,
+    postId: string,
+    tagId: string,
+    post:  {
+      __typename: "Post",
+      id: string,
+      title: string,
+      content: string,
+      authorId: string,
+      status: PostStatus,
+      postType: PostType,
+      createdAt: string,
+      updatedAt: string,
+      boardPostsId?: string | null,
+      categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
+    },
+    tag:  {
+      __typename: "Tag",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      authorId?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+    authorId?: string | null,
+  } | null,
+};
+
+export type OnDeletePostTagsSubscriptionVariables = {
+  filter?: ModelSubscriptionPostTagsFilterInput | null,
+  authorId?: string | null,
+};
+
+export type OnDeletePostTagsSubscription = {
+  onDeletePostTags?:  {
+    __typename: "PostTags",
+    id: string,
+    postId: string,
+    tagId: string,
+    post:  {
+      __typename: "Post",
+      id: string,
+      title: string,
+      content: string,
+      authorId: string,
+      status: PostStatus,
+      postType: PostType,
+      createdAt: string,
+      updatedAt: string,
+      boardPostsId?: string | null,
+      categoryPostsId?: string | null,
+      postArticleId?: string | null,
+      postBoardId?: string | null,
+    },
+    tag:  {
+      __typename: "Tag",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      authorId?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+    authorId?: string | null,
   } | null,
 };
