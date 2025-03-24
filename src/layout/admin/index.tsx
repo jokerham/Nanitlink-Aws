@@ -5,10 +5,10 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import Footer from './Footer';
 import { Outlet } from 'react-router';
-import { ColumnBox, RowBox } from 'component/customMui';
+import { ColumnBox, RowBox } from '@/component/customMui';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AdminAuthorized from 'component/amplify/AdminAuthorized';
+import AdminAuthorized from '@/component/amplify/AdminAuthorized';
 
 const Layout = () => {
   return (

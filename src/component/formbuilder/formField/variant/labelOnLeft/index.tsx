@@ -1,4 +1,4 @@
-import { EFieldType, TFieldSetting } from "component/formbuilder/types";
+import { EFieldType, TFieldSetting } from "@/component/formbuilder/types";
 import { Box, Grid2, Typography } from "@mui/material";
 import { SmallSize } from "../smallSize";
 

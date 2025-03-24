@@ -1,4 +1,4 @@
-import { ReactNode, RefCallback } from 'react';
+import { ReactNode, RefCallback, RefObject } from 'react';
 import { MenuTab, MenuTabHeader, MenuTabTitle, MenuTabContent, MenuTabAction, CloseIcon } from './Components';
 import { Link } from '@mui/material';
 import { NavLink } from 'react-router';
@@ -13,7 +13,7 @@ interface ITabProps {
   headerComponent?: ReactNode;
   contentComponent: ReactNode;
   actionComponent?: ReactNode;
-  ref?: RefCallback<Element>;
+  ref?: RefObject<Element>;
   onClose?: TGeneralFunction;
 }
 

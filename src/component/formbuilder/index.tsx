@@ -1,7 +1,7 @@
 import { Form, Formik, FormikConsumer } from 'formik';
 import { EVariant, FormBuilderHandle, IFormBuilderProps, IFormFieldListProps, TFieldSetting } from './types';
-import { Section, SectionContent, SectionTitle } from 'component/Section';
-import { ColumnBox } from 'component/customMui';
+import { Section, SectionContent, SectionTitle } from '@/component/Section';
+import { ColumnBox } from '@/component/customMui';
 import Variant from './formField';
 import { Box, Button, createTheme } from '@mui/material';
 import { useState, useRef, useImperativeHandle, forwardRef, Fragment, useEffect } from 'react';

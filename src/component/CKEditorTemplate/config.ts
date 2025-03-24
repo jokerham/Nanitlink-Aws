@@ -1,6 +1,56 @@
-import { EditorConfig, AccessibilityHelp, Autoformat, AutoImage, Autosave, Base64UploadAdapter, BlockQuote, Bold, CloudServices, Essentials, FullPage, GeneralHtmlSupport, Heading, HtmlComment, HtmlEmbed, ImageBlock, ImageCaption, ImageInline, ImageInsert, ImageInsertViaUrl, ImageResize, ImageStyle, ImageTextAlternative, ImageToolbar, ImageUpload, Indent, IndentBlock, Italic, Link, LinkImage, List, ListProperties, MediaEmbed, Paragraph, PasteFromOffice, SelectAll, ShowBlocks, SourceEditing, Table, TableCaption, TableCellProperties, TableColumnResize, TableProperties, TableToolbar, TextTransformation, TodoList, Underline, Undo } from 'ckeditor5';
+import {
+  EditorConfig,
+  AccessibilityHelp,
+  Autoformat,
+  AutoImage,
+  Autosave,
+  Base64UploadAdapter,
+  BlockQuote,
+  Bold,
+  CloudServices,
+  Essentials,
+  FullPage,
+  GeneralHtmlSupport,
+  Heading,
+  HtmlComment,
+  HtmlEmbed,
+  ImageBlock,
+  ImageCaption,
+  ImageInline,
+  ImageInsert,
+  ImageInsertViaUrl,
+  ImageResize,
+  ImageStyle,
+  ImageTextAlternative,
+  ImageToolbar,
+  ImageUpload,
+  Indent,
+  IndentBlock,
+  Italic,
+  Link,
+  LinkImage,
+  List,
+  ListProperties,
+  MediaEmbed,
+  Paragraph,
+  PasteFromOffice,
+  SelectAll,
+  ShowBlocks,
+  SourceEditing,
+  Table,
+  TableCaption,
+  TableCellProperties,
+  TableColumnResize,
+  TableProperties,
+  TableToolbar,
+  TextTransformation,
+  TodoList,
+  Underline,
+  Undo
+} from 'ckeditor5';
 
 export const CKEditorConfig: EditorConfig = {
+  licenseKey: 'GPL',
   toolbar: {
     items: [
       'undo',
@@ -175,5 +225,5 @@ export const CKEditorConfig: EditorConfig = {
   placeholder: 'Type or paste your content here!',
   table: {
     contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
-  },
+  }
 };

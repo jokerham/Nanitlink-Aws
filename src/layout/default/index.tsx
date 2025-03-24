@@ -2,7 +2,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import { ToastContainer } from 'react-toastify';
 import { Container, Paper } from '@mui/material';
-import { ColumnBox, RowBox } from 'component/customMui';
+import { ColumnBox, RowBox } from '@/component/customMui';
 import Header from './Header';
 import { Outlet } from 'react-router';
 

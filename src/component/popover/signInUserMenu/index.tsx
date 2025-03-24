@@ -5,7 +5,7 @@ import { FaSignInAlt } from 'react-icons/fa';
 import { IoSettings } from 'react-icons/io5';
 import { signOut } from 'aws-amplify/auth';
 import { NavLink } from 'react-router';
-import AdminAuthorized from 'component/amplify/AdminAuthorized';
+import AdminAuthorized from '@/component/amplify/AdminAuthorized';
 
 interface ISignInUserMenuProps {
   open: boolean;

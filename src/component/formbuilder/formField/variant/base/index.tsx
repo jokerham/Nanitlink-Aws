@@ -1,4 +1,4 @@
-import { EFieldType, TFieldSetting } from "component/formbuilder/types";
+import { EFieldType, TFieldSetting } from "@/component/formbuilder/types";
 import { FormTextField } from "./FormTextField";
 import { FormSelect } from "../base/formSelect";
 import { FormCheckBox } from "./FormCheckBox";

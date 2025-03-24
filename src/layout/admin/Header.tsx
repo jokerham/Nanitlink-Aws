@@ -1,7 +1,7 @@
 import { AppBar, Box, Divider, Link, Toolbar, Typography } from '@mui/material';
 import { signOut } from 'aws-amplify/auth';
-import { useUser } from 'component/amplify/AdminAuthorized';
-import { HorizontalBox } from 'component/customMui';
+import { useUser } from '@/component/amplify/AdminAuthorized';
+import { HorizontalBox } from '@/component/customMui';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const Header = () => {

@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DefaultLayout from './layout/default';
 import AdminLayout from './layout/admin';
 import modulesConfig from './layouts_and_modules.json';
-import PageNotFound from 'PageNotFound';
+//import PageNotFound from 'PageNotFound';
+import PageNotFound from '@/PageNotFound';
 
 // Lazy load modules
 const loadModule = (moduleName: string) => lazy(() => import(`./module/${moduleName}`));

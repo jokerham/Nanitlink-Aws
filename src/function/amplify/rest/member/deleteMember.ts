@@ -1,7 +1,7 @@
 import { del } from 'aws-amplify/api';
 import { fetchAuthSession } from 'aws-amplify/auth';
-import awsConfigure from 'amplifyconfiguration.json'
-import { showToast } from 'function/showToast';
+import awsConfigure from '@/amplifyconfiguration.json'
+import { showToast } from '@/function/showToast';
 
 // API Function to Fetch Cognito Users
 export const deleteMember = async (

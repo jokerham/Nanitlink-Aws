@@ -1,4 +1,4 @@
-import 'amplifyConfigure';
+import '@/amplifyConfigure';
 import { fetchUserAttributes, getCurrentUser } from 'aws-amplify/auth';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Hub } from 'aws-amplify/utils';

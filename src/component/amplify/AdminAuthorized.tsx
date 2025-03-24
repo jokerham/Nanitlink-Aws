@@ -1,5 +1,5 @@
 import { getCurrentUser } from "aws-amplify/auth";
-import { getMemberDetail } from "function/amplify/rest/member";
+import { getMemberDetail } from "@/function/amplify/rest/member";
 import { createContext, Fragment, ReactNode, useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 

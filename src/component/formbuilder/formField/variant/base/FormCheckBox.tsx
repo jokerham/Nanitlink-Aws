@@ -1,6 +1,6 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { ColumnBox, RowBox } from "component/customMui";
-import { IOptionFieldSetting, TFieldSetting } from "component/formbuilder/types";
+import { ColumnBox, RowBox } from "@/component/customMui";
+import { IOptionFieldSetting, TFieldSetting } from "@/component/formbuilder/types";
 import { Field, FormikValues, useFormikContext } from "formik";
 import { ChangeEvent, useState } from "react";
 

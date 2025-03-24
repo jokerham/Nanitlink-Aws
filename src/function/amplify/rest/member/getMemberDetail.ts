@@ -1,6 +1,6 @@
 import { get } from 'aws-amplify/api';
 import { CognitoUser } from './types';
-import awsConfigure from 'amplifyconfiguration.json'
+import awsConfigure from '@/amplifyconfiguration.json'
 
 // API Function to Fetch Cognito Users
 export const getMemberDetail = async (

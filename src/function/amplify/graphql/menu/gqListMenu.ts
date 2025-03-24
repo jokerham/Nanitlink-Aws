@@ -1,5 +1,5 @@
 import { generateClient } from 'aws-amplify/api';
-import { showToast } from 'function/showToast';
+import { showToast } from '@/function/showToast';
 import { gql } from "graphql-tag"; // Import gql for defining GraphQL queries
 
 // Define the custom GraphQL query

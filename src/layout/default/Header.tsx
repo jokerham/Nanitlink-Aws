@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { FaSignInAlt, FaUser } from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { Link, NavLink } from "react-router-dom";
-import SignInDialog from "component/dialog/signInDialog";
-import Authorized, { useUser } from "component/amplify/Authorized";
-import SignInUserMenu from "component/popover/signInUserMenu";
-import SecondLevelMenu from "component/popover/secondLevelMenu";
-import { IMenu } from "module/menu/admin/edit/types";
-import { gqListMenuTree } from "function/amplify/graphql/menu/gqListMenu";
+import SignInDialog from "@/component/dialog/signInDialog";
+import Authorized, { useUser } from "@/component/amplify/Authorized";
+import SignInUserMenu from "@/component/popover/signInUserMenu";
+import SecondLevelMenu from "@/component/popover/secondLevelMenu";
+import { IMenu } from "@/module/menu/admin/edit/types";
+import { gqListMenuTree } from "@/function/amplify/graphql/menu/gqListMenu";
 
 
 interface IRenderAuthorizedProps {

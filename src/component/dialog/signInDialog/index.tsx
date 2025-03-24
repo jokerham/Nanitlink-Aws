@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { 
   Dialog,
   DialogTitle,
@@ -10,14 +10,14 @@ import {
   ButtonGroup
 } from '@mui/material';
 import { IoClose } from 'react-icons/io5';
-import { IFormBuilderProps, EFieldType, EVariant, FormBuilder } from 'component/formbuilder';
+import { IFormBuilderProps, EFieldType, EVariant, FormBuilder } from '@/component/formbuilder';
 import { FormikValues } from 'formik';
 import { FaQuestionCircle, FaUserPlus } from 'react-icons/fa';
 import theme from './theme';
 import { useNavigate } from 'react-router';
 import { signIn } from 'aws-amplify/auth';
-import "amplifyConfigure"
-import { showToast } from 'function/showToast';
+import "@/amplifyConfigure"
+import { showToast } from '@/function/showToast';
 
 interface LoginDialogProps {
   open: boolean;

@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Box } from '@mui/material';
 import { Tree as ArboristTree, NodeApi } from 'react-arborist';
 import { FaFolder, FaFolderOpen, FaHome, FaPlusCircle } from 'react-icons/fa';
 import { CgMenuBoxed } from 'react-icons/cg';
-import useResizeObserver from 'use-resize-observer';
+import { useResizeObserver } from 'usehooks-ts';
 import { RowBox } from 'component/customMui';
 import { ActionButton, ActionTypography, ContainedButton, SearchTextField, TreeNodeLabel, TreeNodeRowBox } from './Components';
 import { gqListMenuTree } from 'function/amplify/graphql/menu/gqListMenu';
@@ -26,7 +26,10 @@ const initialTeeProps = {
 };
 
 const Tree = ({ onAddMenu, onSelectNode }: ITreeProps) => {
-  const { ref, width, height } = useResizeObserver();
+  const targetRef = useRef<HTMLElement>(document.createElement('div'));
+  const { width = 0, height = 0 } = useResizeObserver({
+    ref: targetRef,
+  });
   const [treeProps, setTreeProps] = useState(initialTeeProps);
 
   const fetchMenu = async () => {
@@ -71,7 +74,7 @@ const Tree = ({ onAddMenu, onSelectNode }: ITreeProps) => {
           </ActionTypography>
         </ActionButton>
       }
-      ref={ref}
+      ref={targetRef}
     />
   );
 };
