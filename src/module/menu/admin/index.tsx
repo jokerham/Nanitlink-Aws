@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import PageNotFound from 'PageNotFound';
+import PageNotFound from '@/PageNotFound';
 import Edit from './edit';
 
 const IndexComponent = () => {

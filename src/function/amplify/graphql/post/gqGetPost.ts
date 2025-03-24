@@ -1,9 +1,8 @@
 import { generateClient } from 'aws-amplify/api';
-import { gql } from "graphql-tag";
 import { showToast } from '@/function/showToast';
 
 // Define the GraphQL query to fetch an article with its associated post
-const GET_ARTICLE_WITH_POST = gql`
+const GET_ARTICLE_WITH_POST =  /* GraphQL */ `
   query GetArticleWithPost($id: ID!) {
     getArticle(id: $id) {
       id

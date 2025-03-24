@@ -1,5 +1,5 @@
-import { RowBox } from 'component/customMui';
-import { EFieldType, EVariant, FormBuilder, FormBuilderHandle, IFormBuilderProps, TFieldSetting } from 'component/formbuilder';
+import { RowBox } from '@/component/customMui';
+import { EFieldType, EVariant, FormBuilder, FormBuilderHandle, IFormBuilderProps, TFieldSetting } from '@/component/formbuilder';
 import { FormikValues } from 'formik';
 import { useRef } from 'react';
 import { ContainedButton, ContainedGrayButton } from './Components';

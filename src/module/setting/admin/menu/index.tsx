@@ -1,6 +1,6 @@
 import { Fragment } from "react/jsx-runtime";
 import { Typography } from "@mui/material";
-import { TitleBox } from "component/customMui";
+import { TitleBox } from "@/component/customMui";
 import PageSetup from "./pageSetup";
 import MenuSetup from "./menuSetup";
 

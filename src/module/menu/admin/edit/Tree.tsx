@@ -4,12 +4,12 @@ import { Tree as ArboristTree, NodeApi } from 'react-arborist';
 import { FaFolder, FaFolderOpen, FaHome, FaPlusCircle } from 'react-icons/fa';
 import { CgMenuBoxed } from 'react-icons/cg';
 import { useResizeObserver } from 'usehooks-ts';
-import { RowBox } from 'component/customMui';
+import { RowBox } from '@/component/customMui';
 import { ActionButton, ActionTypography, ContainedButton, SearchTextField, TreeNodeLabel, TreeNodeRowBox } from './Components';
-import { gqListMenuTree } from 'function/amplify/graphql/menu/gqListMenu';
+import { gqListMenuTree } from '@/function/amplify/graphql/menu/gqListMenu';
 import Tab from './Tab';
 import { IMenu, NodeProps } from './types';
-import 'extension/nodeApiExt';
+import '@/extension/nodeApiExt';
 
 interface ITreeProps { 
   onAddMenu: () => void,

@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { TitleBox } from "component/customMui";
+import { TitleBox } from "@/component/customMui";
 import Primary from "./primary";
 import EmbedFilter from "./embedFilter";
 import Advanced from "./advanced";

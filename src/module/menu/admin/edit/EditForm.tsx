@@ -1,8 +1,8 @@
 import { IMenu } from './types';
 import Tab from './Tab';
-import { EFieldType, EVariant, FormBuilder, IFormBuilderProps } from 'component/formbuilder';
+import { EFieldType, EVariant, FormBuilder, IFormBuilderProps } from '@/component/formbuilder';
 import { FormikValues } from 'formik';
-import { RowBox } from 'component/customMui';
+import { RowBox } from '@/component/customMui';
 import { ContainedButton, ContainedGrayButton } from './Components';
 import { useRef } from 'react';
 

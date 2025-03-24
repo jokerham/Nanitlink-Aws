@@ -1,5 +1,5 @@
 import { Box, Link } from "@mui/material";
-import { Section, SectionContent, SectionTitle } from "component/Section";
+import { Section, SectionContent, SectionTitle } from "@/component/Section";
 import { NodeApi, NodeRendererProps, Tree } from 'react-arborist';
 import { styled } from '@mui/system';
 import { SiPluscodes } from 'react-icons/si';

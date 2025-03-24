@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
-import { EFieldType, EVariant, FormBuilder, IFormBuilderProps, TSection } from "component/formbuilder";
+import { EFieldType, EVariant, FormBuilder, IFormBuilderProps, TSection } from "@/component/formbuilder";
 import { FormikValues } from "formik";
-import { showToast } from "function/showToast";
-import SignUpConfirmDialog from "component/dialog/signUpConfirmDialog";
+import { showToast } from "@/function/showToast";
+import SignUpConfirmDialog from "@/component/dialog/signUpConfirmDialog";
 import { useNavigate } from "react-router";
 import { signUp, signIn, SignUpOutput, SignInOutput, ConfirmSignUpOutput } from 'aws-amplify/auth';
 import "amplifyConfigure"

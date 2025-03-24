@@ -1,7 +1,7 @@
-import MemberGroupDialog from "component/dialog/memberGroupDialog";
-import { Section, SectionContent, SectionTitle } from "component/Section";
-import { IDataColumns, IDataRow, TableBuilder, TAction } from "component/tableBuilder";
-import { getMemberGroupList, deleteMemberGroup } from "function/amplify/rest/member";
+import MemberGroupDialog from "@/component/dialog/memberGroupDialog";
+import { Section, SectionContent, SectionTitle } from "@/component/Section";
+import { IDataColumns, IDataRow, TableBuilder, TAction } from "@/component/tableBuilder";
+import { getMemberGroupList, deleteMemberGroup } from "@/function/amplify/rest/member";
 import { Fragment, useEffect, useState } from "react";
 
 const Group = () => {

@@ -1,7 +1,6 @@
 import { generateClient } from 'aws-amplify/api';
-import { createArticle } from '../../graphql/mutations'; // Ensure correct path
 import { GraphQLResult } from '@aws-amplify/api-graphql';
-import { Article, Post, PostStatus, PostType } from 'API';
+import { Article, Post, PostStatus, PostType } from '@/API';
 import { getCurrentUser } from 'aws-amplify/auth';
 
 interface ICreateEmptyPostParameter {

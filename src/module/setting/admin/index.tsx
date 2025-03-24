@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import General from './general';
-import PageNotFound from 'PageNotFound';
+import PageNotFound from '@/PageNotFound';
 import Menu from './menu';
 
 const IndexComponent = () => {

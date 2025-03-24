@@ -1,9 +1,8 @@
 import { generateClient } from 'aws-amplify/api';
-import { gql } from "graphql-tag";
 import { showToast } from '@/function/showToast';
 
 // Define the GraphQL mutation to update a post
-const UPDATE_POST = gql`
+const UPDATE_POST = /* GraphQL */ `
   mutation UpdatePost($input: UpdatePostInput!) {
     updatePost(input: $input) {
       id

@@ -1,10 +1,10 @@
-import { EFieldType, EVariant, FormBuilder, IFormBuilderProps, TFieldSetting, TSection } from 'component/formbuilder';
-import { Section, SectionContent, SectionTitle } from 'component/Section';
+import { EFieldType, EVariant, FormBuilder, IFormBuilderProps, TFieldSetting, TSection } from '@/component/formbuilder';
+import { Section, SectionContent, SectionTitle } from '@/component/Section';
 import { FormikValues, FormikHelpers } from 'formik';
-import { getMemberDetail, getMemberGroupList } from 'function/amplify/rest/member';
-import { CognitoGroup } from 'function/amplify/rest/member/types';
-import { updateMember } from 'function/amplify/rest/member/updateMember';
-import { showToast } from 'function/showToast';
+import { getMemberDetail, getMemberGroupList } from '@/function/amplify/rest/member';
+import { CognitoGroup } from '@/function/amplify/rest/member/types';
+import { updateMember } from '@/function/amplify/rest/member/updateMember';
+import { showToast } from '@/function/showToast';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 

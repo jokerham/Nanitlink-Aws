@@ -7,10 +7,10 @@ import { Box } from "@mui/material";
 import { IMenu } from "./types";
 import { FormikValues } from "formik";
 import Permission from "./Permission";
-import { showToast } from "function/showToast";
-import { gqAddMenu, IAddMenuInput } from "function/amplify/graphql/menu/gqAddMenu";
-import { gqDeleteMenu } from "function/amplify/graphql/menu/gqDeleteMenu";
-import { gqUpdateMenu, IUpdateMenuInput } from "function/amplify/graphql/menu/gqUpdateMenu";
+import { showToast } from "@/function/showToast";
+import { gqAddMenu, IAddMenuInput } from "@/function/amplify/graphql/menu/gqAddMenu";
+import { gqDeleteMenu } from "@/function/amplify/graphql/menu/gqDeleteMenu";
+import { gqUpdateMenu, IUpdateMenuInput } from "@/function/amplify/graphql/menu/gqUpdateMenu";
 
 enum EState {
   default,

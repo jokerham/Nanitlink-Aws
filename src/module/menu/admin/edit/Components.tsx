@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { Button, ButtonProps, createTheme, Link, ListItemButton, ListItemText, ListItemTextProps, TextField, TextFieldProps, Typography } from '@mui/material';
-import { ColumnBox, RowBox } from 'component/customMui';
+import { ColumnBox, RowBox } from '@/component/customMui';
 import { IoCloseSharp } from 'react-icons/io5';
 import { ThemeProvider } from '@emotion/react';
 

@@ -1,7 +1,7 @@
 import { put } from 'aws-amplify/api';
 import { fetchAuthSession } from 'aws-amplify/auth';
-import awsConfigure from 'amplifyconfiguration.json';
-import { showToast } from 'function/showToast';
+import awsConfigure from '@/amplifyconfiguration.json';
+import { showToast } from '@/function/showToast';
 
 // AWS Cognito default attributes
 const nonCustomAttributes = new Set([

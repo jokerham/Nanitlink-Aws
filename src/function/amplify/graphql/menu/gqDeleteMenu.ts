@@ -1,9 +1,7 @@
 import { generateClient } from "aws-amplify/api";
-import { gql } from "graphql-tag";
-import { gqListMenuByParendId } from "./gqListMenu";
-import { showToast } from "function/showToast";
+import { showToast } from "@/function/showToast";
 
-const LIST_CHILD_MENUS = gql`
+const LIST_CHILD_MENUS = /* GraphQL */  `
   query ListChildMenus($parentId: ID!) {
     listMenus(filter: { parentId: { eq: $parentId } }) {
       items {
@@ -13,7 +11,7 @@ const LIST_CHILD_MENUS = gql`
   }
 `;
 
-const DELETE_MENU = gql`
+const DELETE_MENU = /* GraphQL */  `
   mutation DeleteMenu($id: ID!) {
     deleteMenu(input: { id: $id }) {
       id

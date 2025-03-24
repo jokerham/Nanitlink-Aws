@@ -1,7 +1,7 @@
 import { generateClient } from 'aws-amplify/api';
-import { showToast } from 'function/showToast';
-import { createMenu } from 'graphql/mutations';
-import 'amplifyConfigure';
+import { showToast } from '@/function/showToast';
+import { createMenu } from '@/graphql/mutations';
+import '@/amplifyConfigure';
 import { gqListMenuByParendId } from './gqListMenu';
 
 export interface IAddMenuInput {

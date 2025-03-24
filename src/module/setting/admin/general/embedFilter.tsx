@@ -1,5 +1,5 @@
-import { FormBuilder } from "component/formbuilder";
-import { EFieldType, EVariant, TSection } from "component/formbuilder/types";
+import { FormBuilder } from "@/component/formbuilder";
+import { EFieldType, EVariant, TSection } from "@/component/formbuilder/types";
 import { FormikHelpers, FormikValues } from "formik";
 
 const EmbedFilter = () => {

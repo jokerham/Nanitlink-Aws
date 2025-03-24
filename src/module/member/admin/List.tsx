@@ -1,6 +1,6 @@
-import { Section, SectionContent, SectionTitle } from 'component/Section'
-import { IDataColumns, IDataRow, TableBuilder, TAction } from 'component/tableBuilder';
-import { deleteMember, getMemberList } from 'function/amplify/rest/member';
+import { Section, SectionContent, SectionTitle } from '@/component/Section'
+import { IDataColumns, IDataRow, TableBuilder, TAction } from '@/component/tableBuilder';
+import { deleteMember, getMemberList } from '@/function/amplify/rest/member';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 

@@ -1,9 +1,8 @@
 import { generateClient } from 'aws-amplify/api';
 import { showToast } from '@/function/showToast';
-import { gql } from "graphql-tag"; // Import gql for defining GraphQL queries
 
 // Define the custom GraphQL query
-const LIST_MENUS_BY_PARENT = gql`
+const LIST_MENUS_BY_PARENT = /* GraphQL */  `
   query ListMenusByParent($filter: ModelMenuFilterInput) {
     listMenus(filter: $filter) {
       items {

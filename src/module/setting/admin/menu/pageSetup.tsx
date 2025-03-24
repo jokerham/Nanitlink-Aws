@@ -1,4 +1,4 @@
-import { EFieldType, EVariant, FormBuilder, TSection } from "component/formbuilder";
+import { EFieldType, EVariant, FormBuilder, TSection } from "@/component/formbuilder";
 import { FormikHelpers, FormikValues } from "formik";
 
 const PageSetup = () => {
