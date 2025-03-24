@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Button, ButtonGroup, Divider, Link, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import { IDataRow, ITableBuidleProps, ITableFilter, TAction } from './types';
-import { RowBox } from 'component/customMui';
+import { RowBox } from '@/component/customMui';
 import { isString } from 'formik';
 
 export * from './types';
