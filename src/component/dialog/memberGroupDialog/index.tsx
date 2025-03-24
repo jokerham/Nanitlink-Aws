@@ -13,7 +13,7 @@ import { IFormBuilderProps, EFieldType, EVariant, FormBuilder } from '@/componen
 import { FormikValues } from 'formik';
 import { showToast } from '@/function/showToast';
 import theme from './theme';
-import "amplifyConfigure"
+import "@/amplifyConfigure"
 import { createMemberGroup, deleteMemberGroup } from '@/function/amplify/rest/member';
 
 
