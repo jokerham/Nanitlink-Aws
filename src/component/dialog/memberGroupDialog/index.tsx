@@ -9,12 +9,12 @@ import {
   IconButton
 } from '@mui/material';
 import { IoClose } from 'react-icons/io5';
-import { IFormBuilderProps, EFieldType, EVariant, FormBuilder } from 'component/formbuilder';
+import { IFormBuilderProps, EFieldType, EVariant, FormBuilder } from '@/component/formbuilder';
 import { FormikValues } from 'formik';
-import { showToast } from 'function/showToast';
+import { showToast } from '@/function/showToast';
 import theme from './theme';
 import "amplifyConfigure"
-import { createMemberGroup, deleteMemberGroup } from 'function/amplify/rest/member';
+import { createMemberGroup, deleteMemberGroup } from '@/function/amplify/rest/member';
 
 
 interface IMemberGroupDialogProps {

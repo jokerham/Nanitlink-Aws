@@ -9,10 +9,10 @@ import {
   IconButton
 } from '@mui/material';
 import { IoClose } from 'react-icons/io5';
-import { IFormBuilderProps, EFieldType, EVariant, FormBuilder } from 'component/formbuilder';
+import { IFormBuilderProps, EFieldType, EVariant, FormBuilder } from '@/component/formbuilder';
 import { FormikValues } from 'formik';
 import { confirmSignUp, ConfirmSignUpOutput } from 'aws-amplify/auth';
-import { showToast } from 'function/showToast';
+import { showToast } from '@/function/showToast';
 import theme from './theme';
 import "amplifyConfigure"
 
