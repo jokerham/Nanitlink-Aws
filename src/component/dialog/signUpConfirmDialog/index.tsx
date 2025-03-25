@@ -14,7 +14,7 @@ import { FormikValues } from 'formik';
 import { confirmSignUp, ConfirmSignUpOutput } from 'aws-amplify/auth';
 import { showToast } from '@/function/showToast';
 import theme from './theme';
-import "amplifyConfigure"
+import "@/amplifyConfigure"
 
 
 interface SignUpConfirmDialogProps {
