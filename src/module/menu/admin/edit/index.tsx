@@ -147,7 +147,7 @@ const Edit: React.FC = () => {
        * 4) call and await createDefault
        */
       if (values.module) {
-        const { createDefault } = await import(`module/${values.module.toLowerCase()}/defaultCreate`);
+        const { createDefault } = await import(`../../../${values.module.toLowerCase()}/defaultCreate`);
         await createDefault({id: values.moduleId, name: values.name});
       }
 
