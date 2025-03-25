@@ -2,6 +2,7 @@ import { generateClient } from 'aws-amplify/api';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { Article, Post, PostStatus, PostType } from '@/API';
 import { getCurrentUser } from 'aws-amplify/auth';
+import { gqGetArticleWithPost } from '@/function/amplify/graphql/post/gqGetPost';
 
 interface ICreateEmptyPostParameter {
   title: string, 
@@ -58,9 +59,14 @@ interface ICreateDefaultParameter {
 export async function createDefault({id, name}: ICreateDefaultParameter): Promise<Article | null> {
   const client = generateClient();
   const author = await getCurrentUser();
+
+  const article = await gqGetArticleWithPost(id);
+  if (article) {
+    return article;
+  }
+
   const post = await createEmptyPost({title: name, authorId: author.userId});
   if (!post) {
-    console.error('Failed to create post. Aborting article creation.');
     return null;
   }
 
