@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import PageNotFound from 'PageNotFound';
+import PageNotFound from '@/PageNotFound';
 
 const IndexComponent = () => {
   const { action } = useParams<{ action: string }>();
