@@ -54,5 +54,5 @@ export const gqListMenuTree = async (level: number, parentId: string | null) => 
     );
   }
 
-  return menu;
+  return menu.sort((a: { sortOrder: number; }, b: { sortOrder: number; }) => a.sortOrder - b.sortOrder);
 };
