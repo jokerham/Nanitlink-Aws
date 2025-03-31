@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../../amplify/backend/function/post/src/src/API";
+import * as APITypes from "../API";
 type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationInput: InputType;
   __generatedMutationOutput: OutputType;
@@ -18,6 +18,12 @@ export const createBoard = /* GraphQL */ `mutation CreateBoard(
     description
     posts {
       nextToken
+      __typename
+    }
+    totalPosts
+    pageTokens {
+      page
+      token
       __typename
     }
     createdAt
@@ -41,6 +47,12 @@ export const updateBoard = /* GraphQL */ `mutation UpdateBoard(
       nextToken
       __typename
     }
+    totalPosts
+    pageTokens {
+      page
+      token
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -62,6 +74,12 @@ export const deleteBoard = /* GraphQL */ `mutation DeleteBoard(
       nextToken
       __typename
     }
+    totalPosts
+    pageTokens {
+      page
+      token
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -79,22 +97,8 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     id
     title
     content
-    article {
-      id
-      name
-      createdAt
-      updatedAt
-      articlePostId
-      __typename
-    }
-    board {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-      __typename
-    }
+    module
+    moduleId
     authorId
     comments {
       nextToken
@@ -105,7 +109,6 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
       __typename
     }
     status
-    postType
     tags {
       nextToken
       __typename
@@ -115,8 +118,6 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     updatedAt
     boardPostsId
     categoryPostsId
-    postArticleId
-    postBoardId
     __typename
   }
 }
@@ -132,22 +133,8 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     id
     title
     content
-    article {
-      id
-      name
-      createdAt
-      updatedAt
-      articlePostId
-      __typename
-    }
-    board {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-      __typename
-    }
+    module
+    moduleId
     authorId
     comments {
       nextToken
@@ -158,7 +145,6 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
       __typename
     }
     status
-    postType
     tags {
       nextToken
       __typename
@@ -168,8 +154,6 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     updatedAt
     boardPostsId
     categoryPostsId
-    postArticleId
-    postBoardId
     __typename
   }
 }
@@ -185,22 +169,8 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
     id
     title
     content
-    article {
-      id
-      name
-      createdAt
-      updatedAt
-      articlePostId
-      __typename
-    }
-    board {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-      __typename
-    }
+    module
+    moduleId
     authorId
     comments {
       nextToken
@@ -211,7 +181,6 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
       __typename
     }
     status
-    postType
     tags {
       nextToken
       __typename
@@ -221,8 +190,6 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
     updatedAt
     boardPostsId
     categoryPostsId
-    postArticleId
-    postBoardId
     __typename
   }
 }
@@ -240,16 +207,15 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     authorId
@@ -278,16 +244,15 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     authorId
@@ -316,16 +281,15 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     authorId
@@ -356,16 +320,15 @@ export const createMedia = /* GraphQL */ `mutation CreateMedia(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     comment {
@@ -401,16 +364,15 @@ export const updateMedia = /* GraphQL */ `mutation UpdateMedia(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     comment {
@@ -446,16 +408,15 @@ export const deleteMedia = /* GraphQL */ `mutation DeleteMedia(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     comment {
@@ -601,16 +562,15 @@ export const createArticle = /* GraphQL */ `mutation CreateArticle(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     createdAt
@@ -634,16 +594,15 @@ export const updateArticle = /* GraphQL */ `mutation UpdateArticle(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     createdAt
@@ -667,16 +626,15 @@ export const deleteArticle = /* GraphQL */ `mutation DeleteArticle(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     createdAt
@@ -929,16 +887,15 @@ export const createPostTags = /* GraphQL */ `mutation CreatePostTags(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     tag {
@@ -971,16 +928,15 @@ export const updatePostTags = /* GraphQL */ `mutation UpdatePostTags(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     tag {
@@ -1013,16 +969,15 @@ export const deletePostTags = /* GraphQL */ `mutation DeletePostTags(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     tag {

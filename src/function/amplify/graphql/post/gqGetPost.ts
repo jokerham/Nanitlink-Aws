@@ -1,3 +1,4 @@
+import { getPost, listPosts, getBoard } from './../../../../graphql/queries';
 import { generateClient } from 'aws-amplify/api';
 import { showToast } from '@/function/showToast';
 
@@ -47,6 +48,45 @@ const GET_ARTICLE_WITH_POST =  /* GraphQL */ `
   }
 `;
 
+const GET_BOARD =  /* GraphQL */ `
+  query GetBoard($id: ID!) {
+    getBoard(id: $id) {
+      id
+      name
+      totalPosts
+      pageTokens {
+        page
+        token
+      }
+    }
+  }
+`;
+
+const GET_BOARD_POST = /* GraphQL */ `
+  query ($moduleId: String = "") {
+    postsByModuleId(moduleId: $moduleId) {
+      items {
+        id
+        title
+        content
+        authorId
+        createdAt
+        views
+        comments {
+          items {
+            id
+          }
+        }
+        attachments {
+          items {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const gqGetArticleWithPost = async (articleId: string) => {
   const client = generateClient({ authMode: 'apiKey' });
 
@@ -66,3 +106,37 @@ export const gqGetArticleWithPost = async (articleId: string) => {
     return null;
   }
 };
+
+export const gqGetBoardWithPost = async (boardId: string, page: number) => {
+  const client = generateClient({ authMode: 'apiKey' });
+
+  try {
+    // Fetch board information
+    const boardResponse: any = await client.graphql({
+      query: GET_BOARD,
+      variables: { id: boardId }
+    });
+    const board = boardResponse.data.getBoard;
+    //console.log(board);
+    
+    // Fetch posts for the specified board and page
+    const token = board.pageTokens.find((t: any) => t.page === page)?.token;
+    const postResponse: any = await client.graphql({
+      query: GET_BOARD_POST,
+      variables: { moduleId: boardId, nextToken: token }
+    });
+    const posts = postResponse.data.postsByModuleId;
+    //console.log(posts);
+    board.posts = posts;
+
+    //console.log(board);
+    return board;
+  } catch (error) {
+    const typedError = error as { errors?: { message: string }[] };
+    typedError.errors?.forEach(error => {
+      showToast(error.message, 'error');
+      console.log(error.message);
+    });
+    return null;
+  }
+}

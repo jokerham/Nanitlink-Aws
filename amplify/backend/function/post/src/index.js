@@ -2,8 +2,8 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 const ROWS_PER_PAGE = 10;
 
-const POSTS_TABLE = process.env.API_AWSNANITELINK_POSTTABLE_NAME; // e.g. Post-table
-const CACHE_TABLE = process.env.API_AWSNANITELINK_BOARDCACHETABLE_NAME; // e.g. PaginationCache-table
+const POSTS_TABLE = process.env.API_AWSNANITELINK_POSTTABLE_NAME;
+const BOARD_TABLE = process.env.API_AWSNANITELINK_BOARDTABLE_NAME;
 
 exports.handler = async (event) => {
   console.log('Received event:', JSON.stringify(event, null, 2));
@@ -23,8 +23,8 @@ exports.handler = async (event) => {
 
 async function updateCache(boardId) {
   // Step 1: Initialize totalCount
+  let key = { id: boardId };
   let totalCount = 0;
-  const cacheKey = { id: boardId };
 
   // Step 2: Recalculate page tokens
   const pageTokens = [];
@@ -34,8 +34,8 @@ async function updateCache(boardId) {
   do {
     const queryParams = {
       TableName: POSTS_TABLE,
-      IndexName: 'byBoard',
-      KeyConditionExpression: 'postBoardId = :b',
+      IndexName: 'byModuleId',
+      KeyConditionExpression: 'moduleId = :b',
       ExpressionAttributeValues: { ':b': boardId },
       Limit: ROWS_PER_PAGE,
       ExclusiveStartKey: lastEvaluatedKey,
@@ -60,8 +60,8 @@ async function updateCache(boardId) {
 
   // Step 3: Update the pageMap
   const updatePageMap = {
-    TableName: CACHE_TABLE,
-    Key: cacheKey,
+    TableName: BOARD_TABLE,
+    Key: key,
     UpdateExpression: 'SET totalPosts = :count, pageTokens = :map',
     ExpressionAttributeValues: {
       ':count': totalCount,

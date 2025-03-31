@@ -3,6 +3,11 @@
 # 
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
+type PageTokenTuple {
+  page: Int!
+  token: String!
+}
+
 type Board
   @model 
   @auth(rules: [
@@ -13,6 +18,8 @@ type Board
   name: String!
   description: String
   posts: [Post] @hasMany
+  totalPosts: Int!
+  pageTokens: [PageTokenTuple]
 }
 
 type Post 
@@ -25,14 +32,12 @@ type Post
   id: ID!
   title: String!
   content: String!
-  article: Article @hasOne
-  postBoardId: ID! @index(name: "byBoard")
-  board: Board @hasOne(fields: ["postBoardId"])
+  module: String!
+  moduleId: String! @index(name: "byModuleId")
   authorId: String!
   comments: [Comment] @hasMany
   attachments: [Media] @hasMany
   status: PostStatus!
-  postType: PostType!
   tags: [Tag] @manyToMany(relationName: "PostTags")
   views: Int!
 }
@@ -41,11 +46,6 @@ enum PostStatus {
   PUBLISHED
   DRAFT
   ARCHIVED
-}
-
-enum PostType {
-  BOARD
-  ARTICLE
 }
 
 type Comment 
@@ -147,19 +147,4 @@ type ActivityLog
   userId: String!
   action: String!
   timestamp: AWSDateTime
-}
-
-type PageTokenTuple {
-  page: Int!
-  token: String!
-}
-
-type BoardCache
-  @model 
-  @auth(rules: [
-    { allow: public, operations: [read, create, update, delete] },
-  ]) {
-  id: ID!
-  totalPosts: Int!
-  pageTokens: [PageTokenTuple]
 }

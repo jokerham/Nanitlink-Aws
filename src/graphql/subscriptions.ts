@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../../amplify/backend/function/post/src/src/API";
+import * as APITypes from "../API";
 type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionInput: InputType;
   __generatedSubscriptionOutput: OutputType;
@@ -15,6 +15,12 @@ export const onCreateBoard = /* GraphQL */ `subscription OnCreateBoard($filter: 
     description
     posts {
       nextToken
+      __typename
+    }
+    totalPosts
+    pageTokens {
+      page
+      token
       __typename
     }
     createdAt
@@ -35,6 +41,12 @@ export const onUpdateBoard = /* GraphQL */ `subscription OnUpdateBoard($filter: 
       nextToken
       __typename
     }
+    totalPosts
+    pageTokens {
+      page
+      token
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -51,6 +63,12 @@ export const onDeleteBoard = /* GraphQL */ `subscription OnDeleteBoard($filter: 
     description
     posts {
       nextToken
+      __typename
+    }
+    totalPosts
+    pageTokens {
+      page
+      token
       __typename
     }
     createdAt
@@ -70,22 +88,8 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
     id
     title
     content
-    article {
-      id
-      name
-      createdAt
-      updatedAt
-      articlePostId
-      __typename
-    }
-    board {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-      __typename
-    }
+    module
+    moduleId
     authorId
     comments {
       nextToken
@@ -96,7 +100,6 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
       __typename
     }
     status
-    postType
     tags {
       nextToken
       __typename
@@ -106,8 +109,6 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
     updatedAt
     boardPostsId
     categoryPostsId
-    postArticleId
-    postBoardId
     __typename
   }
 }
@@ -123,22 +124,8 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
     id
     title
     content
-    article {
-      id
-      name
-      createdAt
-      updatedAt
-      articlePostId
-      __typename
-    }
-    board {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-      __typename
-    }
+    module
+    moduleId
     authorId
     comments {
       nextToken
@@ -149,7 +136,6 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
       __typename
     }
     status
-    postType
     tags {
       nextToken
       __typename
@@ -159,8 +145,6 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
     updatedAt
     boardPostsId
     categoryPostsId
-    postArticleId
-    postBoardId
     __typename
   }
 }
@@ -176,22 +160,8 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
     id
     title
     content
-    article {
-      id
-      name
-      createdAt
-      updatedAt
-      articlePostId
-      __typename
-    }
-    board {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-      __typename
-    }
+    module
+    moduleId
     authorId
     comments {
       nextToken
@@ -202,7 +172,6 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
       __typename
     }
     status
-    postType
     tags {
       nextToken
       __typename
@@ -212,8 +181,6 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
     updatedAt
     boardPostsId
     categoryPostsId
-    postArticleId
-    postBoardId
     __typename
   }
 }
@@ -231,16 +198,15 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     authorId
@@ -269,16 +235,15 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     authorId
@@ -307,16 +272,15 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     authorId
@@ -347,16 +311,15 @@ export const onCreateMedia = /* GraphQL */ `subscription OnCreateMedia(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     comment {
@@ -392,16 +355,15 @@ export const onUpdateMedia = /* GraphQL */ `subscription OnUpdateMedia(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     comment {
@@ -437,16 +399,15 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     comment {
@@ -580,16 +541,15 @@ export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filt
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     createdAt
@@ -610,16 +570,15 @@ export const onUpdateArticle = /* GraphQL */ `subscription OnUpdateArticle($filt
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     createdAt
@@ -640,16 +599,15 @@ export const onDeleteArticle = /* GraphQL */ `subscription OnDeleteArticle($filt
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     createdAt
@@ -890,16 +848,15 @@ export const onCreatePostTags = /* GraphQL */ `subscription OnCreatePostTags(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     tag {
@@ -932,16 +889,15 @@ export const onUpdatePostTags = /* GraphQL */ `subscription OnUpdatePostTags(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     tag {
@@ -974,16 +930,15 @@ export const onDeletePostTags = /* GraphQL */ `subscription OnDeletePostTags(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     tag {

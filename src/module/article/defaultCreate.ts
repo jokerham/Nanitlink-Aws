@@ -1,10 +1,11 @@
 import { generateClient } from 'aws-amplify/api';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
-import { Article, Post, PostStatus, PostType } from '@/API';
+import { Article, Post, PostStatus } from '@/API';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { gqGetArticleWithPost } from '@/function/amplify/graphql/post/gqGetPost';
 
 interface ICreateEmptyPostParameter {
+  moduleId: string,
   title: string, 
   authorId: string
 }
@@ -25,7 +26,7 @@ const createArticleMinimal = /* GraphQL */ `
   }
 `;
 
-export async function createEmptyPost({title, authorId}: ICreateEmptyPostParameter): Promise<Post | null> {
+export async function createEmptyPost({moduleId, title, authorId}: ICreateEmptyPostParameter): Promise<Post | null> {
   const client = generateClient();
   try {
     const response = (await client.graphql({
@@ -35,8 +36,9 @@ export async function createEmptyPost({title, authorId}: ICreateEmptyPostParamet
           title,
           content: '',
           authorId,
+          module: 'article',
+          moduleId,
           status: PostStatus.PUBLISHED,
-          postType: PostType.ARTICLE,
           views: 0,
         },
       },
@@ -66,7 +68,7 @@ export async function createDefault({id, name}: ICreateDefaultParameter): Promis
     return article;
   }
 
-  const post = await createEmptyPost({title: name, authorId: author.userId});
+  const post = await createEmptyPost({moduleId: id, title: name, authorId: author.userId});
   if (!post) {
     return null;
   }

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../../amplify/backend/function/post/src/src/API";
+import * as APITypes from "../API";
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
@@ -15,6 +15,12 @@ export const getBoard = /* GraphQL */ `query GetBoard($id: ID!) {
     description
     posts {
       nextToken
+      __typename
+    }
+    totalPosts
+    pageTokens {
+      page
+      token
       __typename
     }
     createdAt
@@ -33,6 +39,7 @@ export const listBoards = /* GraphQL */ `query ListBoards(
       id
       name
       description
+      totalPosts
       createdAt
       updatedAt
       __typename
@@ -50,22 +57,8 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     id
     title
     content
-    article {
-      id
-      name
-      createdAt
-      updatedAt
-      articlePostId
-      __typename
-    }
-    board {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-      __typename
-    }
+    module
+    moduleId
     authorId
     comments {
       nextToken
@@ -76,7 +69,6 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
       __typename
     }
     status
-    postType
     tags {
       nextToken
       __typename
@@ -86,8 +78,6 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     updatedAt
     boardPostsId
     categoryPostsId
-    postArticleId
-    postBoardId
     __typename
   }
 }
@@ -102,16 +92,15 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     nextToken
@@ -119,6 +108,43 @@ export const listPosts = /* GraphQL */ `query ListPosts(
   }
 }
 ` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
+export const postsByModuleId = /* GraphQL */ `query PostsByModuleId(
+  $moduleId: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  postsByModuleId(
+    moduleId: $moduleId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      content
+      module
+      moduleId
+      authorId
+      status
+      views
+      createdAt
+      updatedAt
+      boardPostsId
+      categoryPostsId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PostsByModuleIdQueryVariables,
+  APITypes.PostsByModuleIdQuery
+>;
 export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
   getComment(id: $id) {
     id
@@ -126,16 +152,15 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     authorId
@@ -186,16 +211,15 @@ export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     comment {
@@ -336,16 +360,15 @@ export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     createdAt
@@ -531,16 +554,15 @@ export const getPostTags = /* GraphQL */ `query GetPostTags($id: ID!) {
       id
       title
       content
+      module
+      moduleId
       authorId
       status
-      postType
       views
       createdAt
       updatedAt
       boardPostsId
       categoryPostsId
-      postArticleId
-      postBoardId
       __typename
     }
     tag {
