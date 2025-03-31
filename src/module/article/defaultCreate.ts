@@ -36,7 +36,8 @@ export async function createEmptyPost({title, authorId}: ICreateEmptyPostParamet
           content: '',
           authorId,
           status: PostStatus.PUBLISHED,
-          postType: PostType.ARTICLE
+          postType: PostType.ARTICLE,
+          views: 0,
         },
       },
       authMode: 'userPool'
