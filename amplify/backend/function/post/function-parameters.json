@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "api": {
+      "awsnanitelink": [
+        "Query"
+      ]
+    },
+    "storage": {
+      "Board:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Post:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "BoardCache:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

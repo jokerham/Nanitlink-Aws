@@ -92,6 +92,22 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "post": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "awsnanitelink"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -132,6 +148,22 @@
         {
           "category": "function",
           "resourceName": "NLMember"
+        }
+      ]
+    },
+    "AMPLIFY_function_post_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "post"
+        }
+      ]
+    },
+    "AMPLIFY_function_post_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "post"
         }
       ]
     }

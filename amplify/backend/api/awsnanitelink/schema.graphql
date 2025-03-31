@@ -26,13 +26,15 @@ type Post
   title: String!
   content: String!
   article: Article @hasOne
-  board: Board @hasOne
+  postBoardId: ID! @index(name: "byBoard")
+  board: Board @hasOne(fields: ["postBoardId"])
   authorId: String!
   comments: [Comment] @hasMany
   attachments: [Media] @hasMany
   status: PostStatus!
   postType: PostType!
   tags: [Tag] @manyToMany(relationName: "PostTags")
+  views: Int!
 }
 
 enum PostStatus {
@@ -145,4 +147,19 @@ type ActivityLog
   userId: String!
   action: String!
   timestamp: AWSDateTime
+}
+
+type PageTokenTuple {
+  page: Int!
+  token: String!
+}
+
+type BoardCache
+  @model 
+  @auth(rules: [
+    { allow: public, operations: [read, create, update, delete] },
+  ]) {
+  id: ID!
+  totalPosts: Int!
+  pageTokens: [PageTokenTuple]
 }

@@ -29,6 +29,10 @@
         "NLMemberGroup": {
           "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
           "s3Key": "amplify-builds/NLMemberGroup-334c4547346e4e54384d-build.zip"
+        },
+        "post": {
+          "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
+          "s3Key": "amplify-builds/post-4a686565576176633143-build.zip"
         }
       }
     }
