@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../API";
+import * as APITypes from "../../amplify/backend/function/post/src/src/API";
 type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionInput: InputType;
   __generatedSubscriptionOutput: OutputType;
@@ -101,6 +101,7 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
       nextToken
       __typename
     }
+    views
     createdAt
     updatedAt
     boardPostsId
@@ -153,6 +154,7 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
       nextToken
       __typename
     }
+    views
     createdAt
     updatedAt
     boardPostsId
@@ -205,6 +207,7 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
       nextToken
       __typename
     }
+    views
     createdAt
     updatedAt
     boardPostsId
@@ -231,6 +234,7 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -268,6 +272,7 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -305,6 +310,7 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -344,6 +350,7 @@ export const onCreateMedia = /* GraphQL */ `subscription OnCreateMedia(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -388,6 +395,7 @@ export const onUpdateMedia = /* GraphQL */ `subscription OnUpdateMedia(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -432,6 +440,7 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -574,6 +583,7 @@ export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filt
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -603,6 +613,7 @@ export const onUpdateArticle = /* GraphQL */ `subscription OnUpdateArticle($filt
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -632,6 +643,7 @@ export const onDeleteArticle = /* GraphQL */ `subscription OnDeleteArticle($filt
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -881,6 +893,7 @@ export const onCreatePostTags = /* GraphQL */ `subscription OnCreatePostTags(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -922,6 +935,7 @@ export const onUpdatePostTags = /* GraphQL */ `subscription OnUpdatePostTags(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -963,6 +977,7 @@ export const onDeletePostTags = /* GraphQL */ `subscription OnDeletePostTags(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId

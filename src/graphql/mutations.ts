@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../API";
+import * as APITypes from "../../amplify/backend/function/post/src/src/API";
 type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationInput: InputType;
   __generatedMutationOutput: OutputType;
@@ -110,6 +110,7 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
       nextToken
       __typename
     }
+    views
     createdAt
     updatedAt
     boardPostsId
@@ -162,6 +163,7 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
       nextToken
       __typename
     }
+    views
     createdAt
     updatedAt
     boardPostsId
@@ -214,6 +216,7 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
       nextToken
       __typename
     }
+    views
     createdAt
     updatedAt
     boardPostsId
@@ -240,6 +243,7 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -277,6 +281,7 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -314,6 +319,7 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -353,6 +359,7 @@ export const createMedia = /* GraphQL */ `mutation CreateMedia(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -397,6 +404,7 @@ export const updateMedia = /* GraphQL */ `mutation UpdateMedia(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -441,6 +449,7 @@ export const deleteMedia = /* GraphQL */ `mutation DeleteMedia(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -595,6 +604,7 @@ export const createArticle = /* GraphQL */ `mutation CreateArticle(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -627,6 +637,7 @@ export const updateArticle = /* GraphQL */ `mutation UpdateArticle(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -659,6 +670,7 @@ export const deleteArticle = /* GraphQL */ `mutation DeleteArticle(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -920,6 +932,7 @@ export const createPostTags = /* GraphQL */ `mutation CreatePostTags(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -961,6 +974,7 @@ export const updatePostTags = /* GraphQL */ `mutation UpdatePostTags(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -1002,6 +1016,7 @@ export const deletePostTags = /* GraphQL */ `mutation DeletePostTags(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId

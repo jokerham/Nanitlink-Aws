@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../API";
+import * as APITypes from "../../amplify/backend/function/post/src/src/API";
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
@@ -81,6 +81,7 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
       nextToken
       __typename
     }
+    views
     createdAt
     updatedAt
     boardPostsId
@@ -104,6 +105,7 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -127,6 +129,7 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -186,6 +189,7 @@ export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -335,6 +339,7 @@ export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
@@ -529,6 +534,7 @@ export const getPostTags = /* GraphQL */ `query GetPostTags($id: ID!) {
       authorId
       status
       postType
+      views
       createdAt
       updatedAt
       boardPostsId
