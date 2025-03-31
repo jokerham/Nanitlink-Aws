@@ -5,7 +5,7 @@ import { showToast } from "@/function/showToast";
 import SignUpConfirmDialog from "@/component/dialog/signUpConfirmDialog";
 import { useNavigate } from "react-router";
 import { signUp, signIn, SignUpOutput, SignInOutput, ConfirmSignUpOutput } from 'aws-amplify/auth';
-import "amplifyConfigure"
+import "@/amplifyConfigure"
 
 const SignUp = () => {
   const [signUpValues, setSignUpValues] = useState<FormikValues | null>(null);
