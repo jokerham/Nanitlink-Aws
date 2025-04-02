@@ -1,0 +1,30 @@
+.boardPostLink {
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+  & svg {
+    margin-left: 3px;
+    color: #97a9c1;
+  }
+}
+.boardFooter {
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+.search {
+  align-items: center;
+  width: 35%;
+  margin-top: -7px;
+  & button {
+    margin-top: 7px;
+  }
+}
+.boardButtons {
+  justify-content: flex-end;
+  width: 35%;
+}

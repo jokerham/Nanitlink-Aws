@@ -59,7 +59,7 @@ interface ICreatePostProps {
 
 export const gqCreatePost = async ({ module, moduleId, title, content, attachments }: ICreatePostProps) => {
   const client = generateClient();
-  const authorId = (await getCurrentUser()).username;
+  const authorId = (await getCurrentUser()).userId;
   let postIndex = 1;
   switch (module) {
     case 'board':

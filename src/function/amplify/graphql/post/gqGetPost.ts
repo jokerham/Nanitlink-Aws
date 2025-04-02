@@ -54,6 +54,7 @@ const GET_BOARD =  /* GraphQL */ `
       id
       name
       totalPosts
+      lastPostIndex
       pageTokens {
         page
         token
@@ -63,10 +64,16 @@ const GET_BOARD =  /* GraphQL */ `
 `;
 
 const GET_BOARD_POST = /* GraphQL */ `
-  query ($moduleId: String = "", $nextToken: String | null = null) {
-    postsByModule(module: "board", moduleId: $moduleId, nextToken: $nextToken) {
+  query GetBoardPosts($moduleId: String = "", $nextToken: String) {
+    postsByModuleAndModuleIdAndPostIndex(
+      module: "board"
+      moduleIdPostIndex: { beginsWith: { moduleId: $moduleId } }
+      nextToken: $nextToken
+      sortDirection: DESC
+    ) {
       items {
         id
+        postIndex
         title
         content
         authorId
@@ -83,6 +90,7 @@ const GET_BOARD_POST = /* GraphQL */ `
           }
         }
       }
+      nextToken
     }
   }
 `;
@@ -120,12 +128,14 @@ export const gqListBoardWithPost = async (boardId: string, page: number) => {
     //console.log(board);
     
     // Fetch posts for the specified board and page
-    const token = board.pageTokens.find((t: any) => t.page === page)?.token;
+    const nextToken = board.pageTokens.find((t: any) => t.page === page)?.token ?? null;
+
     const postResponse: any = await client.graphql({
       query: GET_BOARD_POST,
-      variables: { moduleId: boardId, nextToken: token }
+      variables: { moduleId: boardId, nextToken }
     });
-    const posts = postResponse.data.postsByModuleId;
+    //console.log(postResponse);
+    const posts = postResponse.data.postsByModuleAndModuleIdAndPostIndex;
     //console.log(posts);
     board.posts = posts;
 

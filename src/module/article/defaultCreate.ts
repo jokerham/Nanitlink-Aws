@@ -33,11 +33,12 @@ export async function createEmptyPost({moduleId, title, authorId}: ICreateEmptyP
       query: createPostMinimal,
       variables: {
         input: {
+          module: 'article',
+          moduleId,
+          postIndex: 1,
           title,
           content: '',
           authorId,
-          module: 'article',
-          moduleId,
           status: PostStatus.PUBLISHED,
           views: 0,
         },
