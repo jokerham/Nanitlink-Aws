@@ -63,8 +63,8 @@ const GET_BOARD =  /* GraphQL */ `
 `;
 
 const GET_BOARD_POST = /* GraphQL */ `
-  query ($moduleId: String = "") {
-    postsByModuleId(moduleId: $moduleId) {
+  query ($moduleId: String = "", $nextToken: String | null = null) {
+    postsByModule(module: "board", moduleId: $moduleId, nextToken: $nextToken) {
       items {
         id
         title
@@ -107,7 +107,7 @@ export const gqGetArticleWithPost = async (articleId: string) => {
   }
 };
 
-export const gqGetBoardWithPost = async (boardId: string, page: number) => {
+export const gqListBoardWithPost = async (boardId: string, page: number) => {
   const client = generateClient({ authMode: 'apiKey' });
 
   try {
@@ -131,6 +131,26 @@ export const gqGetBoardWithPost = async (boardId: string, page: number) => {
 
     //console.log(board);
     return board;
+  } catch (error) {
+    const typedError = error as { errors?: { message: string }[] };
+    typedError.errors?.forEach(error => {
+      showToast(error.message, 'error');
+      console.log(error.message);
+    });
+    return null;
+  }
+}
+
+export const gqGetPost = async (id: string) => {
+  const client = generateClient({ authMode: 'apiKey' });
+
+  try {
+    const response: any = await client.graphql({
+      query: getPost,
+      variables: { id }
+    });
+
+    return response.data.getPost;
   } catch (error) {
     const typedError = error as { errors?: { message: string }[] };
     typedError.errors?.forEach(error => {

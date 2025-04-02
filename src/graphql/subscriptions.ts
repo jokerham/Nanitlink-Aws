@@ -17,6 +17,7 @@ export const onCreateBoard = /* GraphQL */ `subscription OnCreateBoard($filter: 
       nextToken
       __typename
     }
+    lastPostIndex
     totalPosts
     pageTokens {
       page
@@ -41,6 +42,7 @@ export const onUpdateBoard = /* GraphQL */ `subscription OnUpdateBoard($filter: 
       nextToken
       __typename
     }
+    lastPostIndex
     totalPosts
     pageTokens {
       page
@@ -65,6 +67,7 @@ export const onDeleteBoard = /* GraphQL */ `subscription OnDeleteBoard($filter: 
       nextToken
       __typename
     }
+    lastPostIndex
     totalPosts
     pageTokens {
       page
@@ -86,10 +89,11 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
 ) {
   onCreatePost(filter: $filter, authorId: $authorId) {
     id
-    title
-    content
     module
     moduleId
+    postIndex
+    title
+    content
     authorId
     comments {
       nextToken
@@ -122,10 +126,11 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
 ) {
   onUpdatePost(filter: $filter, authorId: $authorId) {
     id
-    title
-    content
     module
     moduleId
+    postIndex
+    title
+    content
     authorId
     comments {
       nextToken
@@ -158,10 +163,11 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
 ) {
   onDeletePost(filter: $filter, authorId: $authorId) {
     id
-    title
-    content
     module
     moduleId
+    postIndex
+    title
+    content
     authorId
     comments {
       nextToken
@@ -196,10 +202,11 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
     id
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -233,10 +240,11 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
     id
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -270,10 +278,11 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
     id
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -309,10 +318,11 @@ export const onCreateMedia = /* GraphQL */ `subscription OnCreateMedia(
     path
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -353,10 +363,11 @@ export const onUpdateMedia = /* GraphQL */ `subscription OnUpdateMedia(
     path
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -397,10 +408,11 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia(
     path
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -539,10 +551,11 @@ export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filt
     name
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -568,10 +581,11 @@ export const onUpdateArticle = /* GraphQL */ `subscription OnUpdateArticle($filt
     name
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -597,10 +611,11 @@ export const onDeleteArticle = /* GraphQL */ `subscription OnDeleteArticle($filt
     name
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -846,10 +861,11 @@ export const onCreatePostTags = /* GraphQL */ `subscription OnCreatePostTags(
     tagId
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -887,10 +903,11 @@ export const onUpdatePostTags = /* GraphQL */ `subscription OnUpdatePostTags(
     tagId
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -928,10 +945,11 @@ export const onDeletePostTags = /* GraphQL */ `subscription OnDeletePostTags(
     tagId
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views

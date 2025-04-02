@@ -20,6 +20,7 @@ export const createBoard = /* GraphQL */ `mutation CreateBoard(
       nextToken
       __typename
     }
+    lastPostIndex
     totalPosts
     pageTokens {
       page
@@ -47,6 +48,7 @@ export const updateBoard = /* GraphQL */ `mutation UpdateBoard(
       nextToken
       __typename
     }
+    lastPostIndex
     totalPosts
     pageTokens {
       page
@@ -74,6 +76,7 @@ export const deleteBoard = /* GraphQL */ `mutation DeleteBoard(
       nextToken
       __typename
     }
+    lastPostIndex
     totalPosts
     pageTokens {
       page
@@ -95,10 +98,11 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
 ) {
   createPost(input: $input, condition: $condition) {
     id
-    title
-    content
     module
     moduleId
+    postIndex
+    title
+    content
     authorId
     comments {
       nextToken
@@ -131,10 +135,11 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
 ) {
   updatePost(input: $input, condition: $condition) {
     id
-    title
-    content
     module
     moduleId
+    postIndex
+    title
+    content
     authorId
     comments {
       nextToken
@@ -167,10 +172,11 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
 ) {
   deletePost(input: $input, condition: $condition) {
     id
-    title
-    content
     module
     moduleId
+    postIndex
+    title
+    content
     authorId
     comments {
       nextToken
@@ -205,10 +211,11 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
     id
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -242,10 +249,11 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
     id
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -279,10 +287,11 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
     id
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -318,10 +327,11 @@ export const createMedia = /* GraphQL */ `mutation CreateMedia(
     path
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -362,10 +372,11 @@ export const updateMedia = /* GraphQL */ `mutation UpdateMedia(
     path
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -406,10 +417,11 @@ export const deleteMedia = /* GraphQL */ `mutation DeleteMedia(
     path
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -560,10 +572,11 @@ export const createArticle = /* GraphQL */ `mutation CreateArticle(
     name
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -592,10 +605,11 @@ export const updateArticle = /* GraphQL */ `mutation UpdateArticle(
     name
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -624,10 +638,11 @@ export const deleteArticle = /* GraphQL */ `mutation DeleteArticle(
     name
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -885,10 +900,11 @@ export const createPostTags = /* GraphQL */ `mutation CreatePostTags(
     tagId
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -926,10 +942,11 @@ export const updatePostTags = /* GraphQL */ `mutation UpdatePostTags(
     tagId
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -967,10 +984,11 @@ export const deletePostTags = /* GraphQL */ `mutation DeletePostTags(
     tagId
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views

@@ -12,12 +12,14 @@ type Board
   @model 
   @auth(rules: [
     { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] }, # Only Admins can mutate
+    { allow: private, provider: userPools, operations: [read, update] }, # Only authenticated users can read
     { allow: public, operations: [read] } # Everyone can read (guests included)
   ]) {
   id: ID!
   name: String!
   description: String
   posts: [Post] @hasMany
+  lastPostIndex: Int!
   totalPosts: Int!
   pageTokens: [PageTokenTuple]
 }
@@ -30,10 +32,11 @@ type Post
     { allow: public, operations: [read] }
   ]) {
   id: ID!
+  module: String! @index(name: "byModule", sortKeyFields: ["moduleId", "postIndex"])
+  moduleId: String!
+  postIndex: Int!
   title: String!
   content: String!
-  module: String!
-  moduleId: String! @index(name: "byModuleId")
   authorId: String!
   comments: [Comment] @hasMany
   attachments: [Media] @hasMany

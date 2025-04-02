@@ -17,6 +17,7 @@ export const getBoard = /* GraphQL */ `query GetBoard($id: ID!) {
       nextToken
       __typename
     }
+    lastPostIndex
     totalPosts
     pageTokens {
       page
@@ -39,6 +40,7 @@ export const listBoards = /* GraphQL */ `query ListBoards(
       id
       name
       description
+      lastPostIndex
       totalPosts
       createdAt
       updatedAt
@@ -55,10 +57,11 @@ export const listBoards = /* GraphQL */ `query ListBoards(
 export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
   getPost(id: $id) {
     id
-    title
-    content
     module
     moduleId
+    postIndex
+    title
+    content
     authorId
     comments {
       nextToken
@@ -90,10 +93,11 @@ export const listPosts = /* GraphQL */ `query ListPosts(
   listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -108,15 +112,17 @@ export const listPosts = /* GraphQL */ `query ListPosts(
   }
 }
 ` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
-export const postsByModuleId = /* GraphQL */ `query PostsByModuleId(
-  $moduleId: String!
+export const postsByModuleAndModuleIdAndPostIndex = /* GraphQL */ `query PostsByModuleAndModuleIdAndPostIndex(
+  $module: String!
+  $moduleIdPostIndex: ModelPostByModuleCompositeKeyConditionInput
   $sortDirection: ModelSortDirection
   $filter: ModelPostFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  postsByModuleId(
-    moduleId: $moduleId
+  postsByModuleAndModuleIdAndPostIndex(
+    module: $module
+    moduleIdPostIndex: $moduleIdPostIndex
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -124,10 +130,11 @@ export const postsByModuleId = /* GraphQL */ `query PostsByModuleId(
   ) {
     items {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -142,18 +149,19 @@ export const postsByModuleId = /* GraphQL */ `query PostsByModuleId(
   }
 }
 ` as GeneratedQuery<
-  APITypes.PostsByModuleIdQueryVariables,
-  APITypes.PostsByModuleIdQuery
+  APITypes.PostsByModuleAndModuleIdAndPostIndexQueryVariables,
+  APITypes.PostsByModuleAndModuleIdAndPostIndexQuery
 >;
 export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
   getComment(id: $id) {
     id
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -209,10 +217,11 @@ export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
     path
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -358,10 +367,11 @@ export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
     name
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
@@ -552,10 +562,11 @@ export const getPostTags = /* GraphQL */ `query GetPostTags($id: ID!) {
     tagId
     post {
       id
-      title
-      content
       module
       moduleId
+      postIndex
+      title
+      content
       authorId
       status
       views
