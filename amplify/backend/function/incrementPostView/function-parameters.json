@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "function": {
+      "NLCache": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "auth": {
+      "awsnanitelinkd053666d": [
+        "read"
+      ]
+    },
+    "storage": {
+      "Post:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

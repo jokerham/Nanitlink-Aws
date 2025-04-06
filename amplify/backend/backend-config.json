@@ -62,6 +62,14 @@
           ],
           "category": "function",
           "resourceName": "NLBoard"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "incrementPostView"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -126,6 +134,22 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "NLCache": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "CustomDatabase"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "NLMember": {
       "build": true,
       "dependsOn": [],
@@ -134,6 +158,34 @@
     },
     "NLMemberGroup": {
       "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "incrementPostView": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "NLCache"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "awsnanitelinkd053666d"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "awsnanitelink"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -168,6 +220,22 @@
         {
           "category": "function",
           "resourceName": "NLBoard"
+        }
+      ]
+    },
+    "AMPLIFY_function_NLCache_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NLCache"
+        }
+      ]
+    },
+    "AMPLIFY_function_NLCache_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NLCache"
         }
       ]
     },
@@ -208,6 +276,22 @@
         {
           "category": "function",
           "resourceName": "NLMember"
+        }
+      ]
+    },
+    "AMPLIFY_function_incrementPostView_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "incrementPostView"
+        }
+      ]
+    },
+    "AMPLIFY_function_incrementPostView_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "incrementPostView"
         }
       ]
     },
