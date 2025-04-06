@@ -128,7 +128,6 @@ export const gqGetPost = async (id: string, incrementView: boolean = false) => {
   } catch (error) {
     userId = `guest-${window?.location?.hostname}`;
   }
-  console.log('userId', userId);
 
   try {
     if (incrementView) {
