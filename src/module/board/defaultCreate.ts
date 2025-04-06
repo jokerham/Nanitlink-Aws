@@ -18,7 +18,7 @@ export async function createDefault({id, name}: ICreateDefaultParameter): Promis
           id,
           name,
           totalPosts: 0,
-          pageTokens: [],
+          lastPostIndex: 0
         },
       },
       authMode: 'userPool'

@@ -1,18 +1,16 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Pagination } from '@mui/material';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaPencil } from "react-icons/fa6";
 import { FiSettings } from 'react-icons/fi';
 import { MdSearch } from "react-icons/md";
 import { IoIosSave } from "react-icons/io";
-import theme from './theme';
 import { RowBox } from '@/component/customMui';
 import { EFieldType, EVariant, FormBuilder, TSection } from '@/component/formbuilder';
-import { Link } from 'react-router-dom';
+import { getBoardPostsList } from '@/function/amplify/rest/board';
+import theme from './theme';
 import './style.scss';
-import { gqListBoardWithPost } from '@/function/amplify/graphql/post/gqGetPost';
-import { getMemberDetail } from '@/function/amplify/rest/member';
-import { CognitoUser } from '@/function/amplify/rest/member/types';
 
 interface IBoardPost {
   no: number
@@ -64,26 +62,29 @@ const List = ({id}: IListProps) => {
   const onPageChange = (_event: any , page: number) => { setPage(page); }
   
   useEffect(() => {
-    gqListBoardWithPost(id, page).then(async (board) => {
-      const data: IBoardPost[] = await Promise.all(
-        board.posts.items.map(async (post: any): Promise<IBoardPost> => {
-          const member = (await getMemberDetail(post.authorId)).user as unknown as CognitoUser;
-          return {
-            no: post.postIndex,
-            id: post.id,
-            title: post.title,
-            author: member.nickName,
-            date: formatPostDate(post.createdAt),
-            views: post.views,
-            hasAttachment: (post.attachments?.items?.length ?? 0) > 0,
-            comments: post.comments?.items?.items?.length ?? 0
-          };
-        })
-      );
+    getBoardPostsList(id, page, rowsPerPage).then(async (board) => {
+      const data: IBoardPost[] = board?.posts?.items?.map((post: any): IBoardPost => {
+        return {
+          no: post.postIndex,
+          id: post.id,
+          title: post.title,
+          author: post.author,
+          date: formatPostDate(post.createdAt),
+          views: post.views,
+          hasAttachment: (post.attachments?.items?.length ?? 0) > 0,
+          comments: post.comments?.items?.items?.length ?? 0
+        };
+      }) || [];
       setData(data);
-      setCount(board.totalCount);
+      const totalPages = Math.ceil(board.totalPosts / rowsPerPage)
+      setCount(totalPages);
       setCheckedRows([]);
-    })
+    }).catch((error) => {
+      console.error('Error fetching board posts:', error);
+      setData([]);
+      setCount(0);
+      setCheckedRows([]);
+    });
   }, [id, page])
 
   const onSubmit = () => {

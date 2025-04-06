@@ -1,7 +1,7 @@
 import { useState, ComponentType } from 'react';
 import { EFieldType, EVariant, FormBuilder, TSection } from '@/component/formbuilder';
 import { FormikHelpers, FormikValues } from 'formik';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { gqGetPost } from '@/function/amplify/graphql/post/gqGetPost';
 import { CKEditorTemplate } from '@/component/CKEditorTemplate';
 import { gqCreatePost, gqUpdatePost } from '@/function/amplify/graphql/post/gqUpdatePost';
@@ -24,6 +24,7 @@ const defaultInitialValues = {
 const Edit = ({id}: IEditProps) => {
   const [initialValues, setInitialValues] = useState<FormikValues>({...defaultInitialValues, moduleId: id});
   const { search } = useLocation();
+  const navigate = useNavigate();
   const params = new URLSearchParams(search);
   const postId = params.get('postId');
 
@@ -45,23 +46,29 @@ const Edit = ({id}: IEditProps) => {
   }
   
   const onSubmit = async (values: FormikValues, formikHelpers: FormikHelpers<FormikValues>) => {
-    console.log(values);
+    //console.log(values);
     if (values.id) {
       // update post
-      await gqUpdatePost({
+      const result = await gqUpdatePost({
         id: values.id,
         title: values.title,
         content: values.content
       });
+      if (result) {
+        navigate('/board/' + values.moduleId);
+      }
     } else {
       // create post
-      await gqCreatePost({
+      const result = await gqCreatePost({
         title: values.title,
         content: values.content,
         module: values.module,
         moduleId: values.moduleId,
         attachments: values.attachments
       });
+      if (result) {
+        navigate('/board/' + values.moduleId);
+      }
     }
   };
 
