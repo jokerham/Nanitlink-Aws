@@ -39,6 +39,9 @@
           "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
           "s3Key": "amplify-builds/NLBoard-4b313643596549516e43-build.zip"
         }
+      },
+      "storage": {
+        "CustomDatabase": {}
       }
     }
   }

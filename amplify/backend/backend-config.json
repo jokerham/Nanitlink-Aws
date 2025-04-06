@@ -227,5 +227,11 @@
         }
       ]
     }
+  },
+  "storage": {
+    "CustomDatabase": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    }
   }
 }

@@ -1,0 +1,10 @@
+{
+  "resourceName": "CustomDatabase",
+  "tableName": "ttlCache",
+  "partitionKey": {
+    "fieldName": "cacheKey",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
