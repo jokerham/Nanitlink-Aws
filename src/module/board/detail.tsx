@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 
 interface IDetailProps {
   id: string
+  currentPage?: number
 }
 
 type IPostExtend = Post & { author: string };
@@ -29,9 +30,11 @@ export const formatAwsTimestamp = (timestamp?: string): string => {
 const Detail = ({id}: IDetailProps) => {
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState<IPostExtend | undefined>(undefined);
+  const searchParam = new URLSearchParams(window.location.search);
+  const currentPage = searchParam.get('currentPage') ? parseInt(searchParam.get('currentPage') || '1') : 1;
 
   useEffect(() => {
-    gqGetPost(id).then((post) => {
+    gqGetPost(id, true).then((post) => {
       setPost(post);
       setLoading(false);
     }).catch((error) => {
@@ -67,7 +70,7 @@ const Detail = ({id}: IDetailProps) => {
           <Divider />
           <Box dangerouslySetInnerHTML={{ __html: post?.content || '' }} />
           <RowBox>
-            <Button component={Link} to={`/board/${post?.moduleId}`} size="small" startIcon={<CiViewList />} color="inherit">List</Button>
+            <Button component={Link} to={`/board/${post?.moduleId}?page=${currentPage}`} size="small" startIcon={<CiViewList />} color="inherit">List</Button>
           </RowBox>
           <Divider />
         </ColumnBox>

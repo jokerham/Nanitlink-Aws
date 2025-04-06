@@ -52,10 +52,11 @@ export const formatPostDate = (isoDate: string): string => {
 };
 
 const List = ({id}: IListProps) => {
+  const searchParam = new URLSearchParams(window.location.search);
   const rowsPerPage = 10;
   const formRef = useRef<HTMLFormElement>(null);
   const [data, setData] = useState<IBoardPost[]>([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(Number(searchParam.get('page') || 1));
   const [count, setCount] = useState(0);
   const [checkedRows, setCheckedRows] = useState<number[]>([]);
   
@@ -138,7 +139,7 @@ const List = ({id}: IListProps) => {
               <TableRow key={row.no}>
                 <TableCell align='center'>{row.no}</TableCell>
                 <TableCell>
-                  <Link className='boardPostLink' to={`/board/detail/${row.id}`}>
+                  <Link className='boardPostLink' to={`/board/detail/${row.id}?currentPage=${page}`}>
                     {row.title}
                     {(row.comments??0) > 0 && (` [${row.comments}]`) }
                     {(row.hasAttachment) && (<IoIosSave size={16}/>) }

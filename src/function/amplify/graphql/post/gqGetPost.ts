@@ -1,7 +1,8 @@
-import { getPost, listPosts, getBoard } from './../../../../graphql/queries';
-import { generateClient } from 'aws-amplify/api';
+import { getPost } from './../../../../graphql/queries';
+import { generateClient, post } from 'aws-amplify/api';
 import { showToast } from '@/function/showToast';
 import { getMemberDetail } from '../../rest/member';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 // Define the GraphQL query to fetch an article with its associated post
 const GET_ARTICLE_WITH_POST =  /* GraphQL */ `
@@ -117,19 +118,38 @@ export const gqGetArticleWithPost = async (articleId: string) => {
   }
 };
 
-export const gqGetPost = async (id: string) => {
+export const gqGetPost = async (id: string, incrementView: boolean = false) => {
   const client = generateClient({ authMode: 'apiKey' });
 
   try {
+    if (incrementView) {
+      const userId = (await getCurrentUser()).userId
+      const restApiResponse = await post({
+        apiName: 'post',
+        path: `/post/increment`,
+        options: {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            postId: id,
+            userId,
+          })
+        }
+      });
+      const postResponse = await restApiResponse.response;
+      const incrementResponse = await postResponse.body.json();
+    };
+
     const response: any = await client.graphql({
       query: getPost,
       variables: { id }
     });
 
-    const post = response.data.getPost;
-    const user = await getMemberDetail(post?.authorId);
-    post.author = user?.user?.nickName || 'guest';
-    return post;
+    const postItem = response.data.getPost;
+    const user = await getMemberDetail(postItem?.authorId);
+    postItem.author = user?.user?.nickName || 'guest';
+    return postItem;
   } catch (error) {
     const typedError = error as { errors?: { message: string }[] };
     typedError.errors?.forEach(error => {
@@ -138,4 +158,4 @@ export const gqGetPost = async (id: string) => {
     });
     return null;
   }
-}
+};
