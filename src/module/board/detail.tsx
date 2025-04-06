@@ -10,8 +10,10 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { CiViewList } from "react-icons/ci";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getCurrentUser } from "aws-amplify/auth";
+import DeleteConfirmDialog from "@/component/dialog/deleteConfirmDialog";
+import { gqDeletePost } from "@/function/amplify/graphql/post/gqDeletePost";
 
 interface IDetailProps {
   id: string
@@ -31,9 +33,11 @@ export const formatAwsTimestamp = (timestamp?: string): string => {
 const Detail = ({id}: IDetailProps) => {
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState<IPostExtend | undefined>(undefined);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [editable, setEditable] = useState(false);
   const searchParam = new URLSearchParams(window.location.search);
   const currentPage = searchParam.get('currentPage') ? parseInt(searchParam.get('currentPage') || '1') : 1;
+  const navigate = useNavigate();
 
   useEffect(() => {
     gqGetPost(id, true).then((post) => {
@@ -42,15 +46,21 @@ const Detail = ({id}: IDetailProps) => {
       getCurrentUser().then((user) => {
         setEditable(post.authorId === user?.userId);
       });
-      // const user = await getCurrentUser();
-      // if (user) {
-      //   console.log('user', user);
-      //   setEditable(post.authorId === user);
-      // }
     }).catch((error) => {
       setLoading(false);
     });
   }, [id]);
+
+  const onDeleteCancel = () => { setDeleteOpen(false); };
+  const onDeleteConfirm = async () => {
+    setDeleteOpen(false);
+    // Call delete API here
+    const response = await gqDeletePost({ id });
+    // After delete, navigate to the list page
+    if (response) {
+      navigate(`/board/${post?.moduleId}?page=${currentPage}`);
+    }
+  }
 
   return (
     <Loading loading={loading}>
@@ -84,13 +94,18 @@ const Detail = ({id}: IDetailProps) => {
             {editable && (
             <RowBox sx={{gap: 1}}>
               <Button component={Link} to={`/board/edit/${post?.moduleId}?postId=${id}&page=${currentPage}`} size="small" color="inherit">Edit</Button>
-              <Button component={Link} to={`/board/${post?.moduleId}/delete/${id}?page=${currentPage}`} size="small" color="inherit">Delete</Button>
+              <Button size="small" color="inherit" onClick={() => setDeleteOpen(true)}>Delete</Button>
             </RowBox>
             )}
           </RowBox>
           <Divider />
         </ColumnBox>
       </ThemeProvider>
+      <DeleteConfirmDialog
+        open={deleteOpen}
+        item={post?.title || ''}
+        onCancel={onDeleteCancel}
+        onConfirm={onDeleteConfirm} />
     </Loading>
   );
 }
