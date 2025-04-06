@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "storage": {
+      "CustomDatabase": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
