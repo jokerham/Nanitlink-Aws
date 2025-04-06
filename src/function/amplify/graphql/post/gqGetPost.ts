@@ -129,8 +129,6 @@ export const gqGetPost = async (id: string) => {
     const post = response.data.getPost;
     const user = await getMemberDetail(post?.authorId);
     post.author = user?.user?.nickName || 'guest';
-    console.log('post', post);
-
     return post;
   } catch (error) {
     const typedError = error as { errors?: { message: string }[] };
