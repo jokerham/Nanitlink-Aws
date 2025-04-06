@@ -76,10 +76,14 @@ const List = ({id}: IListProps) => {
           comments: post.comments?.items?.items?.length ?? 0
         };
       }) || [];
-      setData(data);
       const totalPages = Math.ceil(board.totalPosts / rowsPerPage)
       setCount(totalPages);
-      setCheckedRows([]);
+      if (page > totalPages) {
+        setPage(totalPages);
+      } else {
+        setData(data);
+        setCheckedRows([]);
+      }
     }).catch((error) => {
       console.error('Error fetching board posts:', error);
       setData([]);
