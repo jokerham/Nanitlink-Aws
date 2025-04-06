@@ -52,6 +52,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "post": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "NLBoard"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -82,6 +96,36 @@
     }
   },
   "function": {
+    "NLBoard": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "NLMember"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "awsnanitelinkd053666d"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "awsnanitelink"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "NLMember": {
       "build": true,
       "dependsOn": [],
@@ -111,6 +155,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_NLBoard_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NLBoard"
+        }
+      ]
+    },
+    "AMPLIFY_function_NLBoard_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NLBoard"
+        }
+      ]
+    },
     "AMPLIFY_function_NLMemberGroup_deploymentBucketName": {
       "usedBy": [
         {

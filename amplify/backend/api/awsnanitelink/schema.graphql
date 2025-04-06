@@ -3,11 +3,6 @@
 # 
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type PageTokenTuple {
-  page: Int!
-  token: String!
-}
-
 type Board
   @model 
   @auth(rules: [
@@ -21,7 +16,6 @@ type Board
   posts: [Post] @hasMany
   lastPostIndex: Int!
   totalPosts: Int!
-  pageTokens: [PageTokenTuple]
 }
 
 type Post 
@@ -32,9 +26,10 @@ type Post
     { allow: public, operations: [read] }
   ]) {
   id: ID!
-  module: String! @index(name: "byModule", sortKeyFields: ["moduleId", "postIndex"])
+  module: String! @index(name: "byModule", sortKeyFields: ["moduleId", "postIndexString"])
   moduleId: String!
   postIndex: Int!
+  postIndexString: String!
   title: String!
   content: String!
   authorId: String!

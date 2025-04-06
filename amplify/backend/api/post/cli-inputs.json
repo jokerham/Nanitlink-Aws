@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/board/{boardId}": {
+      "name": "/board/{boardId}",
+      "lambdaFunction": "NLBoard",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
