@@ -23,7 +23,7 @@ const Loading = ({loading, children}: ILoadingProps) => {
   if (loading) {
     return (
       <ThemeProvider theme={theme}>
-        <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100%">
           <CircularProgress />
         </Box>
       </ThemeProvider>
