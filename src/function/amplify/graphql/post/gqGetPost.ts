@@ -120,10 +120,18 @@ export const gqGetArticleWithPost = async (articleId: string) => {
 
 export const gqGetPost = async (id: string, incrementView: boolean = false) => {
   const client = generateClient({ authMode: 'apiKey' });
+  let userId = '';
+
+  try {
+    const currentUser = await getCurrentUser();
+    userId = currentUser.userId;
+  } catch (error) {
+    userId = `guest-${window?.location?.hostname}`;
+  }
+  console.log('userId', userId);
 
   try {
     if (incrementView) {
-      const userId = (await getCurrentUser()).userId
       const restApiResponse = await post({
         apiName: 'post',
         path: `/post/increment`,
