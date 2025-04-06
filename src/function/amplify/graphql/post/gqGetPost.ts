@@ -1,6 +1,7 @@
 import { getPost, listPosts, getBoard } from './../../../../graphql/queries';
 import { generateClient } from 'aws-amplify/api';
 import { showToast } from '@/function/showToast';
+import { getMemberDetail } from '../../rest/member';
 
 // Define the GraphQL query to fetch an article with its associated post
 const GET_ARTICLE_WITH_POST =  /* GraphQL */ `
@@ -125,7 +126,12 @@ export const gqGetPost = async (id: string) => {
       variables: { id }
     });
 
-    return response.data.getPost;
+    const post = response.data.getPost;
+    const user = await getMemberDetail(post?.authorId);
+    post.author = user?.user?.nickName || 'guest';
+    console.log('post', post);
+
+    return post;
   } catch (error) {
     const typedError = error as { errors?: { message: string }[] };
     typedError.errors?.forEach(error => {

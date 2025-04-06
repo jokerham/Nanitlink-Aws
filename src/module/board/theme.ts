@@ -2,6 +2,14 @@ import { fontSize } from './../../../node_modules/@mui/system/typography/typogra
 import { createTheme } from "@mui/material";
 
 const theme = createTheme({
+  typography: {
+    h2: {
+      fontSize: '1.3125rem',
+    },
+    h6: {
+      fontSize: '0.75rem',
+    },
+  },
   components: {
     MuiTableHead: {
       styleOverrides: {
