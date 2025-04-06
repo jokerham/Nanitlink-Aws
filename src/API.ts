@@ -8,12 +8,6 @@ export type CreateBoardInput = {
   description?: string | null,
   lastPostIndex: number,
   totalPosts: number,
-  pageTokens?: Array< PageTokenTupleInput | null > | null,
-};
-
-export type PageTokenTupleInput = {
-  page: number,
-  token: string,
 };
 
 export type ModelBoardConditionInput = {
@@ -88,7 +82,6 @@ export type Board = {
   posts?: ModelPostConnection | null,
   lastPostIndex: number,
   totalPosts: number,
-  pageTokens?:  Array<PageTokenTuple | null > | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -192,19 +185,12 @@ export type Tag = {
   authorId?: string | null,
 };
 
-export type PageTokenTuple = {
-  __typename: "PageTokenTuple",
-  page: number,
-  token: string,
-};
-
 export type UpdateBoardInput = {
   id: string,
   name?: string | null,
   description?: string | null,
   lastPostIndex?: number | null,
   totalPosts?: number | null,
-  pageTokens?: Array< PageTokenTupleInput | null > | null,
 };
 
 export type DeleteBoardInput = {
@@ -991,11 +977,6 @@ export type CreateBoardMutation = {
     } | null,
     lastPostIndex: number,
     totalPosts: number,
-    pageTokens?:  Array< {
-      __typename: "PageTokenTuple",
-      page: number,
-      token: string,
-    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1018,11 +999,6 @@ export type UpdateBoardMutation = {
     } | null,
     lastPostIndex: number,
     totalPosts: number,
-    pageTokens?:  Array< {
-      __typename: "PageTokenTuple",
-      page: number,
-      token: string,
-    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1045,11 +1021,6 @@ export type DeleteBoardMutation = {
     } | null,
     lastPostIndex: number,
     totalPosts: number,
-    pageTokens?:  Array< {
-      __typename: "PageTokenTuple",
-      page: number,
-      token: string,
-    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1965,11 +1936,6 @@ export type GetBoardQuery = {
     } | null,
     lastPostIndex: number,
     totalPosts: number,
-    pageTokens?:  Array< {
-      __typename: "PageTokenTuple",
-      page: number,
-      token: string,
-    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2637,11 +2603,6 @@ export type OnCreateBoardSubscription = {
     } | null,
     lastPostIndex: number,
     totalPosts: number,
-    pageTokens?:  Array< {
-      __typename: "PageTokenTuple",
-      page: number,
-      token: string,
-    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2663,11 +2624,6 @@ export type OnUpdateBoardSubscription = {
     } | null,
     lastPostIndex: number,
     totalPosts: number,
-    pageTokens?:  Array< {
-      __typename: "PageTokenTuple",
-      page: number,
-      token: string,
-    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2689,11 +2645,6 @@ export type OnDeleteBoardSubscription = {
     } | null,
     lastPostIndex: number,
     totalPosts: number,
-    pageTokens?:  Array< {
-      __typename: "PageTokenTuple",
-      page: number,
-      token: string,
-    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,

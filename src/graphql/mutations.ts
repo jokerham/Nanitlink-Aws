@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../API";
+import * as APITypes from "../../amplify/backend/function/NLBoard/src/src/API";
 type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationInput: InputType;
   __generatedMutationOutput: OutputType;
@@ -22,11 +22,6 @@ export const createBoard = /* GraphQL */ `mutation CreateBoard(
     }
     lastPostIndex
     totalPosts
-    pageTokens {
-      page
-      token
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -50,11 +45,6 @@ export const updateBoard = /* GraphQL */ `mutation UpdateBoard(
     }
     lastPostIndex
     totalPosts
-    pageTokens {
-      page
-      token
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -78,11 +68,6 @@ export const deleteBoard = /* GraphQL */ `mutation DeleteBoard(
     }
     lastPostIndex
     totalPosts
-    pageTokens {
-      page
-      token
-      __typename
-    }
     createdAt
     updatedAt
     __typename

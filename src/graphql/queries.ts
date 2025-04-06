@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../API";
+import * as APITypes from "../../amplify/backend/function/NLBoard/src/src/API";
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
@@ -19,11 +19,6 @@ export const getBoard = /* GraphQL */ `query GetBoard($id: ID!) {
     }
     lastPostIndex
     totalPosts
-    pageTokens {
-      page
-      token
-      __typename
-    }
     createdAt
     updatedAt
     __typename

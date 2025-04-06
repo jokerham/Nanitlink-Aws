@@ -68,6 +68,7 @@ const GET_BOARD_POST = /* GraphQL */ `
     postsByModuleAndModuleIdAndPostIndex(
       module: "board"
       moduleIdPostIndex: { beginsWith: { moduleId: $moduleId } }
+      limit: 10
       nextToken: $nextToken
       sortDirection: DESC
     ) {
@@ -114,42 +115,6 @@ export const gqGetArticleWithPost = async (articleId: string) => {
     return null;
   }
 };
-
-export const gqListBoardWithPost = async (boardId: string, page: number) => {
-  const client = generateClient({ authMode: 'apiKey' });
-
-  try {
-    // Fetch board information
-    const boardResponse: any = await client.graphql({
-      query: GET_BOARD,
-      variables: { id: boardId }
-    });
-    const board = boardResponse.data.getBoard;
-    //console.log(board);
-    
-    // Fetch posts for the specified board and page
-    const nextToken = board.pageTokens.find((t: any) => t.page === page)?.token ?? null;
-
-    const postResponse: any = await client.graphql({
-      query: GET_BOARD_POST,
-      variables: { moduleId: boardId, nextToken }
-    });
-    //console.log(postResponse);
-    const posts = postResponse.data.postsByModuleAndModuleIdAndPostIndex;
-    //console.log(posts);
-    board.posts = posts;
-
-    //console.log(board);
-    return board;
-  } catch (error) {
-    const typedError = error as { errors?: { message: string }[] };
-    typedError.errors?.forEach(error => {
-      showToast(error.message, 'error');
-      console.log(error.message);
-    });
-    return null;
-  }
-}
 
 export const gqGetPost = async (id: string) => {
   const client = generateClient({ authMode: 'apiKey' });

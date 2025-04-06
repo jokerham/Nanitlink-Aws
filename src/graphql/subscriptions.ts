@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../API";
+import * as APITypes from "../../amplify/backend/function/NLBoard/src/src/API";
 type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionInput: InputType;
   __generatedSubscriptionOutput: OutputType;
@@ -19,11 +19,6 @@ export const onCreateBoard = /* GraphQL */ `subscription OnCreateBoard($filter: 
     }
     lastPostIndex
     totalPosts
-    pageTokens {
-      page
-      token
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -44,11 +39,6 @@ export const onUpdateBoard = /* GraphQL */ `subscription OnUpdateBoard($filter: 
     }
     lastPostIndex
     totalPosts
-    pageTokens {
-      page
-      token
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -69,11 +59,6 @@ export const onDeleteBoard = /* GraphQL */ `subscription OnDeleteBoard($filter: 
     }
     lastPostIndex
     totalPosts
-    pageTokens {
-      page
-      token
-      __typename
-    }
     createdAt
     updatedAt
     __typename

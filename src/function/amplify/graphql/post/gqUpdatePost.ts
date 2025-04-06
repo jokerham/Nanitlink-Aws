@@ -90,11 +90,12 @@ export const gqCreatePost = async ({ module, moduleId, title, content, attachmen
   }
 
   try {
+    const postIndexString = String(postIndex).padStart(10, '0');
     const response: any = await client.graphql({
       query: createPost,
       variables: {
         input: {
-          module, moduleId, title, content, authorId, postIndex,
+          module, moduleId, title, content, authorId, postIndex, postIndexString,
           status: PostStatus.PUBLISHED, views: 0
         }
       },
