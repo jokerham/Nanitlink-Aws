@@ -11,6 +11,7 @@ import { CiViewList } from "react-icons/ci";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
 import { Link } from "react-router-dom";
+import { getCurrentUser } from "aws-amplify/auth";
 
 interface IDetailProps {
   id: string
@@ -30,6 +31,7 @@ export const formatAwsTimestamp = (timestamp?: string): string => {
 const Detail = ({id}: IDetailProps) => {
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState<IPostExtend | undefined>(undefined);
+  const [editable, setEditable] = useState(false);
   const searchParam = new URLSearchParams(window.location.search);
   const currentPage = searchParam.get('currentPage') ? parseInt(searchParam.get('currentPage') || '1') : 1;
 
@@ -37,6 +39,14 @@ const Detail = ({id}: IDetailProps) => {
     gqGetPost(id, true).then((post) => {
       setPost(post);
       setLoading(false);
+      getCurrentUser().then((user) => {
+        setEditable(post.authorId === user?.userId);
+      });
+      // const user = await getCurrentUser();
+      // if (user) {
+      //   console.log('user', user);
+      //   setEditable(post.authorId === user);
+      // }
     }).catch((error) => {
       setLoading(false);
     });
@@ -69,8 +79,14 @@ const Detail = ({id}: IDetailProps) => {
           </RowBox>
           <Divider />
           <Box dangerouslySetInnerHTML={{ __html: post?.content || '' }} />
-          <RowBox>
+          <RowBox sx={{justifyContent: 'space-between'}}>
             <Button component={Link} to={`/board/${post?.moduleId}?page=${currentPage}`} size="small" startIcon={<CiViewList />} color="inherit">List</Button>
+            {editable && (
+            <RowBox sx={{gap: 1}}>
+              <Button component={Link} to={`/board/edit/${post?.moduleId}?postId=${id}&page=${currentPage}`} size="small" color="inherit">Edit</Button>
+              <Button component={Link} to={`/board/${post?.moduleId}/delete/${id}?page=${currentPage}`} size="small" color="inherit">Delete</Button>
+            </RowBox>
+            )}
           </RowBox>
           <Divider />
         </ColumnBox>
