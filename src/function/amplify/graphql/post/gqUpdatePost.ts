@@ -4,6 +4,7 @@ import { createPost, updateBoard } from '@/graphql/mutations';
 import { PostStatus } from '@/API';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { getBoard } from '@/graphql/queries';
+import CreateBoardPost from '../../rest/board/createBoardPost';
 
 // Define the GraphQL mutation to update a post
 const UPDATE_POST = /* GraphQL */ `
@@ -58,51 +59,32 @@ interface ICreatePostProps {
 }
 
 export const gqCreatePost = async ({ module, moduleId, title, content, attachments }: ICreatePostProps) => {
-  const client = generateClient();
-  const authorId = (await getCurrentUser()).userId;
-  let postIndex = 1;
-  switch (module) {
-    case 'board':
-      const board = await client.graphql({
-        query: getBoard,
-        variables: {
-          id: moduleId
-        },
-        authMode: 'apiKey'
-      });
-      if (board.data.getBoard) {
-        postIndex = board.data.getBoard.lastPostIndex + 1;
-      }
-
-      const boardUpdate = await client.graphql({
-        query: updateBoard,
-        variables: {
-          input: {
-            id: moduleId,
-            lastPostIndex: postIndex
-          }
-        },
-        authMode: 'userPool'
-      });
-      break;
-    default:
-      break;
-  }
-
   try {
-    const postIndexString = String(postIndex).padStart(10, '0');
-    const response: any = await client.graphql({
-      query: createPost,
-      variables: {
-        input: {
-          module, moduleId, title, content, authorId, postIndex, postIndexString,
-          status: PostStatus.PUBLISHED, views: 0
-        }
-      },
-      authMode: 'userPool'
-    });
-
-    return response.data.createPost;
+    switch (module) {
+      case 'board':
+        const post = await CreateBoardPost({
+          moduleId,
+          title,
+          content
+        })
+        return post;
+      default:
+        const client = generateClient();
+        const postIndex = 1;
+        const postIndexString = String(postIndex).padStart(10, '0');
+        const authorId = (await getCurrentUser()).userId;
+        const response: any = await client.graphql({
+          query: createPost,
+          variables: {
+            input: {
+              module, moduleId, title, content, authorId, postIndex, postIndexString,
+              status: PostStatus.PUBLISHED, views: 0
+            }
+          },
+          authMode: 'userPool'
+        });
+        return response.data.createPost;
+    }
   } catch (error) {
     const typedError = error as { errors?: { message: string }[] };
     typedError.errors?.forEach(error => {

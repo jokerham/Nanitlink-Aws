@@ -21,6 +21,7 @@
 Amplify Params - DO NOT EDIT */
 const { headers } = require('./headers');
 const { listBoardPost } = require('./listBoardPost');
+const { createBoardPost } = require('./createBoardPost');
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
@@ -38,6 +39,8 @@ exports.handler = async (event) => {
     switch (httpMethod) {
       case 'GET':
         return await listBoardPost(boardId, page, rowsPerPage);
+			case 'POST':
+				return await createBoardPost(event);
 			default:
 				return {
 					statusCode: 405,
