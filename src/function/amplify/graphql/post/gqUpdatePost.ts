@@ -1,10 +1,9 @@
 import { generateClient } from 'aws-amplify/api';
 import { showToast } from '@/function/showToast';
-import { createPost, updateBoard } from '@/graphql/mutations';
+import { createPost } from '@/graphql/mutations';
 import { PostStatus } from '@/API';
 import { getCurrentUser } from 'aws-amplify/auth';
-import { getBoard } from '@/graphql/queries';
-import CreateBoardPost from '../../rest/board/createBoardPost';
+import { createBoardPost } from '../../rest/board';
 
 // Define the GraphQL mutation to update a post
 const UPDATE_POST = /* GraphQL */ `
@@ -62,7 +61,7 @@ export const gqCreatePost = async ({ module, moduleId, title, content, attachmen
   try {
     switch (module) {
       case 'board':
-        const post = await CreateBoardPost({
+        const post = await createBoardPost({
           moduleId,
           title,
           content

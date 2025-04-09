@@ -13,7 +13,7 @@ import theme from "./theme";
 import { Link, useNavigate } from "react-router-dom";
 import { getCurrentUser } from "aws-amplify/auth";
 import DeleteConfirmDialog from "@/component/dialog/deleteConfirmDialog";
-import { gqDeletePost } from "@/function/amplify/graphql/post/gqDeletePost";
+import { deleteBoardPost } from "@/function/amplify/rest/board";
 
 interface IDetailProps {
   id: string
@@ -55,7 +55,7 @@ const Detail = ({id}: IDetailProps) => {
   const onDeleteConfirm = async () => {
     setDeleteOpen(false);
     // Call delete API here
-    const response = await gqDeletePost({ id });
+    const response = await deleteBoardPost({boardId: post?.moduleId || '', postId: post?.id || ''});
     // After delete, navigate to the list page
     if (response) {
       navigate(`/board/${post?.moduleId}?page=${currentPage}`);

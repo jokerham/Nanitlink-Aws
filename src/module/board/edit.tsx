@@ -28,7 +28,6 @@ const Edit = ({id}: IEditProps) => {
   const params = new URLSearchParams(search);
   const postId = params.get('postId');
 
-
   if (postId) {
     gqGetPost(postId).then((post) => {
       setInitialValues({

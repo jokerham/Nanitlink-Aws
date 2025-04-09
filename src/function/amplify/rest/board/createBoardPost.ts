@@ -7,7 +7,7 @@ interface ICreateBoardPostProps {
   content: string;
 }
 
-const CreateBoardPost = async (postInput: ICreateBoardPostProps) => {
+export const createBoardPost = async (postInput: ICreateBoardPostProps) => {
   const apiName = 'post';
   const path = `/board/${postInput.moduleId}`;
   try {
@@ -25,5 +25,3 @@ const CreateBoardPost = async (postInput: ICreateBoardPostProps) => {
     throw error;
   }
 }
-
-export default CreateBoardPost;

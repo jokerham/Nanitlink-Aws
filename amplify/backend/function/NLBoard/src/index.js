@@ -22,6 +22,7 @@ Amplify Params - DO NOT EDIT */
 const { headers } = require('./headers');
 const { listBoardPost } = require('./listBoardPost');
 const { createBoardPost } = require('./createBoardPost');
+const { deleteBoardPost } = require('./deleteBoardPost');
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
@@ -41,6 +42,8 @@ exports.handler = async (event) => {
         return await listBoardPost(boardId, page, rowsPerPage);
 			case 'POST':
 				return await createBoardPost(event);
+			case 'DELETE':
+				return await deleteBoardPost(event);
 			default:
 				return {
 					statusCode: 405,
