@@ -13,7 +13,11 @@ type Board
   id: ID!
   name: String!
   description: String
+  rowsPerPage: Int!
+  headerText: String
+  footerText: String
   posts: [Post] @hasMany
+  categories: [Category] @hasMany(indexName: "byBoard", fields: ["id"])
   lastPostIndex: Int!
   totalPosts: Int!
 }
@@ -26,8 +30,13 @@ type Post
     { allow: public, operations: [read] }
   ]) {
   id: ID!
-  module: String! @index(name: "byModule", sortKeyFields: ["moduleId", "postIndexString"])
   moduleId: String!
+  module: String! 
+    @index(name: "byModule", sortKeyFields: ["moduleId", "postIndexString"])
+    @index(name: "byModuleCategory", sortKeyFields: ["moduleId", "categoryIndexString" "postIndexString"])
+  categoryId: ID
+  category: Category @belongsTo(fields: ["categoryId"])
+  categoryIndexString: String!
   postIndex: Int!
   postIndexString: String!
   title: String!
@@ -54,7 +63,8 @@ type Comment
     { allow: public, operations: [read] }
   ]) {
   id: ID!
-  post: Post @belongsTo
+  postId: ID! @index(name: "byPost", sortKeyFields: [])
+  post: Post @belongsTo(fields: ["postId"])
   authorId: String!
   content: String!
   attachments: [Media] @hasMany
@@ -110,7 +120,11 @@ type Category
   ]) {
   id: ID!
   name: String!
-  posts: [Post] @hasMany
+  boardId: ID! @index(name: "byBoard", sortKeyFields: ["categoryIndexString"])
+  board: Board @belongsTo(fields: ["boardId"])
+  post: [Post] @hasMany
+  categoryIndex: Int!
+  categoryIndexString: String!
 }
 
 type Tag

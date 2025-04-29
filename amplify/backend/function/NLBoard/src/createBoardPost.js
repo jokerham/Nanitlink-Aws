@@ -11,7 +11,7 @@ const createBoardPost = async (event) => {
   const authorId = event.requestContext?.authorizer?.claims?.sub;
   const raw = typeof event.body === 'string' ? JSON.parse(event.body) : event.body;
   const body = typeof raw === 'string' ? JSON.parse(raw) : raw;
-  const { title, content } = body;
+  const { title, content, categoryId } = body;
 
   if (!authorId) {
     return {
@@ -40,6 +40,7 @@ const createBoardPost = async (event) => {
     const lastPostIndex = boardData.Item.lastPostIndex || 0;
     const postIndex = lastPostIndex + 1;
     const postIndexString = postIndex.toString().padStart(10, '0');
+    const categoryIndexString = categoryId || 'board';
 
     // 2. Create Post using DynamoDB
     const postItem = {
@@ -52,7 +53,10 @@ const createBoardPost = async (event) => {
       status: 'PUBLISHED',
       postIndex,
       postIndexString,
+      categoryId,
+      categoryIndexString,
       'moduleId#postIndexString': `${id}#${postIndexString}`,
+      'moduleId#categoryIndexString#postIndexString': `${id}#${categoryIndexString}#${postIndexString}`,
       views: 0,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

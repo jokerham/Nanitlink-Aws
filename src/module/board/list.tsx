@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ThemeProvider } from '@emotion/react';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Pagination } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box, Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Pagination } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import { FaPencil } from "react-icons/fa6";
 import { FiSettings } from 'react-icons/fi';
 import { MdSearch } from "react-icons/md";
@@ -11,6 +11,7 @@ import { EFieldType, EVariant, FormBuilder, TSection } from '@/component/formbui
 import { getBoardPostsList } from '@/function/amplify/rest/board';
 import theme from './theme';
 import './style.scss';
+import { gqGetCategoryByBoard } from '@/function/amplify/graphql/post/gqGetCategory';
 
 interface IBoardPost {
   no: number
@@ -55,6 +56,8 @@ const List = ({id}: IListProps) => {
   const searchParam = new URLSearchParams(window.location.search);
   const rowsPerPage = 10;
   const formRef = useRef<HTMLFormElement>(null);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string>('All');
   const [data, setData] = useState<IBoardPost[]>([]);
   const [page, setPage] = useState(Number(searchParam.get('page') || 1));
   const [count, setCount] = useState(0);
@@ -63,7 +66,15 @@ const List = ({id}: IListProps) => {
   const onPageChange = (_event: any , page: number) => { setPage(page); }
   
   useEffect(() => {
-    getBoardPostsList(id, page, rowsPerPage).then(async (board) => {
+    gqGetCategoryByBoard(id).then((categories) => {
+      setCategories(categories);
+    });
+  }, [])
+
+  useEffect(() => {
+    let filters = {};
+    if (activeCategory !== 'All') { filters = { ...filters, category: activeCategory }; }
+    getBoardPostsList(id, page, rowsPerPage, filters).then(async (board) => {
       const data: IBoardPost[] = board?.posts?.items?.map((post: any): IBoardPost => {
         return {
           no: post.postIndex,
@@ -89,7 +100,7 @@ const List = ({id}: IListProps) => {
       setCount(0);
       setCheckedRows([]);
     });
-  }, [id, page])
+  }, [id, page, activeCategory])
 
   const onSubmit = () => {
     if (formRef.current) {
@@ -123,6 +134,22 @@ const List = ({id}: IListProps) => {
 
   return (
     <ThemeProvider theme={theme}>
+      {categories.length > 0 && (
+        <RowBox className='boardCategoryList'>
+          <Box className={`boardCategory${activeCategory === 'All' ? ' active' : ''}`}>
+            <Link className='boardCategoryLink' onClick={() => setActiveCategory('All')}>
+              All
+            </Link>
+          </Box>
+          {categories.map((category, index) => (
+            <Box key={index} className={`boardCategory${activeCategory === category.id ? ' active' : ''}`}>
+              <Link key={category.id} className='boardCategoryLink' onClick={() => setActiveCategory(category.id)}>
+                {category.name}
+              </Link>
+            </Box>
+          ))}
+        </RowBox>
+      )}
       <TableContainer component={Box}>
         <Table size="small">
           <TableHead>
@@ -142,7 +169,7 @@ const List = ({id}: IListProps) => {
               <TableRow key={row.no}>
                 <TableCell align='center'>{row.no}</TableCell>
                 <TableCell>
-                  <Link className='boardPostLink' to={`/board/detail/${row.id}?currentPage=${page}`}>
+                  <Link component={NavLink} className='boardPostLink' to={`/board/detail/${row.id}?currentPage=${page}`}>
                     {row.title}
                     {(row.comments??0) > 0 && (` [${row.comments}]`) }
                     {(row.hasAttachment) && (<IoIosSave size={16}/>) }
@@ -175,8 +202,8 @@ const List = ({id}: IListProps) => {
           </RowBox>
           <Pagination shape="rounded" variant="outlined" size="small" count={count} page={page} onChange={onPageChange} />
           <RowBox className='boardButtons'>
-            <Button component={Link} to={`/board/edit/${id}`} size="small" startIcon={<FaPencil />} color="inherit">Write</Button>
-            <Button size="small" startIcon={<FiSettings />} color="inherit">Configure</Button>
+            <Button component={NavLink} to={`/board/edit/${id}`} size="small" startIcon={<FaPencil />} color="inherit">Write</Button>
+            <Button component={NavLink} to={`/board/configure/${id}`} size="small" startIcon={<FiSettings />} color="inherit">Configure</Button>
           </RowBox>
         </RowBox>
       </TableContainer>

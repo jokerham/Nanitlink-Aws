@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getCurrentUser } from "aws-amplify/auth";
 import DeleteConfirmDialog from "@/component/dialog/deleteConfirmDialog";
 import { deleteBoardPost } from "@/function/amplify/rest/board";
+import Comments from "../post/comments";
 
 interface IDetailProps {
   id: string
@@ -66,7 +67,19 @@ const Detail = ({id}: IDetailProps) => {
     <Loading loading={loading}>
       <ThemeProvider theme={theme}>
         <ColumnBox>
-          <Typography variant="h2">{post?.title} </Typography>
+          <RowBox>
+            {post?.category?.id && (
+              <>
+                <Typography variant="h2">
+                  {post.category.name}
+                </Typography>
+                <Divider orientation="vertical" flexItem />
+              </>
+            )}
+            <Typography variant="h2">
+              {post?.title}
+            </Typography>
+          </RowBox>
           <RowBox sx={{gap: 2}}>
             <RowBox>
               <TfiUser />
@@ -98,9 +111,10 @@ const Detail = ({id}: IDetailProps) => {
             </RowBox>
             )}
           </RowBox>
-          <Divider />
         </ColumnBox>
       </ThemeProvider>
+      <Divider sx={{my: 2}}/>
+      <Comments postId={id} />
       <DeleteConfirmDialog
         open={deleteOpen}
         item={post?.title || ''}

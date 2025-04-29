@@ -37,7 +37,7 @@
         },
         "NLBoard": {
           "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
-          "s3Key": "amplify-builds/NLBoard-574b5a534c625751467a-build.zip"
+          "s3Key": "amplify-builds/NLBoard-50516d517a3254444133-build.zip"
         },
         "NLCache": {
           "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",

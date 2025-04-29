@@ -3,6 +3,7 @@ import { fetchAuthSession } from 'aws-amplify/auth';
 
 interface ICreateBoardPostProps {
   moduleId: string;
+  categoryId?: string;
   title: string;
   content: string;
 }

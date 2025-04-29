@@ -82,6 +82,11 @@ const GET_BOARD_POST = /* GraphQL */ `
         authorId
         createdAt
         views
+        categoryId
+        category {
+          id
+          name
+        }
         comments {
           items {
             id

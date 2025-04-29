@@ -15,8 +15,8 @@ const containerStyle = {
 
 const labelStyle = {
   textAlign: 'right',
-  lineHeight: '30px',
-  py: '6px',
+  lineHeight: '26px',
+  py: '3px',
 };
 
 export const LabelOnLeft = (props: TFieldSetting) => {

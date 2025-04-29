@@ -1,0 +1,30 @@
+.titleRow {
+  justify-content: center;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.titleText {
+  font-weight: 700;
+}
+
+.arrowIcon {
+  position: relative;
+  top: 5px;
+
+  & svg {
+    font-size: '22px'
+  }
+}
+
+.boardLink {
+  color: #08c;
+  font-weight: 700;
+  pointer-events: auto;
+  text-decoration: none;
+
+  &:hover {
+    color: #005580;
+    text-decoration: underline;
+  }
+}

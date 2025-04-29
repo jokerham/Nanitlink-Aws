@@ -75,7 +75,7 @@ async function getAuthor(subId) {
   return promise;
 }
 
-async function listBoardPost(boardId, targetPage, rowsPerPage) {
+async function listBoardPost(boardId, targetPage, rowsPerPage, category) {
   const docClient = new AWS.DynamoDB.DocumentClient();
 
   try {
@@ -83,7 +83,22 @@ async function listBoardPost(boardId, targetPage, rowsPerPage) {
     let result;
 
     for (let currentPage = 1; currentPage <= targetPage; currentPage++) {
-      const params = {
+      const params = category ? {
+        TableName: POSTS_TABLE,
+        IndexName: 'byModuleCategory',
+        KeyConditionExpression: '#module = :m and begins_with(#compositeKey, :prefix)',
+        ExpressionAttributeNames: {
+          '#module': 'module',
+          '#compositeKey': 'moduleId#categoryIndexString#postIndexString'
+        },
+        ExpressionAttributeValues: {
+          ':m': 'board',
+          ':prefix': `${boardId}#${category}#`
+        },
+        Limit: rowsPerPage,
+        ScanIndexForward: false,
+        ExclusiveStartKey: lastEvaluatedKey
+      } : {
         TableName: POSTS_TABLE,
         IndexName: 'byModule',
         KeyConditionExpression: '#module = :m and begins_with(#moduleId, :b)',

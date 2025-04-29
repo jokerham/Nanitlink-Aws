@@ -28,6 +28,9 @@ const Edit = ({id}: IEditProps) => {
 
   const onSubmitHandler = async (values: FormikValues) => {
     const updateValues = {
+        module: 'article',
+        moduleId: id,
+        postIndex: 1,
         id: values.id,
         title: values.title,
         content: values.content

@@ -1,0 +1,50 @@
+.comment-count {
+  color: #CDA25A;
+  font-weight: 500;
+}
+
+.comment-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  & button {
+    color: #767676;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: none;
+
+    &:hover {
+      background-color: transparent;
+      color: #CDA25A;
+    }
+  }
+}
+
+.comment-row {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px; /* equivalent to gap: 2 */
+}
+
+.comment-author-column {
+  flex: 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.comment-content-column {
+  flex: 10;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}

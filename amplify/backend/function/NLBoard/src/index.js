@@ -35,11 +35,12 @@ exports.handler = async (event) => {
     const boardId = pathParameters.boardId;
 		const page = parseInt(queryStringParameters.page) || 1;
 		const rowsPerPage = parseInt(queryStringParameters.rowsPerPage) || 10;
+		const category = queryStringParameters.category;
     const httpMethod = event.httpMethod;
     
     switch (httpMethod) {
       case 'GET':
-        return await listBoardPost(boardId, page, rowsPerPage);
+        return await listBoardPost(boardId, page, rowsPerPage, category);
 			case 'POST':
 				return await createBoardPost(event);
 			case 'DELETE':

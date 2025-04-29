@@ -17,23 +17,30 @@ const UPDATE_POST = /* GraphQL */ `
 `;
 
 interface IUpdatePostProps {
+  module: string;
+  moduleId: string;
   id: string;
   title: string;
   content: string;
+  postIndex: number;
+  categoryId? : string;
   attachments?: {
     fileName: string;
     path: string;
   }[];
 }
 
-export const gqUpdatePost = async ({ id, title, content }: IUpdatePostProps) => {
+export const gqUpdatePost = async ({ module, moduleId, id, title, content, postIndex, categoryId }: IUpdatePostProps) => {
   const client = generateClient({ authMode: 'apiKey' });
 
   try {
+    const postIndexString = String(postIndex).padStart(10, '0');
+    const categoryIndexString = categoryId ? categoryId : module;
+    console.log({'input':{ id, module, moduleId, title, content, categoryId, postIndexString, categoryIndexString }})
     const response: any = await client.graphql({
       query: UPDATE_POST,
       variables: {
-        input: { id, title, content }
+        input: { id, module, moduleId, title, content, categoryId, postIndexString, categoryIndexString }
       },
       authMode: 'userPool'
     });
@@ -52,17 +59,19 @@ export const gqUpdatePost = async ({ id, title, content }: IUpdatePostProps) => 
 interface ICreatePostProps {
   module: string;
   moduleId: string;
+  categoryId?: string
   title: string;
   content: string;
   attachments: any[];
 }
 
-export const gqCreatePost = async ({ module, moduleId, title, content, attachments }: ICreatePostProps) => {
+export const gqCreatePost = async ({ module, moduleId, categoryId, title, content }: ICreatePostProps) => {
   try {
     switch (module) {
       case 'board':
         const post = await createBoardPost({
           moduleId,
+          categoryId,
           title,
           content
         })
@@ -77,7 +86,7 @@ export const gqCreatePost = async ({ module, moduleId, title, content, attachmen
           variables: {
             input: {
               module, moduleId, title, content, authorId, postIndex, postIndexString,
-              status: PostStatus.PUBLISHED, views: 0
+              status: PostStatus.PUBLISHED, views: 0, categoryIndexString: 'article'
             }
           },
           authMode: 'userPool'

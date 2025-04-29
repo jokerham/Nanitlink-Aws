@@ -1,4 +1,3 @@
-import { fontSize } from './../../../node_modules/@mui/system/typography/typography.d';
 import { createTheme } from "@mui/material";
 
 const theme = createTheme({

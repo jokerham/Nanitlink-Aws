@@ -26,16 +26,19 @@ export type TAction =
   | { label: string; actionType: 'row'; action: TRowAction }
   | { label: string; actionType: 'rows'; action: TRowsAction };
 
+export type TPaginationOption = {
+  enable?: boolean
+  page: number,
+  rowsPerPage: number,
+  handleChangePage: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, page: number) => void
+  handleChangeRowsPerPage: () => void
+}
+
 export interface ITableBuidleProps {
   columns?: IDataColumns[]
   loading: boolean
   data: IDataRow[]
   filters?: ITableFilter[]
   actions?: TAction[]
-  paginationOption: {
-    page: number,
-    rowsPerPage: number,
-    handleChangePage: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, page: number) => void
-    handleChangeRowsPerPage: () => void
-  }
+  paginationOption: TPaginationOption
 }

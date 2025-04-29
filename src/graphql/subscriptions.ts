@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../../amplify/backend/function/NLBoard/src/src/API";
+import * as APITypes from "../API";
 type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionInput: InputType;
   __generatedSubscriptionOutput: OutputType;
@@ -13,7 +13,14 @@ export const onCreateBoard = /* GraphQL */ `subscription OnCreateBoard($filter: 
     id
     name
     description
+    rowsPerPage
+    headerText
+    footerText
     posts {
+      nextToken
+      __typename
+    }
+    categories {
       nextToken
       __typename
     }
@@ -33,7 +40,14 @@ export const onUpdateBoard = /* GraphQL */ `subscription OnUpdateBoard($filter: 
     id
     name
     description
+    rowsPerPage
+    headerText
+    footerText
     posts {
+      nextToken
+      __typename
+    }
+    categories {
       nextToken
       __typename
     }
@@ -53,7 +67,14 @@ export const onDeleteBoard = /* GraphQL */ `subscription OnDeleteBoard($filter: 
     id
     name
     description
+    rowsPerPage
+    headerText
+    footerText
     posts {
+      nextToken
+      __typename
+    }
+    categories {
       nextToken
       __typename
     }
@@ -74,9 +95,22 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
 ) {
   onCreatePost(filter: $filter, authorId: $authorId) {
     id
-    module
     moduleId
+    module
+    categoryId
+    category {
+      id
+      name
+      boardId
+      categoryIndex
+      categoryIndexString
+      createdAt
+      updatedAt
+      __typename
+    }
+    categoryIndexString
     postIndex
+    postIndexString
     title
     content
     authorId
@@ -97,7 +131,7 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
     createdAt
     updatedAt
     boardPostsId
-    categoryPostsId
+    categoryPostId
     __typename
   }
 }
@@ -111,9 +145,22 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
 ) {
   onUpdatePost(filter: $filter, authorId: $authorId) {
     id
-    module
     moduleId
+    module
+    categoryId
+    category {
+      id
+      name
+      boardId
+      categoryIndex
+      categoryIndexString
+      createdAt
+      updatedAt
+      __typename
+    }
+    categoryIndexString
     postIndex
+    postIndexString
     title
     content
     authorId
@@ -134,7 +181,7 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
     createdAt
     updatedAt
     boardPostsId
-    categoryPostsId
+    categoryPostId
     __typename
   }
 }
@@ -148,9 +195,22 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
 ) {
   onDeletePost(filter: $filter, authorId: $authorId) {
     id
-    module
     moduleId
+    module
+    categoryId
+    category {
+      id
+      name
+      boardId
+      categoryIndex
+      categoryIndexString
+      createdAt
+      updatedAt
+      __typename
+    }
+    categoryIndexString
     postIndex
+    postIndexString
     title
     content
     authorId
@@ -171,7 +231,7 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
     createdAt
     updatedAt
     boardPostsId
-    categoryPostsId
+    categoryPostId
     __typename
   }
 }
@@ -185,11 +245,15 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
 ) {
   onCreateComment(filter: $filter, authorId: $authorId) {
     id
+    postId
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -198,7 +262,7 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     authorId
@@ -223,11 +287,15 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
 ) {
   onUpdateComment(filter: $filter, authorId: $authorId) {
     id
+    postId
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -236,7 +304,7 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     authorId
@@ -261,11 +329,15 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
 ) {
   onDeleteComment(filter: $filter, authorId: $authorId) {
     id
+    postId
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -274,7 +346,7 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     authorId
@@ -303,9 +375,12 @@ export const onCreateMedia = /* GraphQL */ `subscription OnCreateMedia(
     path
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -314,11 +389,12 @@ export const onCreateMedia = /* GraphQL */ `subscription OnCreateMedia(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     comment {
       id
+      postId
       authorId
       content
       createdAt
@@ -348,9 +424,12 @@ export const onUpdateMedia = /* GraphQL */ `subscription OnUpdateMedia(
     path
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -359,11 +438,12 @@ export const onUpdateMedia = /* GraphQL */ `subscription OnUpdateMedia(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     comment {
       id
+      postId
       authorId
       content
       createdAt
@@ -393,9 +473,12 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia(
     path
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -404,11 +487,12 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     comment {
       id
+      postId
       authorId
       content
       createdAt
@@ -536,9 +620,12 @@ export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filt
     name
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -547,7 +634,7 @@ export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filt
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     createdAt
@@ -566,9 +653,12 @@ export const onUpdateArticle = /* GraphQL */ `subscription OnUpdateArticle($filt
     name
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -577,7 +667,7 @@ export const onUpdateArticle = /* GraphQL */ `subscription OnUpdateArticle($filt
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     createdAt
@@ -596,9 +686,12 @@ export const onDeleteArticle = /* GraphQL */ `subscription OnDeleteArticle($filt
     name
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -607,7 +700,7 @@ export const onDeleteArticle = /* GraphQL */ `subscription OnDeleteArticle($filt
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     createdAt
@@ -624,10 +717,26 @@ export const onCreateCategory = /* GraphQL */ `subscription OnCreateCategory($fi
   onCreateCategory(filter: $filter) {
     id
     name
-    posts {
+    boardId
+    board {
+      id
+      name
+      description
+      rowsPerPage
+      headerText
+      footerText
+      lastPostIndex
+      totalPosts
+      createdAt
+      updatedAt
+      __typename
+    }
+    post {
       nextToken
       __typename
     }
+    categoryIndex
+    categoryIndexString
     createdAt
     updatedAt
     __typename
@@ -641,10 +750,26 @@ export const onUpdateCategory = /* GraphQL */ `subscription OnUpdateCategory($fi
   onUpdateCategory(filter: $filter) {
     id
     name
-    posts {
+    boardId
+    board {
+      id
+      name
+      description
+      rowsPerPage
+      headerText
+      footerText
+      lastPostIndex
+      totalPosts
+      createdAt
+      updatedAt
+      __typename
+    }
+    post {
       nextToken
       __typename
     }
+    categoryIndex
+    categoryIndexString
     createdAt
     updatedAt
     __typename
@@ -658,10 +783,26 @@ export const onDeleteCategory = /* GraphQL */ `subscription OnDeleteCategory($fi
   onDeleteCategory(filter: $filter) {
     id
     name
-    posts {
+    boardId
+    board {
+      id
+      name
+      description
+      rowsPerPage
+      headerText
+      footerText
+      lastPostIndex
+      totalPosts
+      createdAt
+      updatedAt
+      __typename
+    }
+    post {
       nextToken
       __typename
     }
+    categoryIndex
+    categoryIndexString
     createdAt
     updatedAt
     __typename
@@ -846,9 +987,12 @@ export const onCreatePostTags = /* GraphQL */ `subscription OnCreatePostTags(
     tagId
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -857,7 +1001,7 @@ export const onCreatePostTags = /* GraphQL */ `subscription OnCreatePostTags(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     tag {
@@ -888,9 +1032,12 @@ export const onUpdatePostTags = /* GraphQL */ `subscription OnUpdatePostTags(
     tagId
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -899,7 +1046,7 @@ export const onUpdatePostTags = /* GraphQL */ `subscription OnUpdatePostTags(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     tag {
@@ -930,9 +1077,12 @@ export const onDeletePostTags = /* GraphQL */ `subscription OnDeletePostTags(
     tagId
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -941,7 +1091,7 @@ export const onDeletePostTags = /* GraphQL */ `subscription OnDeletePostTags(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     tag {

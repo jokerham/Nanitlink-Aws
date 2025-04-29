@@ -17,7 +17,7 @@ interface SectionTitleProps extends AccordionSummaryProps {
   expandable?: boolean;
 }
 
-export const SectionTitle = styled(({expandable, ...props}: SectionTitleProps) => (
+export const SectionTitle = styled(({expandable = true, ...props}: SectionTitleProps) => (
   <AccordionSummary
     expandIcon={(expandable !== false) ? <BiSolidDownArrow /> : null}
     sx={{ pointerEvents: expandable ? "auto" : "none" }}

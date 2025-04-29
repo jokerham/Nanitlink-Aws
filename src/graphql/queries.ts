@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../../amplify/backend/function/NLBoard/src/src/API";
+import * as APITypes from "../API";
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
@@ -13,7 +13,14 @@ export const getBoard = /* GraphQL */ `query GetBoard($id: ID!) {
     id
     name
     description
+    rowsPerPage
+    headerText
+    footerText
     posts {
+      nextToken
+      __typename
+    }
+    categories {
       nextToken
       __typename
     }
@@ -35,6 +42,9 @@ export const listBoards = /* GraphQL */ `query ListBoards(
       id
       name
       description
+      rowsPerPage
+      headerText
+      footerText
       lastPostIndex
       totalPosts
       createdAt
@@ -52,9 +62,22 @@ export const listBoards = /* GraphQL */ `query ListBoards(
 export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
   getPost(id: $id) {
     id
-    module
     moduleId
+    module
+    categoryId
+    category {
+      id
+      name
+      boardId
+      categoryIndex
+      categoryIndexString
+      createdAt
+      updatedAt
+      __typename
+    }
+    categoryIndexString
     postIndex
+    postIndexString
     title
     content
     authorId
@@ -75,7 +98,7 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     createdAt
     updatedAt
     boardPostsId
-    categoryPostsId
+    categoryPostId
     __typename
   }
 }
@@ -88,9 +111,12 @@ export const listPosts = /* GraphQL */ `query ListPosts(
   listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -99,7 +125,7 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     nextToken
@@ -107,17 +133,17 @@ export const listPosts = /* GraphQL */ `query ListPosts(
   }
 }
 ` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
-export const postsByModuleAndModuleIdAndPostIndex = /* GraphQL */ `query PostsByModuleAndModuleIdAndPostIndex(
+export const postsByModuleAndModuleIdAndPostIndexString = /* GraphQL */ `query PostsByModuleAndModuleIdAndPostIndexString(
   $module: String!
-  $moduleIdPostIndex: ModelPostByModuleCompositeKeyConditionInput
+  $moduleIdPostIndexString: ModelPostByModuleCompositeKeyConditionInput
   $sortDirection: ModelSortDirection
   $filter: ModelPostFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  postsByModuleAndModuleIdAndPostIndex(
+  postsByModuleAndModuleIdAndPostIndexString(
     module: $module
-    moduleIdPostIndex: $moduleIdPostIndex
+    moduleIdPostIndexString: $moduleIdPostIndexString
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -125,9 +151,12 @@ export const postsByModuleAndModuleIdAndPostIndex = /* GraphQL */ `query PostsBy
   ) {
     items {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -136,7 +165,7 @@ export const postsByModuleAndModuleIdAndPostIndex = /* GraphQL */ `query PostsBy
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     nextToken
@@ -144,17 +173,33 @@ export const postsByModuleAndModuleIdAndPostIndex = /* GraphQL */ `query PostsBy
   }
 }
 ` as GeneratedQuery<
-  APITypes.PostsByModuleAndModuleIdAndPostIndexQueryVariables,
-  APITypes.PostsByModuleAndModuleIdAndPostIndexQuery
+  APITypes.PostsByModuleAndModuleIdAndPostIndexStringQueryVariables,
+  APITypes.PostsByModuleAndModuleIdAndPostIndexStringQuery
 >;
-export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
-  getComment(id: $id) {
-    id
-    post {
+export const postsByModuleAndModuleIdAndCategoryIndexStringAndPostIndexString = /* GraphQL */ `query PostsByModuleAndModuleIdAndCategoryIndexStringAndPostIndexString(
+  $module: String!
+  $moduleIdCategoryIndexStringPostIndexString: ModelPostByModuleCategoryCompositeKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  postsByModuleAndModuleIdAndCategoryIndexStringAndPostIndexString(
+    module: $module
+    moduleIdCategoryIndexStringPostIndexString: $moduleIdCategoryIndexStringPostIndexString
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -163,7 +208,38 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PostsByModuleAndModuleIdAndCategoryIndexStringAndPostIndexStringQueryVariables,
+  APITypes.PostsByModuleAndModuleIdAndCategoryIndexStringAndPostIndexStringQuery
+>;
+export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
+  getComment(id: $id) {
+    id
+    postId
+    post {
+      id
+      moduleId
+      module
+      categoryId
+      categoryIndexString
+      postIndex
+      postIndexString
+      title
+      content
+      authorId
+      status
+      views
+      createdAt
+      updatedAt
+      boardPostsId
+      categoryPostId
       __typename
     }
     authorId
@@ -190,6 +266,7 @@ export const listComments = /* GraphQL */ `query ListComments(
   listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      postId
       authorId
       content
       createdAt
@@ -205,6 +282,38 @@ export const listComments = /* GraphQL */ `query ListComments(
   APITypes.ListCommentsQueryVariables,
   APITypes.ListCommentsQuery
 >;
+export const commentsByPostId = /* GraphQL */ `query CommentsByPostId(
+  $postId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  commentsByPostId(
+    postId: $postId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      postId
+      authorId
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.CommentsByPostIdQueryVariables,
+  APITypes.CommentsByPostIdQuery
+>;
 export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
   getMedia(id: $id) {
     id
@@ -212,9 +321,12 @@ export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
     path
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -223,11 +335,12 @@ export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     comment {
       id
+      postId
       authorId
       content
       createdAt
@@ -362,9 +475,12 @@ export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
     name
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -373,7 +489,7 @@ export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     createdAt
@@ -412,10 +528,26 @@ export const getCategory = /* GraphQL */ `query GetCategory($id: ID!) {
   getCategory(id: $id) {
     id
     name
-    posts {
+    boardId
+    board {
+      id
+      name
+      description
+      rowsPerPage
+      headerText
+      footerText
+      lastPostIndex
+      totalPosts
+      createdAt
+      updatedAt
+      __typename
+    }
+    post {
       nextToken
       __typename
     }
+    categoryIndex
+    categoryIndexString
     createdAt
     updatedAt
     __typename
@@ -434,6 +566,9 @@ export const listCategories = /* GraphQL */ `query ListCategories(
     items {
       id
       name
+      boardId
+      categoryIndex
+      categoryIndexString
       createdAt
       updatedAt
       __typename
@@ -445,6 +580,40 @@ export const listCategories = /* GraphQL */ `query ListCategories(
 ` as GeneratedQuery<
   APITypes.ListCategoriesQueryVariables,
   APITypes.ListCategoriesQuery
+>;
+export const categoriesByBoardIdAndCategoryIndexString = /* GraphQL */ `query CategoriesByBoardIdAndCategoryIndexString(
+  $boardId: ID!
+  $categoryIndexString: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelCategoryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  categoriesByBoardIdAndCategoryIndexString(
+    boardId: $boardId
+    categoryIndexString: $categoryIndexString
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      name
+      boardId
+      categoryIndex
+      categoryIndexString
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.CategoriesByBoardIdAndCategoryIndexStringQueryVariables,
+  APITypes.CategoriesByBoardIdAndCategoryIndexStringQuery
 >;
 export const getTag = /* GraphQL */ `query GetTag($id: ID!) {
   getTag(id: $id) {
@@ -557,9 +726,12 @@ export const getPostTags = /* GraphQL */ `query GetPostTags($id: ID!) {
     tagId
     post {
       id
-      module
       moduleId
+      module
+      categoryId
+      categoryIndexString
       postIndex
+      postIndexString
       title
       content
       authorId
@@ -568,7 +740,7 @@ export const getPostTags = /* GraphQL */ `query GetPostTags($id: ID!) {
       createdAt
       updatedAt
       boardPostsId
-      categoryPostsId
+      categoryPostId
       __typename
     }
     tag {

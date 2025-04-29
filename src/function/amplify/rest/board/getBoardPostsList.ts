@@ -3,7 +3,9 @@ import { Board } from '@/API';
 
 // API Function to Fetch Cognito Users
 export const getBoardPostsList = async (
-  board: string, page: number = 1, rowsPerPage: number = 10,
+  board: string, 
+  page: number = 1, 
+  rowsPerPage: number = 10,
   filters: Record<string, string> = {}
 ): Promise<Board> => {
   try {

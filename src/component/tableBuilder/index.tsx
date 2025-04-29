@@ -141,6 +141,10 @@ export const TableBuilder = ({ columns: columnSettings, data: initialData, filte
     }
   }, [currentFilter, initialData]);
 
+  useEffect(() => {
+    console.log(dataRow);
+  }, [dataRow]);
+  
   return (
     <Fragment>
       <RowBox sx={{mt: 2, mb: 1, maxHeight: '30px'}}>
@@ -216,41 +220,43 @@ export const TableBuilder = ({ columns: columnSettings, data: initialData, filte
           </TableBody>
         </Table>
       </TableContainer>
-      <RowBox sx={{mt: 2, mb: 1, height: '30px'}}>
-        <RowBox sx={{mr: 'auto'}}>
-          <TablePagination
-            component="div"
-            count={data.length}
-            page={paginationOption.page}
-            onPageChange={paginationOption.handleChangePage}
-            rowsPerPage={paginationOption.rowsPerPage}
-            onRowsPerPageChange={paginationOption.handleChangeRowsPerPage}
-            sx={{
-              "& .MuiTablePagination-toolbar": {
-                minHeight: '30px !important',
-                "& .MuiTablePagination-spacer": {
-                  display: "none",
-                }
-              },
-              "& .MuiToolbar-root": {
-                paddingY: 0,
-              },
-              "& .MuiTablePagination-selectLabel": {
-                marginY: 0,
-              },
-              "& .MuiTablePagination-displayedRows": {
-                marginY: 0,
-              },
-              "& .MuiTablePagination-actions": {
-                "&> .MuiButtonBase-root": {
+      {(paginationOption.enable ?? true === true) && 
+        <RowBox sx={{mt: 2, mb: 1, height: '30px'}}>
+          <RowBox sx={{mr: 'auto'}}>
+            <TablePagination
+              component="div"
+              count={data.length}
+              page={paginationOption.page}
+              onPageChange={paginationOption.handleChangePage}
+              rowsPerPage={paginationOption.rowsPerPage}
+              onRowsPerPageChange={paginationOption.handleChangeRowsPerPage}
+              sx={{
+                "& .MuiTablePagination-toolbar": {
+                  minHeight: '30px !important',
+                  "& .MuiTablePagination-spacer": {
+                    display: "none",
+                  }
+                },
+                "& .MuiToolbar-root": {
                   paddingY: 0,
                 },
-              } 
-            }}
-          />
+                "& .MuiTablePagination-selectLabel": {
+                  marginY: 0,
+                },
+                "& .MuiTablePagination-displayedRows": {
+                  marginY: 0,
+                },
+                "& .MuiTablePagination-actions": {
+                  "&> .MuiButtonBase-root": {
+                    paddingY: 0,
+                  },
+                } 
+              }}
+            />
+          </RowBox>
+          <TableButtonGroup actions={actions} dataRow={dataRow} />
         </RowBox>
-        <TableButtonGroup actions={actions} dataRow={dataRow} />
-      </RowBox>
+      }
     </Fragment>
   );
 }
