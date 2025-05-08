@@ -2,10 +2,17 @@ import { Box } from '@mui/material';
 import { Field, FormikHandlers, useFormikContext } from 'formik';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { CKEditorConfig } from './config'
+import { CKEditorConfig as CKEditorConfigComment } from './commentConfig'
 import { ClassicEditor } from 'ckeditor5';
 import 'ckeditor5/ckeditor5.css';
 
+enum ECkEditorTemplateVariant {
+  Post,
+  Comment,
+}
+
 interface ICKEditorTemplateProps {
+  variant?: ECkEditorTemplateVariant;
   value: string;
   name: string;
   onChange: FormikHandlers['handleChange']
@@ -35,14 +42,17 @@ export const CKEditorTemplate = (props: ICKEditorTemplateProps) => {
   const setContent = (content: string) => {
     setFieldValue(name, content);
   };
-  
+
+  const config = ((props.variant ?? ECkEditorTemplateVariant.Post)
+    === ECkEditorTemplateVariant.Post) ? CKEditorConfig : CKEditorConfigComment;
+
   return (
     <Box sx={CKEditorBoxStyle}>
       <Field type='hidden' id={name} value={name} onChange={onChange}/>
       <CKEditor 
         id='editor'
         editor={ ClassicEditor }
-        config={ CKEditorConfig }
+        config={ config }
         data={content}
         onReady={(editor) => {        
           const sourceEditing = editor.plugins.get('SourceEditing');
