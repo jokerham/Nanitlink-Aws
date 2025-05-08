@@ -29,6 +29,7 @@ const sampleComments: ExtendedComment[] = [
     id: '1',
     content: 'This is a comment',
     authorId: 'XXXXX',
+    postId: 'samplePostId',
     createdAt: '2021-01-01',
     __typename: 'Comment',
     updatedAt: '',
