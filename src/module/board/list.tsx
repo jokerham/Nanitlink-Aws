@@ -203,7 +203,7 @@ const List = ({id}: IListProps) => {
           <Pagination shape="rounded" variant="outlined" size="small" count={count} page={page} onChange={onPageChange} />
           <RowBox className='boardButtons'>
             <Button component={NavLink} to={`/board/edit/${id}`} size="small" startIcon={<FaPencil />} color="inherit">Write</Button>
-            <Button component={NavLink} to={`/board/configure/${id}`} size="small" startIcon={<FiSettings />} color="inherit">Configure</Button>
+            <Button component={NavLink} to={`/board/configure/${id}/info`} size="small" startIcon={<FiSettings />} color="inherit">Configure</Button>
           </RowBox>
         </RowBox>
       </TableContainer>
