@@ -50,6 +50,12 @@
       },
       "storage": {
         "CustomDatabase": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2kyyp8xn7rntb",
+          "type": "manual"
+        }
       }
     }
   }
