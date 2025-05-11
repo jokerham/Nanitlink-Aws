@@ -1,7 +1,5 @@
 import { generateClient, GraphQLResult } from 'aws-amplify/api';
 import { showToast } from '@/function/showToast';
-import { createCategory } from '@/graphql/mutations';
-import { getCurrentUser } from 'aws-amplify/auth';
 
 interface IAddCateogryProps {
   name: string;

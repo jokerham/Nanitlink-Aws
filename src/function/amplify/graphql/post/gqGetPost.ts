@@ -2,7 +2,7 @@ import { getPost } from './../../../../graphql/queries';
 import { generateClient, post } from 'aws-amplify/api';
 import { showToast } from '@/function/showToast';
 import { getMemberDetail } from '../../rest/member';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { useAuth } from '@/component/commom/AuthContext';
 
 // Define the GraphQL query to fetch an article with its associated post
 const GET_ARTICLE_WITH_POST =  /* GraphQL */ `
@@ -123,16 +123,8 @@ export const gqGetArticleWithPost = async (articleId: string) => {
   }
 };
 
-export const gqGetPost = async (id: string, incrementView: boolean = false) => {
+export const gqGetPost = async (id: string, userId: string, incrementView: boolean = false) => {
   const client = generateClient({ authMode: 'apiKey' });
-  let userId = '';
-
-  try {
-    const currentUser = await getCurrentUser();
-    userId = currentUser.userId;
-  } catch (error) {
-    userId = `guest-${window?.location?.hostname}`;
-  }
 
   try {
     if (incrementView) {
@@ -145,7 +137,7 @@ export const gqGetPost = async (id: string, incrementView: boolean = false) => {
           },
           body: JSON.stringify({
             postId: id,
-            userId,
+            userId, // userSub
           })
         }
       });

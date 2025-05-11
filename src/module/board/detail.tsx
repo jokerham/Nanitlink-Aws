@@ -11,10 +11,10 @@ import { CiViewList } from "react-icons/ci";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
 import { Link, useNavigate } from "react-router-dom";
-import { getCurrentUser } from "aws-amplify/auth";
 import DeleteConfirmDialog from "@/component/dialog/deleteConfirmDialog";
 import { deleteBoardPost } from "@/function/amplify/rest/board";
 import Comments from "../post/comments";
+import { getGuestId, useAuth } from "@/component/commom/AuthContext";
 
 interface IDetailProps {
   id: string
@@ -40,16 +40,20 @@ const Detail = ({id}: IDetailProps) => {
   const currentPage = searchParam.get('currentPage') ? parseInt(searchParam.get('currentPage') || '1') : 1;
   const navigate = useNavigate();
 
+  const auth = useAuth();
+  const user = auth.user;
+
   useEffect(() => {
-    gqGetPost(id, true).then((post) => {
-      setPost(post);
-      setLoading(false);
-      getCurrentUser().then((user) => {
-        setEditable(post.authorId === user?.userId);
+    gqGetPost(id, user?.sub ?? getGuestId(), true)
+      .then((post) => {
+        setPost(post);
+        setLoading(false);
+          setEditable(post.authorId === user?.id );
+        })
+      .catch((error) => {
+        console.error('Error fetching post:', error);
+        setLoading(false);
       });
-    }).catch((error) => {
-      setLoading(false);
-    });
   }, [id]);
 
   const onDeleteCancel = () => { setDeleteOpen(false); };

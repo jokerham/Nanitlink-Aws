@@ -4,26 +4,27 @@ import { FaSignInAlt, FaUser } from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { Link, NavLink } from "react-router-dom";
 import SignInDialog from "@/component/dialog/signInDialog";
-import Authorized, { useUser } from "@/component/amplify/Authorized";
 import SignInUserMenu from "@/component/popover/signInUserMenu";
 import SecondLevelMenu from "@/component/popover/secondLevelMenu";
 import { IMenu } from "@/module/menu/admin/edit/types";
 import { gqListMenuTree } from "@/function/amplify/graphql/menu/gqListMenu";
+import { useAuth } from "@/component/commom/AuthContext";
+import { CognitoUser } from "@/function/amplify/rest/member/types";
 
 
 interface IRenderAuthorizedProps {
+  user: CognitoUser,
   signInUserMenuOpen: boolean,
   setAnchorEl: (anchorEl: HTMLButtonElement | null) => void,
   setSignInUserMenuOpen: (open: boolean) => void
 }
 
 const RenderAuthorized = ({
+  user,
   signInUserMenuOpen,
   setAnchorEl,
   setSignInUserMenuOpen
 }: IRenderAuthorizedProps) => {
-  const user = useUser();
-
   return (
     <Button
       className={signInUserMenuOpen ? "active" : ""}
@@ -34,7 +35,7 @@ const RenderAuthorized = ({
     >
       <Typography variant="h4">
         <FaUser />
-        {user?.userAttributes?.nickname ?? "Guest"} {/* Fix nickname access */}
+        {user.nickName ?? "Guest"}
       </Typography>
     </Button>
   );
@@ -59,6 +60,8 @@ const Header = () => {
   const [menu, setMenu] = useState<IMenu[]>([]);
   const [secondLevelAnchorEl, setSecondLevelAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [secondLevelMenu, setSecondLevelMenu] = useState<IMenu[]>([]);
+  const auth = useAuth();
+  const user = auth.user;
 
   useEffect(() => {
     gqListMenuTree(2, null)
@@ -99,20 +102,18 @@ const Header = () => {
             );
           })}
           <Box sx={{ ml: "auto" }}>
-            <Authorized
-              authorized={
-                <RenderAuthorized
-                  signInUserMenuOpen={signInUserMenuOpen}
-                  setAnchorEl={setAnchorEl}
-                  setSignInUserMenuOpen={setSignInUserMenuOpen}
-                />
-              }
-              unauthorized={
-                <RenderUnauthorized
-                  setSignInOpen={setSignInOpen}
-                />
-              }
-            />
+            {user ? (
+              <RenderAuthorized
+                user={user}
+                signInUserMenuOpen={signInUserMenuOpen}
+                setAnchorEl={setAnchorEl}
+                setSignInUserMenuOpen={setSignInUserMenuOpen}
+              />
+            ) : (
+              <RenderUnauthorized
+                setSignInOpen={setSignInOpen}
+              />
+            )}
           </Box>
         </Toolbar>
       </Container>

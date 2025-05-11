@@ -1,7 +1,6 @@
 import { generateClient } from 'aws-amplify/api';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
-import { Article, Post, PostStatus } from '@/API';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { Article, Post } from '@/API';
 import { gqGetArticleWithPost } from '@/function/amplify/graphql/post/gqGetPost';
 import { gqCreatePost } from '@/function/amplify/graphql/post/gqUpdatePost';
 
@@ -45,7 +44,6 @@ interface ICreateDefaultParameter {
 // Function to create an article with the created post
 export async function createDefault({id, name}: ICreateDefaultParameter): Promise<Article | null> {
   const client = generateClient();
-  const author = await getCurrentUser();
 
   const article = await gqGetArticleWithPost(id);
   if (article) {

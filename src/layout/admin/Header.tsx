@@ -1,11 +1,12 @@
 import { AppBar, Box, Divider, Link, Toolbar, Typography } from '@mui/material';
 import { signOut } from 'aws-amplify/auth';
-import { useUser } from '@/component/amplify/AdminAuthorized';
 import { HorizontalBox } from '@/component/customMui';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/component/commom/AuthContext';
 
 const Header = () => {
-  const user = useUser();
+  const auth = useAuth();
+  const user = auth.user;
   const navigate = useNavigate();
 
   const signOutHandler = () => {
@@ -23,7 +24,7 @@ const Header = () => {
           <Link component={NavLink} to="/"><Typography variant='h6'>http://www.nanitelink.com</Typography></Link>
         </Box>
         <HorizontalBox sx={{height: 32}}>
-          <Link><Typography variant='h5'>{user?.userAttributes?.userName}</Typography></Link>
+          <Link><Typography variant='h5'>{user?.userName}</Typography></Link>
           <Divider orientation="vertical" variant="middle" flexItem sx={{ bgcolor: 'rgba(0,0,0,0.12)' }} />
           <Link onClick={signOutHandler}><Typography variant='h5'>Sign Out</Typography></Link>
           <Divider orientation="vertical" variant="middle" flexItem sx={{ bgcolor: 'rgba(0,0,0,0.12)' }} />

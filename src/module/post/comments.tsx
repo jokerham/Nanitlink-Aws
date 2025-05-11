@@ -11,9 +11,8 @@ import { Avatar, Box, Button } from '@mui/material';
 import { gqListComments } from '@/function/amplify/graphql/post/gqListComments';
 import theme from './theme'
 import './style.scss';
-import { getCurrentUser } from 'aws-amplify/auth';
 import { getMemberDetail } from '@/function/amplify/rest/member';
-import { CognitoUser } from '@/function/amplify/rest/member/types';
+import { useAuth } from '@/component/commom/AuthContext';
 
 interface ICommentsProps {
   postId: string
@@ -39,20 +38,13 @@ const sampleComments: ExtendedComment[] = [
 ]
 
 const Comments = ({postId}: ICommentsProps) => {
+  const { user, loading } = useAuth();
   const [comments, setComments] = useState<ExtendedComment[]>(sampleComments);
-  const [signedInUser, setSignedInUser] = useState<CognitoUser | null>(null);
 
   useEffect(() => {
-    getCurrentUser().then((user) => {
-      getMemberDetail(user?.userId || '').then((cognitoUser) => {
-        setSignedInUser(cognitoUser.user);
-      }).catch((error) => {
-        console.error('Error fetching member details:', error);
-      });
-    }).catch((error) => {
-      console.error('Error fetching signed in user:', error);
-    });
-  }, []);
+    if (loading) return;
+    // rest of your comment fetch logic
+  }, [loading, user]);
 
   useEffect(() => {
     const getAuthorNickName = async (authorId: string) => {
@@ -61,12 +53,11 @@ const Comments = ({postId}: ICommentsProps) => {
     }
 
     const hasEditPermission = (authorId: string) => {
-      console.log('signedInUser', signedInUser);
-      if (signedInUser) {
-        if (signedInUser.userGroups.includes('Admin')) 
+      if (user) {
+        if (user.userGroups.includes('Admin')) 
           return true;
         else 
-          return authorId === signedInUser.id;
+          return authorId === user.id;
       }
       return false;
     }
@@ -93,7 +84,7 @@ const Comments = ({postId}: ICommentsProps) => {
         console.error('Error fetching comments:', error);
       }
     })();
-  }, [signedInUser]);
+  }, [user]);
 
 
   return (
