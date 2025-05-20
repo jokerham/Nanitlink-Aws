@@ -46,7 +46,8 @@ import {
   TextTransformation,
   TodoList,
   Underline,
-  Undo
+  Undo,
+  CodeBlock
 } from 'ckeditor5';
 
 export const CKEditorConfig: EditorConfig = {
@@ -70,6 +71,7 @@ export const CKEditorConfig: EditorConfig = {
       'mediaEmbed',
       'insertTable',
       'blockQuote',
+      'codeBlock',
       'htmlEmbed',
       '|',
       'bulletedList',
@@ -89,6 +91,7 @@ export const CKEditorConfig: EditorConfig = {
     BlockQuote,
     Bold,
     CloudServices,
+    CodeBlock,
     Essentials,
     FullPage,
     GeneralHtmlSupport,

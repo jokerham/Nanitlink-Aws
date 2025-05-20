@@ -90,7 +90,8 @@ export interface IFileFieldSetting extends IBaseFieldSetting {
 export interface ICustomFieldSetting extends IBaseFieldSetting {
   type: EFieldType.Custom
   options: {
-    Component: React.ComponentType<unknown>
+    Component: React.ComponentType<unknown>;
+    componentPros?: unknown;
   }
 }
 

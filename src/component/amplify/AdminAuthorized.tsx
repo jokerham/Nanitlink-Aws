@@ -6,8 +6,7 @@ interface IAdminAuthorizedProps {
 }
 
 const AdminAuthorized = ({children}: IAdminAuthorizedProps) => {
-  const auth = useAuth();
-  const user = auth.user;
+  const {user} = useAuth();
   
   return (
     <Fragment>

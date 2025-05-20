@@ -77,8 +77,7 @@ export const gqCreatePost = async ({ module, moduleId, categoryId, title, conten
         })
         return post;
       default:
-        const auth = useAuth();
-        const user = auth.user;
+        const { user } = useAuth();
         const client = generateClient();
         const postIndex = 1;
         const postIndexString = String(postIndex).padStart(10, '0');

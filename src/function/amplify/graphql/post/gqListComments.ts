@@ -3,8 +3,8 @@ import { generateClient } from 'aws-amplify/api';
 import { showToast } from '@/function/showToast';
 
 const LIST_COMMENTS_BY_POST = /* GraphQL */ `
-  query ListCommentsByPost($postId: ID!) {
-    commentsByPostId(postId: $postId) {
+  query commentsByPostId($postId: ID!) {
+    commentsByPostIdAndCommentIndexString(postId: $postId, sortDirection: DESC) {
       items {
         id
         content
@@ -16,6 +16,7 @@ const LIST_COMMENTS_BY_POST = /* GraphQL */ `
             path
           }
         }
+        createdAt
       }
     }
   }
@@ -30,8 +31,11 @@ export const gqListComments = async (postId: string) => {
       variables: { postId }
     });
 
-    return response.data.commentsByPostId.items;
+    console.log(response);
+
+    return response.data.commentsByPostIdAndCommentIndexString.items;
   } catch (error) {
+    console.error(error);
     const typedError = error as { errors?: { message: string }[] };
     typedError.errors?.forEach(error => {
       showToast(error.message, 'error');

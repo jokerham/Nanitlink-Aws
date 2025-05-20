@@ -2,7 +2,7 @@ import { getPost } from './../../../../graphql/queries';
 import { generateClient, post } from 'aws-amplify/api';
 import { showToast } from '@/function/showToast';
 import { getMemberDetail } from '../../rest/member';
-import { useAuth } from '@/component/commom/AuthContext';
+import { getGuestId } from '@/component/commom/AuthContext';
 
 // Define the GraphQL query to fetch an article with its associated post
 const GET_ARTICLE_WITH_POST =  /* GraphQL */ `
@@ -123,7 +123,7 @@ export const gqGetArticleWithPost = async (articleId: string) => {
   }
 };
 
-export const gqGetPost = async (id: string, userId: string, incrementView: boolean = false) => {
+export const gqGetPost = async (id: string, userId: string = getGuestId(), incrementView: boolean = false) => {
   const client = generateClient({ authMode: 'apiKey' });
 
   try {

@@ -60,8 +60,7 @@ const Header = () => {
   const [menu, setMenu] = useState<IMenu[]>([]);
   const [secondLevelAnchorEl, setSecondLevelAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [secondLevelMenu, setSecondLevelMenu] = useState<IMenu[]>([]);
-  const auth = useAuth();
-  const user = auth.user;
+  const { user } = useAuth();
 
   useEffect(() => {
     gqListMenuTree(2, null)

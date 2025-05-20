@@ -274,6 +274,8 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
       categoryPostId
       __typename
     }
+    commentIndex
+    commentIndexString
     authorId
     content
     attachments {
@@ -316,6 +318,8 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
       categoryPostId
       __typename
     }
+    commentIndex
+    commentIndexString
     authorId
     content
     attachments {
@@ -358,6 +362,8 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
       categoryPostId
       __typename
     }
+    commentIndex
+    commentIndexString
     authorId
     content
     attachments {
@@ -404,6 +410,8 @@ export const createMedia = /* GraphQL */ `mutation CreateMedia(
     comment {
       id
       postId
+      commentIndex
+      commentIndexString
       authorId
       content
       createdAt
@@ -453,6 +461,8 @@ export const updateMedia = /* GraphQL */ `mutation UpdateMedia(
     comment {
       id
       postId
+      commentIndex
+      commentIndexString
       authorId
       content
       createdAt
@@ -502,6 +512,8 @@ export const deleteMedia = /* GraphQL */ `mutation DeleteMedia(
     comment {
       id
       postId
+      commentIndex
+      commentIndexString
       authorId
       content
       createdAt

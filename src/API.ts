@@ -150,6 +150,8 @@ export type Comment = {
   id: string,
   postId: string,
   post?: Post | null,
+  commentIndex: number,
+  commentIndexString: string,
   authorId: string,
   content: string,
   attachments?: ModelMediaConnection | null,
@@ -317,6 +319,8 @@ export type DeletePostInput = {
 export type CreateCommentInput = {
   id?: string | null,
   postId: string,
+  commentIndex: number,
+  commentIndexString: string,
   authorId: string,
   content: string,
   postCommentsId?: string | null,
@@ -324,6 +328,8 @@ export type CreateCommentInput = {
 
 export type ModelCommentConditionInput = {
   postId?: ModelIDInput | null,
+  commentIndex?: ModelIntInput | null,
+  commentIndexString?: ModelStringInput | null,
   authorId?: ModelStringInput | null,
   content?: ModelStringInput | null,
   and?: Array< ModelCommentConditionInput | null > | null,
@@ -337,6 +343,8 @@ export type ModelCommentConditionInput = {
 export type UpdateCommentInput = {
   id: string,
   postId?: string | null,
+  commentIndex?: number | null,
+  commentIndexString?: string | null,
   authorId?: string | null,
   content?: string | null,
   postCommentsId?: string | null,
@@ -715,6 +723,8 @@ export type ModelPostByModuleCategoryCompositeKeyInput = {
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null,
   postId?: ModelIDInput | null,
+  commentIndex?: ModelIntInput | null,
+  commentIndexString?: ModelStringInput | null,
   authorId?: ModelStringInput | null,
   content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
@@ -723,6 +733,16 @@ export type ModelCommentFilterInput = {
   or?: Array< ModelCommentFilterInput | null > | null,
   not?: ModelCommentFilterInput | null,
   postCommentsId?: ModelIDInput | null,
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
 };
 
 export type ModelMediaFilterInput = {
@@ -752,16 +772,6 @@ export type ModelMenuFilterInput = {
   and?: Array< ModelMenuFilterInput | null > | null,
   or?: Array< ModelMenuFilterInput | null > | null,
   not?: ModelMenuFilterInput | null,
-};
-
-export type ModelStringKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
 };
 
 export type ModelArticleFilterInput = {
@@ -940,6 +950,8 @@ export type ModelSubscriptionPostFilterInput = {
 export type ModelSubscriptionCommentFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   postId?: ModelSubscriptionIDInput | null,
+  commentIndex?: ModelSubscriptionIntInput | null,
+  commentIndexString?: ModelSubscriptionStringInput | null,
   content?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
@@ -1302,6 +1314,8 @@ export type CreateCommentMutation = {
       boardPostsId?: string | null,
       categoryPostId?: string | null,
     } | null,
+    commentIndex: number,
+    commentIndexString: string,
     authorId: string,
     content: string,
     attachments?:  {
@@ -1343,6 +1357,8 @@ export type UpdateCommentMutation = {
       boardPostsId?: string | null,
       categoryPostId?: string | null,
     } | null,
+    commentIndex: number,
+    commentIndexString: string,
     authorId: string,
     content: string,
     attachments?:  {
@@ -1384,6 +1400,8 @@ export type DeleteCommentMutation = {
       boardPostsId?: string | null,
       categoryPostId?: string | null,
     } | null,
+    commentIndex: number,
+    commentIndexString: string,
     authorId: string,
     content: string,
     attachments?:  {
@@ -1430,6 +1448,8 @@ export type CreateMediaMutation = {
       __typename: "Comment",
       id: string,
       postId: string,
+      commentIndex: number,
+      commentIndexString: string,
       authorId: string,
       content: string,
       createdAt: string,
@@ -1478,6 +1498,8 @@ export type UpdateMediaMutation = {
       __typename: "Comment",
       id: string,
       postId: string,
+      commentIndex: number,
+      commentIndexString: string,
       authorId: string,
       content: string,
       createdAt: string,
@@ -1526,6 +1548,8 @@ export type DeleteMediaMutation = {
       __typename: "Comment",
       id: string,
       postId: string,
+      commentIndex: number,
+      commentIndexString: string,
       authorId: string,
       content: string,
       createdAt: string,
@@ -2381,6 +2405,8 @@ export type GetCommentQuery = {
       boardPostsId?: string | null,
       categoryPostId?: string | null,
     } | null,
+    commentIndex: number,
+    commentIndexString: string,
     authorId: string,
     content: string,
     attachments?:  {
@@ -2406,6 +2432,8 @@ export type ListCommentsQuery = {
       __typename: "Comment",
       id: string,
       postId: string,
+      commentIndex: number,
+      commentIndexString: string,
       authorId: string,
       content: string,
       createdAt: string,
@@ -2416,21 +2444,24 @@ export type ListCommentsQuery = {
   } | null,
 };
 
-export type CommentsByPostIdQueryVariables = {
+export type CommentsByPostIdAndCommentIndexStringQueryVariables = {
   postId: string,
+  commentIndexString?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelCommentFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type CommentsByPostIdQuery = {
-  commentsByPostId?:  {
+export type CommentsByPostIdAndCommentIndexStringQuery = {
+  commentsByPostIdAndCommentIndexString?:  {
     __typename: "ModelCommentConnection",
     items:  Array< {
       __typename: "Comment",
       id: string,
       postId: string,
+      commentIndex: number,
+      commentIndexString: string,
       authorId: string,
       content: string,
       createdAt: string,
@@ -2474,6 +2505,8 @@ export type GetMediaQuery = {
       __typename: "Comment",
       id: string,
       postId: string,
+      commentIndex: number,
+      commentIndexString: string,
       authorId: string,
       content: string,
       createdAt: string,
@@ -3225,6 +3258,8 @@ export type OnCreateCommentSubscription = {
       boardPostsId?: string | null,
       categoryPostId?: string | null,
     } | null,
+    commentIndex: number,
+    commentIndexString: string,
     authorId: string,
     content: string,
     attachments?:  {
@@ -3266,6 +3301,8 @@ export type OnUpdateCommentSubscription = {
       boardPostsId?: string | null,
       categoryPostId?: string | null,
     } | null,
+    commentIndex: number,
+    commentIndexString: string,
     authorId: string,
     content: string,
     attachments?:  {
@@ -3307,6 +3344,8 @@ export type OnDeleteCommentSubscription = {
       boardPostsId?: string | null,
       categoryPostId?: string | null,
     } | null,
+    commentIndex: number,
+    commentIndexString: string,
     authorId: string,
     content: string,
     attachments?:  {
@@ -3353,6 +3392,8 @@ export type OnCreateMediaSubscription = {
       __typename: "Comment",
       id: string,
       postId: string,
+      commentIndex: number,
+      commentIndexString: string,
       authorId: string,
       content: string,
       createdAt: string,
@@ -3401,6 +3442,8 @@ export type OnUpdateMediaSubscription = {
       __typename: "Comment",
       id: string,
       postId: string,
+      commentIndex: number,
+      commentIndexString: string,
       authorId: string,
       content: string,
       createdAt: string,
@@ -3449,6 +3492,8 @@ export type OnDeleteMediaSubscription = {
       __typename: "Comment",
       id: string,
       postId: string,
+      commentIndex: number,
+      commentIndexString: string,
       authorId: string,
       content: string,
       createdAt: string,

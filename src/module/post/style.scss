@@ -42,9 +42,23 @@
   gap: 0.1rem;
 }
 
+.comment-author {
+
+}
+
+.comment-created-at {
+  font-size: 12px;
+  font-weight: 400;
+  color: #4b4b4b;
+}
+
 .comment-content-column {
   flex: 10;
   min-width: 0;
   display: flex;
   flex-direction: column;
+}
+
+.comment-content {
+  margin: -16px;
 }

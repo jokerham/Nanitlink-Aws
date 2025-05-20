@@ -5,8 +5,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/component/commom/AuthContext';
 
 const Header = () => {
-  const auth = useAuth();
-  const user = auth.user;
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const signOutHandler = () => {

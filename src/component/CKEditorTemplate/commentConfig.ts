@@ -35,9 +35,9 @@ export const CKEditorConfig: EditorConfig = {
     items: [
       'undo', 'redo', 'findAndReplace',
       '|',
-      'link', 'unlink', 'anchor',
+      'link',
       '|',
-      'insertImage', 'insertTable', 'horizontalLine', 'specialCharacters', 'sourceEditing',
+      'insertTable', 'horizontalLine', 'specialCharacters', 'sourceEditing',
       '|',
       'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript',
       '|',
@@ -50,8 +50,8 @@ export const CKEditorConfig: EditorConfig = {
       'fontColor', 'fontBackgroundColor',
       '|',
       'numberedList', 'bulletedList', 'todoList',
-      '|',
-      'imageInsert', 'imageUpload'
+       '|',
+       /*'imageInsert',*/ 'imageUpload'
     ],
     shouldNotGroupWhenFull: false
   },
@@ -83,25 +83,24 @@ export const CKEditorConfig: EditorConfig = {
   htmlSupport: {
     allow: [
       {
-        name: /.*/,
+        name: 'div',
+        styles: true,
         attributes: true,
-        classes: true,
-        styles: true
+        classes: true
+      },
+      {
+        name: /^.*$/,
+        styles: true,
+        attributes: true,
+        classes: true
       }
     ]
   },
   link: {
     addTargetToExternalLinks: true,
+    defaultProtocol: 'https://',
     decorators: {
-      openInNewTab: {
-        mode: 'manual',
-        label: 'Open in a new tab',
-        attributes: {
-          target: '_blank',
-          rel: 'noopener noreferrer'
-        }
-      },
-      downloadable: {
+      toggleDownloadable: {
         mode: 'manual',
         label: 'Downloadable',
         attributes: {

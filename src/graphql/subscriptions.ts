@@ -265,6 +265,8 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
       categoryPostId
       __typename
     }
+    commentIndex
+    commentIndexString
     authorId
     content
     attachments {
@@ -307,6 +309,8 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
       categoryPostId
       __typename
     }
+    commentIndex
+    commentIndexString
     authorId
     content
     attachments {
@@ -349,6 +353,8 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
       categoryPostId
       __typename
     }
+    commentIndex
+    commentIndexString
     authorId
     content
     attachments {
@@ -395,6 +401,8 @@ export const onCreateMedia = /* GraphQL */ `subscription OnCreateMedia(
     comment {
       id
       postId
+      commentIndex
+      commentIndexString
       authorId
       content
       createdAt
@@ -444,6 +452,8 @@ export const onUpdateMedia = /* GraphQL */ `subscription OnUpdateMedia(
     comment {
       id
       postId
+      commentIndex
+      commentIndexString
       authorId
       content
       createdAt
@@ -493,6 +503,8 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia(
     comment {
       id
       postId
+      commentIndex
+      commentIndexString
       authorId
       content
       createdAt

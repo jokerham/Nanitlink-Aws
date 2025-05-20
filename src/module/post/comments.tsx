@@ -1,18 +1,24 @@
-import { useEffect, useState } from 'react';
+import { ComponentType, useEffect, useState } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { Comment } from '@/API';
+import { ColumnBox, RowBox } from '@/component/customMui';
+import { Avatar, Box, Button, Divider } from '@mui/material';
+import { getMemberDetail } from '@/function/amplify/rest/member';
+import { useAuth } from '@/component/commom/AuthContext';
+import { gqListComments } from '@/function/amplify/graphql/post/gqListComments';
 import { LiaComment } from "react-icons/lia";
 import { TiArrowBackOutline } from "react-icons/ti";
 import { LuEraser } from "react-icons/lu";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { CiMenuKebab } from "react-icons/ci";
-import { ColumnBox, RowBox } from '@/component/customMui';
-import { Avatar, Box, Button } from '@mui/material';
-import { gqListComments } from '@/function/amplify/graphql/post/gqListComments';
+import { CKEditorTemplate, ECkEditorTemplateVariant } from '@/component/CKEditorTemplate';
+import { FormikConfig, FormikHandlers, FormikValues } from 'formik';
+import { EFieldType, EVariant, FormBuilder, TSection } from '@/component/formbuilder';
+import { gqAddComment } from '@/function/amplify/graphql/post/gqAddComment';
+import { showToast } from '@/function/showToast';
+import { formatAwsTimestamp } from "@/function/amplify/formatPostDate";
 import theme from './theme'
 import './style.scss';
-import { getMemberDetail } from '@/function/amplify/rest/member';
-import { useAuth } from '@/component/commom/AuthContext';
 
 interface ICommentsProps {
   postId: string
@@ -23,69 +29,92 @@ type ExtendedComment = Comment & {
   editPermission: boolean;
 };
 
-const sampleComments: ExtendedComment[] = [
-  {
-    id: '1',
-    content: 'This is a comment',
-    authorId: 'XXXXX',
-    postId: 'samplePostId',
-    createdAt: '2021-01-01',
-    __typename: 'Comment',
-    updatedAt: '',
-    author: 'guest',
-    editPermission: false
-  }
-]
-
 const Comments = ({postId}: ICommentsProps) => {
-  const { user, loading } = useAuth();
-  const [comments, setComments] = useState<ExtendedComment[]>(sampleComments);
+  const { user } = useAuth();
+  const [comments, setComments] = useState<ExtendedComment[]>([]);
 
-  useEffect(() => {
-    if (loading) return;
-    // rest of your comment fetch logic
-  }, [loading, user]);
+  const getAuthorNickName = async (authorId: string) => {
+    const member = await getMemberDetail(authorId);
+    return member.user?.nickName ?? 'guest';
+  }
 
+  const hasEditPermission = (authorId: string) => {
+    if (user) {
+      if (user.userGroups.includes('Admin')) 
+        return true;
+      else 
+        return authorId === user.id;
+    }
+    return false;
+  }
+  
   useEffect(() => {
-    const getAuthorNickName = async (authorId: string) => {
-      const member = await getMemberDetail(authorId);
-      return member.user?.nickName ?? 'guest';
+    const fetchComments = async () => {
+      const comments = await gqListComments(postId);
+      console.log(comments);
+      const extendedComments: ExtendedComment[] = await Promise.all(
+        comments.map(async (comment: Comment) => {
+          const author = await getAuthorNickName(comment.authorId);
+          const editPermission = hasEditPermission(comment.authorId);
+          return {
+            ...comment,
+            author,
+            editPermission
+          }
+        })
+      );
+      console.log(extendedComments);
+      setComments(extendedComments);
     }
 
-    const hasEditPermission = (authorId: string) => {
-      if (user) {
-        if (user.userGroups.includes('Admin')) 
-          return true;
-        else 
-          return authorId === user.id;
+
+    gqListComments(postId).then(() => {
+      fetchComments();
+    });
+
+    fetchComments();
+  }, [postId]);
+
+  const formikConfig: FormikConfig<FormikValues> = {
+    initialValues: {
+      postId,
+      content: '',
+    },
+    onSubmit: (values) => {
+      if (!user) {
+        showToast('Please login to comment', 'error');
+        return;
       }
-      return false;
-    }
-    
-    (async () => {
-      try {
-        let comments = await gqListComments(postId);
-        if (comments.length === 0) {
-          comments = sampleComments;
+
+      const commentItem = {
+        postId: values.postId,
+        content: values.content,
+        authorId: user.id,
+      }
+
+      gqAddComment(commentItem).then((res => {
+        if (res) {
+          setComments((prevComments) => [
+            ...prevComments,
+            res
+          ]);
         }
-        const commentWithAuthorNickname: ExtendedComment[] = await Promise.all(
-          comments.map(async (comment: Comment) => {
-            const authorNickname = await getAuthorNickName(comment.authorId);
-            const editPermission = hasEditPermission(comment.authorId);
-            return {
-              ...comment,
-              author: authorNickname,
-              editPermission
-            };
-          })
-        );
-        setComments(commentWithAuthorNickname);
-      } catch (error) {
-        console.error('Error fetching comments:', error);
-      }
-    })();
-  }, [user]);
-
+      }))
+    },
+  }
+  
+  const sections: TSection[] = [
+    {
+      seq: 0,
+      fields: [
+        { name: 'postId', label: 'Post ID', type: EFieldType.Hidden },
+        { name: 'content', label: 'Content', type: EFieldType.Custom, options: {
+          Component: CKEditorTemplate as ComponentType<unknown>,
+          componentPros: { variant: ECkEditorTemplateVariant.Comment }
+        } },
+      ]
+    }
+  ]
 
   return (
     <ThemeProvider theme={theme}>
@@ -95,28 +124,32 @@ const Comments = ({postId}: ICommentsProps) => {
           Comments
           <Box className="comment-count">{comments.length}</Box>
         </RowBox>
-        { comments.map((comment) => (
-          <RowBox className="comment-row" key={comment.id}>
-            <Avatar className="comment-avatar" />
-            <ColumnBox className="comment-author-column">
-              <Box>{comment.author}</Box>
-              <Box>{comment.createdAt}</Box>
-            </ColumnBox>
-            <ColumnBox className="comment-content-column">
-              <Box>{comment.content}</Box>
-              <Box className="comment-actions">
-                <Button startIcon={<TiArrowBackOutline/>}>Comment</Button>
-                {comment.editPermission && (
-                  <>
-                    <Button startIcon={<LuEraser/>}>Update</Button>
-                    <Button startIcon={<RiDeleteBinLine/>}>Delete</Button>
-                  </>
-                )}
-                <Button startIcon={<CiMenuKebab/>}>I want to</Button>
-              </Box>
-            </ColumnBox>
-          </RowBox>
+        { comments.map((comment, index) => (
+          <>
+            <RowBox className="comment-row" key={comment.id}>
+              <Avatar className="comment-avatar" />
+              <ColumnBox className="comment-author-column">
+                <Box className="comment-author">{comment.author}</Box>
+                <Box className="comment-created-at">{formatAwsTimestamp(comment.createdAt)}</Box>
+              </ColumnBox>
+              <ColumnBox className="comment-content-column">
+                <Box dangerouslySetInnerHTML={{ __html: comment.content || '' }} className="comment-content" />
+                <Box className="comment-actions">
+                  <Button startIcon={<TiArrowBackOutline/>}>Comment</Button>
+                  {comment.editPermission && (
+                    <>
+                      <Button startIcon={<LuEraser/>}>Update</Button>
+                      <Button startIcon={<RiDeleteBinLine/>}>Delete</Button>
+                    </>
+                  )}
+                  <Button startIcon={<CiMenuKebab/>}>I want to</Button>
+                </Box>
+              </ColumnBox>
+            </RowBox>
+            {index < comments.length - 1 && <Divider />}
+          </>
         ))}
+        <FormBuilder variant={EVariant.SmallSize} formikConfig={formikConfig} sections={sections}/>
       </ColumnBox>
     </ThemeProvider>
   );

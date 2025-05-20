@@ -242,6 +242,8 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
       categoryPostId
       __typename
     }
+    commentIndex
+    commentIndexString
     authorId
     content
     attachments {
@@ -267,6 +269,8 @@ export const listComments = /* GraphQL */ `query ListComments(
     items {
       id
       postId
+      commentIndex
+      commentIndexString
       authorId
       content
       createdAt
@@ -282,15 +286,17 @@ export const listComments = /* GraphQL */ `query ListComments(
   APITypes.ListCommentsQueryVariables,
   APITypes.ListCommentsQuery
 >;
-export const commentsByPostId = /* GraphQL */ `query CommentsByPostId(
+export const commentsByPostIdAndCommentIndexString = /* GraphQL */ `query CommentsByPostIdAndCommentIndexString(
   $postId: ID!
+  $commentIndexString: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
   $filter: ModelCommentFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  commentsByPostId(
+  commentsByPostIdAndCommentIndexString(
     postId: $postId
+    commentIndexString: $commentIndexString
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -299,6 +305,8 @@ export const commentsByPostId = /* GraphQL */ `query CommentsByPostId(
     items {
       id
       postId
+      commentIndex
+      commentIndexString
       authorId
       content
       createdAt
@@ -311,8 +319,8 @@ export const commentsByPostId = /* GraphQL */ `query CommentsByPostId(
   }
 }
 ` as GeneratedQuery<
-  APITypes.CommentsByPostIdQueryVariables,
-  APITypes.CommentsByPostIdQuery
+  APITypes.CommentsByPostIdAndCommentIndexStringQueryVariables,
+  APITypes.CommentsByPostIdAndCommentIndexStringQuery
 >;
 export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
   getMedia(id: $id) {
@@ -341,6 +349,8 @@ export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
     comment {
       id
       postId
+      commentIndex
+      commentIndexString
       authorId
       content
       createdAt

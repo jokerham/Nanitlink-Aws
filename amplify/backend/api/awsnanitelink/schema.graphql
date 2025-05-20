@@ -63,8 +63,10 @@ type Comment
     { allow: public, operations: [read] }
   ]) {
   id: ID!
-  postId: ID! @index(name: "byPost", sortKeyFields: [])
+  postId: ID! @index(name: "byPost", sortKeyFields: ["commentIndexString"])
   post: Post @belongsTo(fields: ["postId"])
+  commentIndex: Int!
+  commentIndexString: String!
   authorId: String!
   content: String!
   attachments: [Media] @hasMany

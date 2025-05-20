@@ -15,6 +15,7 @@ import DeleteConfirmDialog from "@/component/dialog/deleteConfirmDialog";
 import { deleteBoardPost } from "@/function/amplify/rest/board";
 import Comments from "../post/comments";
 import { getGuestId, useAuth } from "@/component/commom/AuthContext";
+import { formatAwsTimestamp } from "@/function/amplify/formatPostDate";
 
 interface IDetailProps {
   id: string
@@ -23,13 +24,7 @@ interface IDetailProps {
 
 type IPostExtend = Post & { author: string };
 
-export const formatAwsTimestamp = (timestamp?: string): string => {
-  if (!timestamp) return '';
-  const date = new Date(timestamp);
-  const pad = (n: number) => n.toString().padStart(2, '0');
 
-  return `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-};
 
 const Detail = ({id}: IDetailProps) => {
   const [loading, setLoading] = useState(true);
@@ -39,9 +34,7 @@ const Detail = ({id}: IDetailProps) => {
   const searchParam = new URLSearchParams(window.location.search);
   const currentPage = searchParam.get('currentPage') ? parseInt(searchParam.get('currentPage') || '1') : 1;
   const navigate = useNavigate();
-
-  const auth = useAuth();
-  const user = auth.user;
+  const { user } = useAuth();
 
   useEffect(() => {
     gqGetPost(id, user?.sub ?? getGuestId(), true)
