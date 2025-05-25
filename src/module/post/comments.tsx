@@ -1,4 +1,4 @@
-import { ComponentType, useEffect, useState } from 'react';
+import { ComponentType, Fragment, useEffect, useState } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { Comment } from '@/API';
 import { ColumnBox, RowBox } from '@/component/customMui';
@@ -19,6 +19,8 @@ import { showToast } from '@/function/showToast';
 import { formatAwsTimestamp } from "@/function/amplify/formatPostDate";
 import theme from './theme'
 import './style.scss';
+import { gqDeleteComment } from '@/function/amplify/graphql/post/gqDeleteComment';
+import DeleteConfirmDialog from '@/component/dialog/deleteConfirmDialog';
 
 interface ICommentsProps {
   postId: string
@@ -32,6 +34,8 @@ type ExtendedComment = Comment & {
 const Comments = ({postId}: ICommentsProps) => {
   const { user } = useAuth();
   const [comments, setComments] = useState<ExtendedComment[]>([]);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [deleteCommentId, setDeleteCommentId] = useState<string | null>(null);
 
   const getAuthorNickName = async (authorId: string) => {
     const member = await getMemberDetail(authorId);
@@ -51,7 +55,7 @@ const Comments = ({postId}: ICommentsProps) => {
   useEffect(() => {
     const fetchComments = async () => {
       const comments = await gqListComments(postId);
-      console.log(comments);
+      //console.log(comments);
       const extendedComments: ExtendedComment[] = await Promise.all(
         comments.map(async (comment: Comment) => {
           const author = await getAuthorNickName(comment.authorId);
@@ -63,7 +67,7 @@ const Comments = ({postId}: ICommentsProps) => {
           }
         })
       );
-      console.log(extendedComments);
+      //console.log(extendedComments);
       setComments(extendedComments);
     }
 
@@ -116,6 +120,19 @@ const Comments = ({postId}: ICommentsProps) => {
     }
   ]
 
+  const onDeleteComment = (commentId: string) => {
+    gqDeleteComment(commentId).then((res) => {
+      if (res) {
+        setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
+        showToast('Comment deleted successfully', 'success');
+      }
+    });
+  }
+
+  const deleteCommentContent = deleteCommentId
+    ? (comments.find(c => c.id === deleteCommentId)?.content.replace(/<[^>]+>/g, '') ?? '')
+    : '';
+
   return (
     <ThemeProvider theme={theme}>
       <ColumnBox>
@@ -125,7 +142,7 @@ const Comments = ({postId}: ICommentsProps) => {
           <Box className="comment-count">{comments.length}</Box>
         </RowBox>
         { comments.map((comment, index) => (
-          <>
+          <Fragment key={index}>
             <RowBox className="comment-row" key={comment.id}>
               <Avatar className="comment-avatar" />
               <ColumnBox className="comment-author-column">
@@ -139,7 +156,14 @@ const Comments = ({postId}: ICommentsProps) => {
                   {comment.editPermission && (
                     <>
                       <Button startIcon={<LuEraser/>}>Update</Button>
-                      <Button startIcon={<RiDeleteBinLine/>}>Delete</Button>
+                      <Button 
+                        startIcon={<RiDeleteBinLine/>}
+                        onClick={() => { 
+                          setDeleteCommentId(comment.id);
+                          setOpenDeleteDialog(true)
+                        }} >
+                        Delete
+                      </Button>
                     </>
                   )}
                   <Button startIcon={<CiMenuKebab/>}>I want to</Button>
@@ -147,10 +171,21 @@ const Comments = ({postId}: ICommentsProps) => {
               </ColumnBox>
             </RowBox>
             {index < comments.length - 1 && <Divider />}
-          </>
+          </Fragment>
         ))}
         <FormBuilder variant={EVariant.SmallSize} formikConfig={formikConfig} sections={sections}/>
       </ColumnBox>
+      <DeleteConfirmDialog
+        open={openDeleteDialog}
+        item={deleteCommentContent}
+        onCancel={() => setOpenDeleteDialog(false)}
+        onConfirm={() => {
+          if (deleteCommentId) {
+            onDeleteComment(deleteCommentId);
+          }
+          setOpenDeleteDialog(false);
+        }}
+      />
     </ThemeProvider>
   );
 }

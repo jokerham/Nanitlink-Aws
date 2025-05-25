@@ -31,7 +31,7 @@ export const gqListComments = async (postId: string) => {
       variables: { postId }
     });
 
-    console.log(response);
+    //console.log(response);
 
     return response.data.commentsByPostIdAndCommentIndexString.items;
   } catch (error) {
