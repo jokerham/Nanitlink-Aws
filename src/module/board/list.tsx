@@ -61,7 +61,7 @@ const List = ({id}: IListProps) => {
           date: formatPostDate(post.createdAt),
           views: post.views,
           hasAttachment: (post.attachments?.items?.length ?? 0) > 0,
-          comments: post.comments?.items?.items?.length ?? 0
+          comments: post.commentCount ?? 0
         };
       }) || [];
       const totalPages = Math.ceil(board.totalPosts / rowsPerPage);
@@ -146,11 +146,13 @@ const List = ({id}: IListProps) => {
               <TableRow key={row.no}>
                 <TableCell align='center'>{row.no}</TableCell>
                 <TableCell>
-                  <Link component={NavLink} className='boardPostLink' to={`/board/detail/${row.id}?currentPage=${page}`}>
-                    {row.title}
+                  <RowBox className='boardPostTitle'>
+                    <Link component={NavLink} className='boardPostLink' to={`/board/detail/${row.id}?currentPage=${page}`}>
+                      {row.title}
+                    </Link>
                     {(row.comments??0) > 0 && (` [${row.comments}]`) }
                     {(row.hasAttachment) && (<IoIosSave size={16}/>) }
-                  </Link>
+                  </RowBox>
                 </TableCell>
                 <TableCell align='center'>{row.author}</TableCell>
                 <TableCell align='center'>{row.date}</TableCell>

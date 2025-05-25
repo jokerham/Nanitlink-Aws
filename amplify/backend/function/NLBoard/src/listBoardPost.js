@@ -133,6 +133,19 @@ async function listBoardPost(boardId, targetPage, rowsPerPage, category) {
           item.author = 'Guest';
         }
       }
+
+      // Count comments to the post item
+      const commentParams = {
+        TableName: process.env.API_AWSNANITELINK_COMMENTTABLE_NAME,
+        IndexName: 'byPost',
+        KeyConditionExpression: 'postId = :postId',
+        ExpressionAttributeValues: {
+          ':postId': item.id
+        },
+        Select: 'COUNT'
+      };
+      const commentResult = await docClient.query(commentParams).promise();
+      item.commentCount = commentResult.Count;
     }));
 
     const boardData = await docClient.get({
