@@ -36,6 +36,7 @@ const List = ({id}: IListProps) => {
   const [categories, setCategories] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [data, setData] = useState<IBoardPost[]>([]);
+  const [dataLoading, setDataLoading] = useState<boolean>(true);
   const [page, setPage] = useState(Number(searchParam.get('page') || 1));
   const [count, setCount] = useState(0);
   const [checkedRows, setCheckedRows] = useState<number[]>([]);
@@ -51,6 +52,8 @@ const List = ({id}: IListProps) => {
   useEffect(() => {
     let filters = {};
     if (activeCategory !== 'All') { filters = { ...filters, category: activeCategory }; }
+    setData([]);
+    setDataLoading(true);
     getBoardPostsList(id, page, rowsPerPage, filters).then(async (board) => {
       const data: IBoardPost[] = board?.posts?.items?.map((post: any): IBoardPost => {
         return {
@@ -69,6 +72,7 @@ const List = ({id}: IListProps) => {
         setPage(totalPages);
       }
       setData(data);
+      setDataLoading(false);
       setCheckedRows([]);
       setCount(totalPages);
     }).catch((error) => {
@@ -142,6 +146,15 @@ const List = ({id}: IListProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
+            {dataLoading ? (
+              <TableRow>
+                <TableCell colSpan={6} align='center'>Loading...</TableCell>
+              </TableRow>
+            ) : data.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} align='center'>No posts found.</TableCell>
+              </TableRow>
+            ) : null}
             {data.map((row) => (
               <TableRow key={row.no}>
                 <TableCell align='center'>{row.no}</TableCell>
