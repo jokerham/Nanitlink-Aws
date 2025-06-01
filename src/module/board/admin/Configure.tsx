@@ -6,7 +6,8 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { NavLink } from 'react-router';
 import './style.scss';
 import BoardInfo from './BoardInfo';
-import Category from './Category';
+import Category from './category';
+import UserDefined from './userDefined';
 
 interface IConfigureProps {
   id: string
@@ -16,7 +17,7 @@ const Configure = ({id}: IConfigureProps) => {
   const tabPages = [
     { id: 'info', title: 'Board Info', component: <BoardInfo id={id}/> },
     { id: 'category', title: 'Categories', component: <Category id={id}/>},
-    { id: 'userdefined', title: 'User Defined', component: <div>User Defined</div> },
+    { id: 'userdefined', title: 'User Defined', component: <UserDefined id={id}/> },
     { id: 'permission', title: 'Permission', component: <div>Permission</div> },
     { id: 'additionalSetup', title: 'Additional Setup', component: <div>Additional Setup</div> },
   ];

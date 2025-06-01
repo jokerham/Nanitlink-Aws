@@ -1,8 +1,7 @@
-import { Category } from '@/API';
 import { IDataColumns, IDataRow, TableBuilder, TAction, TPaginationOption } from '@/component/tableBuilder';
 import { gqGetCategoryByBoard } from '@/function/amplify/graphql/post/gqGetCategory';
 import { Box } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 interface ICategoriesProps {
