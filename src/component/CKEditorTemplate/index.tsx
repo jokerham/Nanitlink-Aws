@@ -31,7 +31,8 @@ const CKEditorBoxStyle = {
     height: '400px',
     '& textarea': {
       height: '400px',    
-    }
+      overflowY: 'auto',
+    },
   } 
 }
 
@@ -50,7 +51,8 @@ const CKEditorCommentBoxStyle = {
   '& .ck-source-editing-area': {
     height: '100px',
     '& textarea': {
-      height: '100px',    
+      height: '100px',   
+      overflowY: 'auto', 
     }
   } 
 }
