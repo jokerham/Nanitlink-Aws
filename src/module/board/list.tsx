@@ -47,7 +47,7 @@ const List = ({id}: IListProps) => {
     gqGetCategoryByBoard(id).then((categories) => {
       setCategories(categories);
     });
-  }, [])
+  }, [id])
 
   useEffect(() => {
     let filters = {};
@@ -78,6 +78,7 @@ const List = ({id}: IListProps) => {
     }).catch((error) => {
       console.error('Error fetching board posts:', error);
       setData([]);
+      setDataLoading(false);
       setCount(0);
       setCheckedRows([]);
     });

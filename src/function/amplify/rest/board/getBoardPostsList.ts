@@ -26,7 +26,7 @@ export const getBoardPostsList = async (
       return {} as Board;
     }
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.error('Error fetching post:', error);
     throw error;
   }
 };
