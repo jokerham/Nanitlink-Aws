@@ -2,7 +2,7 @@ import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/materi
 import { useEffect, useState } from "react";
 import { FaSignInAlt, FaUser } from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import SignInDialog from "@/component/dialog/signInDialog";
 import SignInUserMenu from "@/component/popover/signInUserMenu";
 import SecondLevelMenu from "@/component/popover/secondLevelMenu";
@@ -54,20 +54,27 @@ const RenderUnauthorized = ({setSignInOpen}: IRenderUnauthorizedProps) => (
 );
 
 const Header = () => {
+  const location = useLocation();
   const [signInOpen, setSignInOpen] = useState(false);
   const [signInUserMenuOpen, setSignInUserMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [menu, setMenu] = useState<IMenu[]>([]);
   const [secondLevelAnchorEl, setSecondLevelAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [secondLevelMenu, setSecondLevelMenu] = useState<IMenu[]>([]);
+  const [renderKey, setRenderKey] = useState(0);
   const { user } = useAuth();
 
   useEffect(() => {
     gqListMenuTree(2, null)
       .then((menus) => {
         setMenu(menus);
+        console.log(menus);
       });
   }, []);
+
+  useEffect(() => {
+    setRenderKey(prev => prev + 1);
+  }, [location])
 
   const handleFirstLevelClick = (event: React.MouseEvent<HTMLButtonElement>, item: IMenu) => {
     if (item.children && item.children.length > 0) {
@@ -79,7 +86,7 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Container>
-        <Toolbar>
+        <Toolbar key={renderKey}>
           <Button component={Link} to="/">
             <Typography variant="h3">Nanitelink</Typography>
           </Button>
@@ -89,7 +96,7 @@ const Header = () => {
               <Button
                 key={index}
                 component={hasChildren ? "button" : NavLink}
-                to={hasChildren ? "#" : item.link ?? "#"}
+                to={hasChildren ? `#${item.name}` : item.link ?? "#"}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => hasChildren && handleFirstLevelClick(event, item)}
                 className={item.children?.some(child => window.location.pathname === child.link) ? "active" : ""}
               >
