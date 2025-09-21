@@ -68,7 +68,6 @@ const Header = () => {
     gqListMenuTree(2, null)
       .then((menus) => {
         setMenu(menus);
-        console.log(menus);
       });
   }, []);
 
