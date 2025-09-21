@@ -6,9 +6,11 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'build', // 👈 change output directory to "build"
+    emptyOutDir: true, // also necessary
   },
   resolve: {
     alias: {
+      "./runtimeConfig": "./runtimeConfig.browser",
       '@': path.resolve(__dirname, './src'), // you can use @ or anything else
     },
   },
