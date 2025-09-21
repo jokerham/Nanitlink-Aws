@@ -188,22 +188,6 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    },
-    "post": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "awsnanitelink"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
     }
   },
   "hosting": {
@@ -299,22 +283,6 @@
         {
           "category": "function",
           "resourceName": "incrementPostView"
-        }
-      ]
-    },
-    "AMPLIFY_function_post_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "post"
-        }
-      ]
-    },
-    "AMPLIFY_function_post_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "post"
         }
       ]
     },
