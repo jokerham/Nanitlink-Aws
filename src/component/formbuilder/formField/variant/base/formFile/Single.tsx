@@ -3,7 +3,7 @@ import { TextField, IconButton, InputAdornment, Dialog, DialogContent } from '@m
 import { RiUpload2Fill } from "react-icons/ri";
 import { IoCloseSharp } from "react-icons/io5";
 import { Field, FieldProps } from 'formik';
-import { IFileFieldSetting, TFileInfo } from 'component/formbuilder/types';
+import { IFileFieldSetting, TFileInfo } from '@/component/formbuilder/types';
 
 export const Single: React.FC<IFileFieldSetting> = ({ label, value, options }) => {
   const [fileInfo, setFileInfo] = useState<TFileInfo | null>((value as TFileInfo) || null);
@@ -70,7 +70,6 @@ export const Single: React.FC<IFileFieldSetting> = ({ label, value, options }) =
                     <InputAdornment position="end">
                       <input
                         type="file"
-                        accept="image/*"
                         style={{ display: 'none' }}
                         onChange={(e) => handleFileChange(e)}
                         id={`file-upload-${label}`}

@@ -1,4 +1,4 @@
-import { IFileFieldSetting } from 'component/formbuilder/types';
+import { IFileFieldSetting } from '@/component/formbuilder/types';
 
 export const Multiple = (props: IFileFieldSetting) => {
   
@@ -8,3 +8,4 @@ export const Multiple = (props: IFileFieldSetting) => {
     </div>
   );
 }
+

@@ -1,0 +1,26 @@
+<svg width="1500" height="1500" viewBox="0 0 1500 1500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1500" height="1500" fill="white"/>
+
+  <!-- Stem -->
+  <line x1="752.5" y1="580" x2="752.5" y2="1446" stroke="black" stroke-width="25"/>
+
+  <!-- Top petal left curve -->
+  <path d="M752.5 580 C 550 200 350 120 350 120" stroke="black" stroke-width="25" fill="none"/>
+  <!-- Top petal right curve (mirror) -->
+  <path d="M752.5 580 C 955 200 1155 120 1155 120" stroke="black" stroke-width="25" fill="none"/>
+
+  <!-- Top small leaves -->
+  <path d="M752.5 80 C 680 180 590 280 590 280" stroke="black" stroke-width="25" fill="none"/>
+  <path d="M752.5 80 C 825 180 915 280 915 280" stroke="black" stroke-width="25" fill="none"/>
+
+  <!-- Bottom leaves (open at the top) -->
+  <path d="M140 880 C 240 1240 500 1450 750 1450 C 1000 1450 1260 1240 1360 880" stroke="black" stroke-width="25" fill="none"/>
+
+  <!-- Side veins -->
+  <path d="M140 880 Q 450 880 750 1437" stroke="black" stroke-width="25" fill="none"/>
+  <path d="M1360 880 Q 1050 880 750 1437" stroke="black" stroke-width="25" fill="none"/>
+
+  <!-- Middle side petals -->
+  <path d="M750 930 C 350 800 250 500 350 120" stroke="black" stroke-width="25" fill="none"/>
+  <path d="M750 930 C 1150 800 1250 500 1150 120" stroke="black" stroke-width="25" fill="none"/>
+</svg>

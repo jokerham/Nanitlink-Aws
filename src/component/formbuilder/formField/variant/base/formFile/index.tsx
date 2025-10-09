@@ -1,4 +1,4 @@
-import { IFileFieldSetting, TFieldSetting } from 'component/formbuilder/types';
+import { IFileFieldSetting, TFieldSetting } from '@/component/formbuilder/types';
 import { Multiple } from './Multiple';
 import { Single } from './Single';
 
