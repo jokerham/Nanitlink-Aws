@@ -18,7 +18,7 @@ exports.handler = async (event) => {
 
   try {
     const pathParameters = event.pathParameters || {};
-    const userId = pathParameters.id;
+    const userId = pathParameters.proxy;
     const httpMethod = event.httpMethod;
     const userPoolId = process.env.AUTH_NANITLINKAWSD5EDFAB0_USERPOOLID; //event.queryStringParameters?.userPoolId || null;
 

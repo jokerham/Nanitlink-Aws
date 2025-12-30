@@ -1,8 +1,8 @@
 {
   "version": 1,
   "paths": {
-    "/member/{id}": {
-      "name": "/member/{id}",
+    "/member": {
+      "name": "/member",
       "lambdaFunction": "MemberRestApi",
       "permissions": {
         "setting": "open"

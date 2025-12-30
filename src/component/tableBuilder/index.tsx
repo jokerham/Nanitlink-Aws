@@ -141,9 +141,9 @@ export const TableBuilder = ({ columns: columnSettings, data: initialData, filte
     }
   }, [currentFilter, initialData]);
 
-  useEffect(() => {
-    console.log(dataRow);
-  }, [dataRow]);
+  // useEffect(() => {
+  //   console.log(dataRow);
+  // }, [dataRow]);
   
   return (
     <Fragment>

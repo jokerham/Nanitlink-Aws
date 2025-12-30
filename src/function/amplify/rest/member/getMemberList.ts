@@ -7,10 +7,8 @@ export const getMemberList = async (
   filters: Record<string, string> = {}
 ): Promise<{ users: CognitoUser[] }> => {
   try {
-    const apiName = 'member';
-    filters = { ...filters, userPoolId: awsConfigure.aws_user_pools_id };
-    const queryParams = new URLSearchParams( Object.entries(filters) );
-    const path = `/member?${queryParams.toString()}`;
+    const apiName = 'MemberRestApi';
+    const path = '/member';
 
     const getOperation = get({apiName, path});
     const response = await getOperation.response;
