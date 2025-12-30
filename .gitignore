@@ -49,3 +49,9 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+batch/seed/ImportCSVtoDynamoDB.py
+batch/seed/data/article.csv
+batch/seed/data/board.csv
+batch/seed/data/category.csv
+batch/seed/data/menu.csv
+batch/seed/data/post.csv
