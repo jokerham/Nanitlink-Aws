@@ -7,7 +7,7 @@ export const getMemberGroupList = async (
   filters: Record<string, string> = {}
 ): Promise<{ groups: CognitoGroup[] }> => {
   try {
-    const apiName = 'member';
+    const apiName = 'MemberRestApi';
     filters = { userPoolId: awsConfigure.aws_user_pools_id };
     const queryParams = new URLSearchParams( Object.entries(filters) );
     const path = `/memberGroup?${queryParams.toString()}`;

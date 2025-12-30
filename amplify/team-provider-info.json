@@ -36,6 +36,10 @@
         "PostRestApi": {
           "deploymentBucketName": "amplify-nanitlinkaws-dev-3550a-deployment",
           "s3Key": "amplify-builds/PostRestApi-54646c41574867694f62-build.zip"
+        },
+        "MemberGroupRestApi": {
+          "deploymentBucketName": "amplify-nanitlinkaws-dev-3550a-deployment",
+          "s3Key": "amplify-builds/MemberGroupRestApi-6d5678646f6447595732-build.zip"
         }
       },
       "storage": {

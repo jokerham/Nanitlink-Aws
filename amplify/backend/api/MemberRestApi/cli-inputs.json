@@ -7,6 +7,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/memberGroup": {
+      "name": "/memberGroup",
+      "lambdaFunction": "MemberGroupRestApi",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

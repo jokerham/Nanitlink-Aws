@@ -8,7 +8,7 @@ export const deleteMember = async (
   subId: string
 ) => {
   try {
-    const apiName = 'member';
+    const apiName = 'MemberRestApi';
     const filters = { userPoolId: awsConfigure.aws_user_pools_id };
     const queryParams = new URLSearchParams( Object.entries(filters) );
     const path = `/member/${subId}?${queryParams.toString()}`;

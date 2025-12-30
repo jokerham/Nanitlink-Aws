@@ -9,6 +9,14 @@
           ],
           "category": "function",
           "resourceName": "MemberRestApi"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "MemberGroupRestApi"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -136,6 +144,20 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "MemberGroupRestApi": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "nanitlinkawsd5edfab0"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "MemberRestApi": {
       "build": true,
       "dependsOn": [
@@ -216,6 +238,22 @@
         {
           "category": "function",
           "resourceName": "CacheRestApi"
+        }
+      ]
+    },
+    "AMPLIFY_function_MemberGroupRestApi_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "MemberGroupRestApi"
+        }
+      ]
+    },
+    "AMPLIFY_function_MemberGroupRestApi_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "MemberGroupRestApi"
         }
       ]
     },
