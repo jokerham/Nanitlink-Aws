@@ -40,6 +40,12 @@
       },
       "storage": {
         "CacheStorage": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2qlv1du9uc98k",
+          "type": "manual"
+        }
       }
     }
   }
