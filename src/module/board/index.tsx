@@ -13,6 +13,7 @@ const IndexComponent = () => {
   }
 
   switch (action ?? 'list') {
+    case 'index':
     case 'list':
       return <List id={id}/>
     case 'edit':

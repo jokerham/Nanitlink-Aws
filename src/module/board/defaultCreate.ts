@@ -17,6 +17,7 @@ export async function createDefault({id, name}: ICreateDefaultParameter): Promis
         input: {
           id,
           name,
+          rowsPerPage: 30,
           totalPosts: 0,
           lastPostIndex: 0
         },

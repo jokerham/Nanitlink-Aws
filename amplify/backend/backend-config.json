@@ -1,13 +1,49 @@
 {
   "api": {
-    "awsnanitelink": {
+    "MemberRestApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "MemberRestApi"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "PostRestApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "BoardRestApi"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "PostRestApi"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "nanitlinkaws": {
       "dependsOn": [
         {
           "attributes": [
             "UserPoolId"
           ],
           "category": "auth",
-          "resourceName": "awsnanitelinkd053666d"
+          "resourceName": "nanitlinkawsd5edfab0"
         }
       ],
       "output": {
@@ -16,7 +52,7 @@
             {
               "authenticationType": "AMAZON_COGNITO_USER_POOLS",
               "userPoolConfig": {
-                "userPoolId": "authawsnanitelinkd053666d"
+                "userPoolId": "authnanitlinkawsd5edfab0"
               }
             }
           ],
@@ -30,54 +66,10 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
-    },
-    "member": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "NLMember"
-        },
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "NLMemberGroup"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
-    "post": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "NLBoard"
-        },
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "incrementPostView"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
     }
   },
   "auth": {
-    "awsnanitelinkd053666d": {
+    "nanitlinkawsd5edfab0": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -90,11 +82,12 @@
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL",
-          "NAME"
+          "EMAIL"
         ],
         "socialProviders": [],
-        "usernameAttributes": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
         "verificationMechanisms": [
           "EMAIL"
         ]
@@ -104,23 +97,9 @@
     }
   },
   "function": {
-    "NLBoard": {
+    "BoardRestApi": {
       "build": true,
       "dependsOn": [
-        {
-          "attributes": [
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "NLMember"
-        },
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "awsnanitelinkd053666d"
-        },
         {
           "attributes": [
             "GraphQLAPIIdOutput",
@@ -128,13 +107,20 @@
             "GraphQLAPIKeyOutput"
           ],
           "category": "api",
-          "resourceName": "awsnanitelink"
+          "resourceName": "nanitlinkaws"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "nanitlinkawsd5edfab0"
         }
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "NLCache": {
+    "CacheRestApi": {
       "build": true,
       "dependsOn": [
         {
@@ -144,167 +130,123 @@
             "StreamArn"
           ],
           "category": "storage",
-          "resourceName": "CustomDatabase"
+          "resourceName": "CacheStorage"
         }
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "NLMember": {
-      "build": true,
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "NLMemberGroup": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "incrementPostView": {
+    "MemberRestApi": {
       "build": true,
       "dependsOn": [
-        {
-          "attributes": [
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "NLCache"
-        },
         {
           "attributes": [
             "UserPoolId"
           ],
           "category": "auth",
-          "resourceName": "awsnanitelinkd053666d"
+          "resourceName": "nanitlinkawsd5edfab0"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "PostRestApi": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "nanitlinkawsd5edfab0"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "CacheRestApi"
         },
         {
           "attributes": [
             "GraphQLAPIIdOutput"
           ],
           "category": "api",
-          "resourceName": "awsnanitelink"
+          "resourceName": "nanitlinkaws"
         }
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
-  "hosting": {
-    "amplifyhosting": {
-      "providerPlugin": "awscloudformation",
-      "service": "amplifyhosting",
-      "type": "manual"
-    }
-  },
   "parameters": {
-    "AMPLIFY_function_NLBoard_deploymentBucketName": {
+    "AMPLIFY_function_BoardRestApi_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "NLBoard"
+          "resourceName": "BoardRestApi"
         }
       ]
     },
-    "AMPLIFY_function_NLBoard_s3Key": {
+    "AMPLIFY_function_BoardRestApi_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "NLBoard"
+          "resourceName": "BoardRestApi"
         }
       ]
     },
-    "AMPLIFY_function_NLCache_deploymentBucketName": {
+    "AMPLIFY_function_CacheRestApi_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "NLCache"
+          "resourceName": "CacheRestApi"
         }
       ]
     },
-    "AMPLIFY_function_NLCache_s3Key": {
+    "AMPLIFY_function_CacheRestApi_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "NLCache"
+          "resourceName": "CacheRestApi"
         }
       ]
     },
-    "AMPLIFY_function_NLMemberGroup_deploymentBucketName": {
+    "AMPLIFY_function_MemberRestApi_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "NLMemberGroup"
+          "resourceName": "MemberRestApi"
         }
       ]
     },
-    "AMPLIFY_function_NLMemberGroup_s3Key": {
+    "AMPLIFY_function_MemberRestApi_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "NLMemberGroup"
+          "resourceName": "MemberRestApi"
         }
       ]
     },
-    "AMPLIFY_function_NLMember_deploymentBucketName": {
+    "AMPLIFY_function_PostRestApi_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "NLMember"
+          "resourceName": "PostRestApi"
         }
       ]
     },
-    "AMPLIFY_function_NLMember_s3Key": {
+    "AMPLIFY_function_PostRestApi_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "NLMember"
-        }
-      ]
-    },
-    "AMPLIFY_function_NLMember_userPoolId": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "NLMember"
-        }
-      ]
-    },
-    "AMPLIFY_function_incrementPostView_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "incrementPostView"
-        }
-      ]
-    },
-    "AMPLIFY_function_incrementPostView_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "incrementPostView"
-        }
-      ]
-    },
-    "AMPLIFY_hosting_amplifyhosting_appId": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
-        }
-      ]
-    },
-    "AMPLIFY_hosting_amplifyhosting_type": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
+          "resourceName": "PostRestApi"
         }
       ]
     }
   },
   "storage": {
-    "CustomDatabase": {
+    "CacheStorage": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
     }

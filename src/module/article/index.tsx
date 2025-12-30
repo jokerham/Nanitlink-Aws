@@ -11,6 +11,7 @@ const IndexComponent = () => {
   }
 
   switch (action ?? 'view') {
+    case 'index':
     case 'view':
       return <View id={id}/>
     case 'edit':

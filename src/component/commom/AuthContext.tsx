@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       getCurrentUser()
         .then((amplifyUser) => getMemberDetail(amplifyUser?.userId || ''))
         .then((memberDetail) => setUser(memberDetail.user))
-        .catch(() => setUser(null))
+        .catch((err) => setUser(null))
         .finally(() => setLoading(false));
     };
   

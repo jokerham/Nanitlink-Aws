@@ -95,6 +95,10 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
       __typename
     }
     views
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     boardPostsId
@@ -250,6 +254,10 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
       nextToken
       __typename
     }
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     postCommentsId
@@ -327,6 +335,7 @@ export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
     id
     fileName
     path
+    postId
     post {
       id
       moduleId
@@ -346,6 +355,7 @@ export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
       categoryPostId
       __typename
     }
+    commentId
     comment {
       id
       postId
@@ -356,6 +366,10 @@ export const getMedia = /* GraphQL */ `query GetMedia($id: ID!) {
       createdAt
       updatedAt
       postCommentsId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -377,6 +391,8 @@ export const listMedia = /* GraphQL */ `query ListMedia(
       id
       fileName
       path
+      postId
+      commentId
       createdAt
       updatedAt
       postAttachmentsId
@@ -389,6 +405,80 @@ export const listMedia = /* GraphQL */ `query ListMedia(
   }
 }
 ` as GeneratedQuery<APITypes.ListMediaQueryVariables, APITypes.ListMediaQuery>;
+export const mediaByPostIdAndFileName = /* GraphQL */ `query MediaByPostIdAndFileName(
+  $postId: ID!
+  $fileName: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelMediaFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  mediaByPostIdAndFileName(
+    postId: $postId
+    fileName: $fileName
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      fileName
+      path
+      postId
+      commentId
+      createdAt
+      updatedAt
+      postAttachmentsId
+      commentAttachmentsId
+      authorId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.MediaByPostIdAndFileNameQueryVariables,
+  APITypes.MediaByPostIdAndFileNameQuery
+>;
+export const mediaByCommentIdAndFileName = /* GraphQL */ `query MediaByCommentIdAndFileName(
+  $commentId: ID!
+  $fileName: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelMediaFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  mediaByCommentIdAndFileName(
+    commentId: $commentId
+    fileName: $fileName
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      fileName
+      path
+      postId
+      commentId
+      createdAt
+      updatedAt
+      postAttachmentsId
+      commentAttachmentsId
+      authorId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.MediaByCommentIdAndFileNameQueryVariables,
+  APITypes.MediaByCommentIdAndFileNameQuery
+>;
 export const getMenu = /* GraphQL */ `query GetMenu($id: ID!) {
   getMenu(id: $id) {
     id
@@ -414,6 +504,10 @@ export const getMenu = /* GraphQL */ `query GetMenu($id: ID!) {
     }
     link
     sortOrder
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -500,6 +594,10 @@ export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
       updatedAt
       boardPostsId
       categoryPostId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -697,6 +795,75 @@ export const getActivityLog = /* GraphQL */ `query GetActivityLog($id: ID!) {
     userId
     action
     timestamp
+    postId
+    post {
+      id
+      moduleId
+      module
+      categoryId
+      categoryIndexString
+      postIndex
+      postIndexString
+      title
+      content
+      authorId
+      status
+      views
+      createdAt
+      updatedAt
+      boardPostsId
+      categoryPostId
+      __typename
+    }
+    commentId
+    comment {
+      id
+      postId
+      commentIndex
+      commentIndexString
+      authorId
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      __typename
+    }
+    articleId
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
+    mediaId
+    media {
+      id
+      fileName
+      path
+      postId
+      commentId
+      createdAt
+      updatedAt
+      postAttachmentsId
+      commentAttachmentsId
+      authorId
+      __typename
+    }
+    menuId
+    menu {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -717,6 +884,11 @@ export const listActivityLogs = /* GraphQL */ `query ListActivityLogs(
       userId
       action
       timestamp
+      postId
+      commentId
+      articleId
+      mediaId
+      menuId
       createdAt
       updatedAt
       __typename
@@ -728,6 +900,196 @@ export const listActivityLogs = /* GraphQL */ `query ListActivityLogs(
 ` as GeneratedQuery<
   APITypes.ListActivityLogsQueryVariables,
   APITypes.ListActivityLogsQuery
+>;
+export const activityLogsByPostIdAndTimestamp = /* GraphQL */ `query ActivityLogsByPostIdAndTimestamp(
+  $postId: ID!
+  $timestamp: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelActivityLogFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  activityLogsByPostIdAndTimestamp(
+    postId: $postId
+    timestamp: $timestamp
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userId
+      action
+      timestamp
+      postId
+      commentId
+      articleId
+      mediaId
+      menuId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ActivityLogsByPostIdAndTimestampQueryVariables,
+  APITypes.ActivityLogsByPostIdAndTimestampQuery
+>;
+export const activityLogsByCommentIdAndTimestamp = /* GraphQL */ `query ActivityLogsByCommentIdAndTimestamp(
+  $commentId: ID!
+  $timestamp: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelActivityLogFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  activityLogsByCommentIdAndTimestamp(
+    commentId: $commentId
+    timestamp: $timestamp
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userId
+      action
+      timestamp
+      postId
+      commentId
+      articleId
+      mediaId
+      menuId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ActivityLogsByCommentIdAndTimestampQueryVariables,
+  APITypes.ActivityLogsByCommentIdAndTimestampQuery
+>;
+export const activityLogsByArticleIdAndTimestamp = /* GraphQL */ `query ActivityLogsByArticleIdAndTimestamp(
+  $articleId: ID!
+  $timestamp: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelActivityLogFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  activityLogsByArticleIdAndTimestamp(
+    articleId: $articleId
+    timestamp: $timestamp
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userId
+      action
+      timestamp
+      postId
+      commentId
+      articleId
+      mediaId
+      menuId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ActivityLogsByArticleIdAndTimestampQueryVariables,
+  APITypes.ActivityLogsByArticleIdAndTimestampQuery
+>;
+export const activityLogsByMediaIdAndTimestamp = /* GraphQL */ `query ActivityLogsByMediaIdAndTimestamp(
+  $mediaId: ID!
+  $timestamp: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelActivityLogFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  activityLogsByMediaIdAndTimestamp(
+    mediaId: $mediaId
+    timestamp: $timestamp
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userId
+      action
+      timestamp
+      postId
+      commentId
+      articleId
+      mediaId
+      menuId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ActivityLogsByMediaIdAndTimestampQueryVariables,
+  APITypes.ActivityLogsByMediaIdAndTimestampQuery
+>;
+export const activityLogsByMenuIdAndTimestamp = /* GraphQL */ `query ActivityLogsByMenuIdAndTimestamp(
+  $menuId: ID!
+  $timestamp: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelActivityLogFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  activityLogsByMenuIdAndTimestamp(
+    menuId: $menuId
+    timestamp: $timestamp
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userId
+      action
+      timestamp
+      postId
+      commentId
+      articleId
+      mediaId
+      menuId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ActivityLogsByMenuIdAndTimestampQueryVariables,
+  APITypes.ActivityLogsByMenuIdAndTimestampQuery
 >;
 export const getPostTags = /* GraphQL */ `query GetPostTags($id: ID!) {
   getPostTags(id: $id) {

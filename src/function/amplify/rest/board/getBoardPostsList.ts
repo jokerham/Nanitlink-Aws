@@ -9,7 +9,7 @@ export const getBoardPostsList = async (
   filters: Record<string, string> = {}
 ): Promise<Board> => {
   try {
-    const apiName = 'post';
+    const apiName = 'PostRestApi';
     filters = { ...filters, page: page.toString(), rowsPerPage: rowsPerPage.toString() };
     const queryParams = new URLSearchParams( Object.entries(filters) );
     const path = `/board/${board}?${queryParams.toString()}`;

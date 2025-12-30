@@ -23,7 +23,7 @@ const Header = () => {
           <Link component={NavLink} to="/"><Typography variant='h6'>http://www.nanitelink.com</Typography></Link>
         </Box>
         <HorizontalBox sx={{height: 32}}>
-          <Link><Typography variant='h5'>{user?.userName}</Typography></Link>
+          <Link><Typography variant='h5'>{user?.nickName}</Typography></Link>
           <Divider orientation="vertical" variant="middle" flexItem sx={{ bgcolor: 'rgba(0,0,0,0.12)' }} />
           <Link onClick={signOutHandler}><Typography variant='h5'>Sign Out</Typography></Link>
           <Divider orientation="vertical" variant="middle" flexItem sx={{ bgcolor: 'rgba(0,0,0,0.12)' }} />

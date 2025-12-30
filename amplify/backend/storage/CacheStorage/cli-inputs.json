@@ -1,0 +1,10 @@
+{
+  "resourceName": "CacheStorage",
+  "tableName": "Cache",
+  "partitionKey": {
+    "fieldName": "cacheKey",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

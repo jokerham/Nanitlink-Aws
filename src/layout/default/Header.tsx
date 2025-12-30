@@ -66,9 +66,7 @@ const Header = () => {
 
   useEffect(() => {
     gqListMenuTree(2, null)
-      .then((menus) => {
-        setMenu(menus);
-      });
+      .then((menus) => setMenu(menus));
   }, []);
 
   useEffect(() => {

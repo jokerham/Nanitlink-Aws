@@ -1,23 +1,23 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
-    "awsnanitelink": {
+    "MemberRestApi": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
+    "PostRestApi": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
+    "nanitlinkaws": {
       "GraphQLAPIEndpointOutput": "string",
       "GraphQLAPIIdOutput": "string",
       "GraphQLAPIKeyOutput": "string"
-    },
-    "member": {
-      "ApiId": "string",
-      "ApiName": "string",
-      "RootUrl": "string"
-    },
-    "post": {
-      "ApiId": "string",
-      "ApiName": "string",
-      "RootUrl": "string"
     }
   },
   "auth": {
-    "awsnanitelinkd053666d": {
+    "nanitlinkawsd5edfab0": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
       "IdentityPoolId": "string",
@@ -28,35 +28,28 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
-    "NLBoard": {
+    "BoardRestApi": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     },
-    "NLCache": {
+    "CacheRestApi": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     },
-    "NLMember": {
+    "MemberRestApi": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     },
-    "NLMemberGroup": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
-    "incrementPostView": {
+    "PostRestApi": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
@@ -65,7 +58,7 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "storage": {
-    "CustomDatabase": {
+    "CacheStorage": {
       "Arn": "string",
       "Name": "string",
       "PartitionKeyName": "string",

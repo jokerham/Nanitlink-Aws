@@ -129,7 +129,7 @@ export const gqGetPost = async (id: string, userId: string = getGuestId(), incre
   try {
     if (incrementView) {
       const restApiResponse = await post({
-        apiName: 'post',
+        apiName: 'PostRestApi',
         path: `/post/increment`,
         options: {
           headers: {

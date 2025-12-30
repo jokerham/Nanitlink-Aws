@@ -94,7 +94,7 @@ const Edit = ({id}: IEditProps) => {
       });
       console.log(result);
       if (result) {
-        navigate('/board/' + values.moduleId);
+        navigate('/board/index/' + values.moduleId);
       }
     } else {
       // create post
@@ -107,7 +107,7 @@ const Edit = ({id}: IEditProps) => {
         attachments: values.attachments
       });
       if (result) {
-        navigate('/board/' + values.moduleId);
+        navigate('/board/index/' + values.moduleId);
       }
     }
   };

@@ -137,6 +137,10 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
       __typename
     }
     views
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     boardPostsId
@@ -187,6 +191,10 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
       __typename
     }
     views
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     boardPostsId
@@ -237,6 +245,10 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
       __typename
     }
     views
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     boardPostsId
@@ -279,6 +291,10 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
     authorId
     content
     attachments {
+      nextToken
+      __typename
+    }
+    activityLogs {
       nextToken
       __typename
     }
@@ -326,6 +342,10 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
       nextToken
       __typename
     }
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     postCommentsId
@@ -370,6 +390,10 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
       nextToken
       __typename
     }
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     postCommentsId
@@ -388,6 +412,7 @@ export const createMedia = /* GraphQL */ `mutation CreateMedia(
     id
     fileName
     path
+    postId
     post {
       id
       moduleId
@@ -407,6 +432,7 @@ export const createMedia = /* GraphQL */ `mutation CreateMedia(
       categoryPostId
       __typename
     }
+    commentId
     comment {
       id
       postId
@@ -417,6 +443,10 @@ export const createMedia = /* GraphQL */ `mutation CreateMedia(
       createdAt
       updatedAt
       postCommentsId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -439,6 +469,7 @@ export const updateMedia = /* GraphQL */ `mutation UpdateMedia(
     id
     fileName
     path
+    postId
     post {
       id
       moduleId
@@ -458,6 +489,7 @@ export const updateMedia = /* GraphQL */ `mutation UpdateMedia(
       categoryPostId
       __typename
     }
+    commentId
     comment {
       id
       postId
@@ -468,6 +500,10 @@ export const updateMedia = /* GraphQL */ `mutation UpdateMedia(
       createdAt
       updatedAt
       postCommentsId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -490,6 +526,7 @@ export const deleteMedia = /* GraphQL */ `mutation DeleteMedia(
     id
     fileName
     path
+    postId
     post {
       id
       moduleId
@@ -509,6 +546,7 @@ export const deleteMedia = /* GraphQL */ `mutation DeleteMedia(
       categoryPostId
       __typename
     }
+    commentId
     comment {
       id
       postId
@@ -519,6 +557,10 @@ export const deleteMedia = /* GraphQL */ `mutation DeleteMedia(
       createdAt
       updatedAt
       postCommentsId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -561,6 +603,10 @@ export const createMenu = /* GraphQL */ `mutation CreateMenu(
     }
     link
     sortOrder
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -598,6 +644,10 @@ export const updateMenu = /* GraphQL */ `mutation UpdateMenu(
     }
     link
     sortOrder
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -635,6 +685,10 @@ export const deleteMenu = /* GraphQL */ `mutation DeleteMenu(
     }
     link
     sortOrder
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -668,6 +722,10 @@ export const createArticle = /* GraphQL */ `mutation CreateArticle(
       updatedAt
       boardPostsId
       categoryPostId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -706,6 +764,10 @@ export const updateArticle = /* GraphQL */ `mutation UpdateArticle(
       categoryPostId
       __typename
     }
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     articlePostId
@@ -740,6 +802,10 @@ export const deleteArticle = /* GraphQL */ `mutation DeleteArticle(
       updatedAt
       boardPostsId
       categoryPostId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -983,6 +1049,75 @@ export const createActivityLog = /* GraphQL */ `mutation CreateActivityLog(
     userId
     action
     timestamp
+    postId
+    post {
+      id
+      moduleId
+      module
+      categoryId
+      categoryIndexString
+      postIndex
+      postIndexString
+      title
+      content
+      authorId
+      status
+      views
+      createdAt
+      updatedAt
+      boardPostsId
+      categoryPostId
+      __typename
+    }
+    commentId
+    comment {
+      id
+      postId
+      commentIndex
+      commentIndexString
+      authorId
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      __typename
+    }
+    articleId
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
+    mediaId
+    media {
+      id
+      fileName
+      path
+      postId
+      commentId
+      createdAt
+      updatedAt
+      postAttachmentsId
+      commentAttachmentsId
+      authorId
+      __typename
+    }
+    menuId
+    menu {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -1001,6 +1136,75 @@ export const updateActivityLog = /* GraphQL */ `mutation UpdateActivityLog(
     userId
     action
     timestamp
+    postId
+    post {
+      id
+      moduleId
+      module
+      categoryId
+      categoryIndexString
+      postIndex
+      postIndexString
+      title
+      content
+      authorId
+      status
+      views
+      createdAt
+      updatedAt
+      boardPostsId
+      categoryPostId
+      __typename
+    }
+    commentId
+    comment {
+      id
+      postId
+      commentIndex
+      commentIndexString
+      authorId
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      __typename
+    }
+    articleId
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
+    mediaId
+    media {
+      id
+      fileName
+      path
+      postId
+      commentId
+      createdAt
+      updatedAt
+      postAttachmentsId
+      commentAttachmentsId
+      authorId
+      __typename
+    }
+    menuId
+    menu {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -1019,6 +1223,75 @@ export const deleteActivityLog = /* GraphQL */ `mutation DeleteActivityLog(
     userId
     action
     timestamp
+    postId
+    post {
+      id
+      moduleId
+      module
+      categoryId
+      categoryIndexString
+      postIndex
+      postIndexString
+      title
+      content
+      authorId
+      status
+      views
+      createdAt
+      updatedAt
+      boardPostsId
+      categoryPostId
+      __typename
+    }
+    commentId
+    comment {
+      id
+      postId
+      commentIndex
+      commentIndexString
+      authorId
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      __typename
+    }
+    articleId
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
+    mediaId
+    media {
+      id
+      fileName
+      path
+      postId
+      commentId
+      createdAt
+      updatedAt
+      postAttachmentsId
+      commentAttachmentsId
+      authorId
+      __typename
+    }
+    menuId
+    menu {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename

@@ -1,57 +1,45 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-awsnanitelink-dev-8f286-authRole",
-      "UnauthRoleArn": "arn:aws:iam::785455635280:role/amplify-awsnanitelink-dev-8f286-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::785455635280:role/amplify-awsnanitelink-dev-8f286-authRole",
+      "AuthRoleName": "amplify-nanitlinkaws-dev-3550a-authRole",
+      "UnauthRoleArn": "arn:aws:iam::785455635280:role/amplify-nanitlinkaws-dev-3550a-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::785455635280:role/amplify-nanitlinkaws-dev-3550a-authRole",
       "Region": "ap-northeast-2",
-      "DeploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
-      "UnauthRoleName": "amplify-awsnanitelink-dev-8f286-unauthRole",
-      "StackName": "amplify-awsnanitelink-dev-8f286",
-      "StackId": "arn:aws:cloudformation:ap-northeast-2:785455635280:stack/amplify-awsnanitelink-dev-8f286/8491a460-cb0f-11ef-9e1a-0a8a5e353d39",
-      "AmplifyAppId": "d2kyyp8xn7rntb"
+      "DeploymentBucketName": "amplify-nanitlinkaws-dev-3550a-deployment",
+      "UnauthRoleName": "amplify-nanitlinkaws-dev-3550a-unauthRole",
+      "StackName": "amplify-nanitlinkaws-dev-3550a",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:785455635280:stack/amplify-nanitlinkaws-dev-3550a/8e4a3310-e41c-11f0-9d7e-0a7c2bbfce31",
+      "AmplifyAppId": "d2qlv1du9uc98k"
     },
     "categories": {
       "auth": {
-        "awsnanitelink585bdcb0": {},
-        "awsnanitelinkd053666d": {}
+        "nanitlinkawsd5edfab0": {}
       },
       "api": {
-        "awsnanitelink": {},
-        "member": {},
-        "post": {}
+        "nanitlinkaws": {},
+        "MemberRestApi": {},
+        "PostRestApi": {}
       },
       "function": {
-        "NLMember": {
-          "userPoolId": "ap-northeast-2_zB6xjtUy1",
-          "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
-          "s3Key": "amplify-builds/NLMember-424d567134596e2f4476-build.zip"
+        "MemberRestApi": {
+          "deploymentBucketName": "amplify-nanitlinkaws-dev-3550a-deployment",
+          "s3Key": "amplify-builds/MemberRestApi-7a646e55786555333851-build.zip"
         },
-        "NLMemberGroup": {
-          "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
-          "s3Key": "amplify-builds/NLMemberGroup-334c4547346e4e54384d-build.zip"
+        "BoardRestApi": {
+          "deploymentBucketName": "amplify-nanitlinkaws-dev-3550a-deployment",
+          "s3Key": "amplify-builds/BoardRestApi-7a377a4c7a437538674c-build.zip"
         },
-        "NLBoard": {
-          "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
-          "s3Key": "amplify-builds/NLBoard-58305741542f63786853-build.zip"
+        "CacheRestApi": {
+          "deploymentBucketName": "amplify-nanitlinkaws-dev-3550a-deployment",
+          "s3Key": "amplify-builds/CacheRestApi-2b6e334b4d597341544f-build.zip"
         },
-        "NLCache": {
-          "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
-          "s3Key": "amplify-builds/NLCache-36734d4739694a5a2b52-build.zip"
-        },
-        "incrementPostView": {
-          "deploymentBucketName": "amplify-awsnanitelink-dev-8f286-deployment",
-          "s3Key": "amplify-builds/incrementPostView-72794770445a50623263-build.zip"
+        "PostRestApi": {
+          "deploymentBucketName": "amplify-nanitlinkaws-dev-3550a-deployment",
+          "s3Key": "amplify-builds/PostRestApi-54646c41574867694f62-build.zip"
         }
       },
       "storage": {
-        "CustomDatabase": {}
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d2kyyp8xn7rntb",
-          "type": "manual"
-        }
+        "CacheStorage": {}
       }
     }
   }

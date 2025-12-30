@@ -36,7 +36,7 @@ const Edit = ({id}: IEditProps) => {
         content: values.content
     };
     await gqUpdatePost(updateValues);
-    navigate(`/Article/${article?.id}`);
+    navigate(`/Article/index/${article?.id}`);
   }
 
   useEffect(() => {

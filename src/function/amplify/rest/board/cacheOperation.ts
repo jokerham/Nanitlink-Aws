@@ -9,7 +9,7 @@ const headers = {
 }
 
 export const cacheOperation = async (body: IIncrementViewsProps) => {
-  const apiName = 'post';
+  const apiName = 'PostRestApi';
   const path = `/cache`;
   const options = { headers, body: JSON.stringify(body) };
   const response = await get({ apiName, path, options });

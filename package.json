@@ -10,7 +10,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.8",
     "@mui/x-data-grid": "^7.28.1",
-    "aws-amplify": "^6.13.6",
+    "aws-amplify": "^6.15.9",
     "ckeditor5": "^44.3.0",
     "formik": "^2.4.6",
     "react": "^19.0.0",
@@ -51,13 +51,19 @@
     ]
   },
   "devDependencies": {
+    "@aws-amplify/backend": "^1.19.0",
+    "@aws-amplify/backend-cli": "^1.8.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.11",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
-    "typescript": "^5.8.2",
+    "aws-cdk-lib": "^2.216.0",
+    "constructs": "^10.4.4",
+    "esbuild": "^0.27.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
     "vite": "^6.2.2"
   }
 }

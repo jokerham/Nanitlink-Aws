@@ -24,8 +24,6 @@ interface IDetailProps {
 
 type IPostExtend = Post & { author: string };
 
-
-
 const Detail = ({id}: IDetailProps) => {
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState<IPostExtend | undefined>(undefined);

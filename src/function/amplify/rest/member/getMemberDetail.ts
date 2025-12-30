@@ -26,10 +26,8 @@ export const getMemberDetail = async (
   // Create and store a new fetch promise
   const fetchPromise = (async (): Promise<CognitoUser | null> => {
     try {
-      const apiName = 'member';
-      const filters = { userPoolId: awsConfigure.aws_user_pools_id };
-      const queryParams = new URLSearchParams(Object.entries(filters));
-      const path = `/member/${subId}?${queryParams.toString()}`;
+      const apiName = 'MemberRestApi';
+      const path = `/member/${subId}`;
 
       const getOperation = get({ apiName, path });
       const response = await getOperation.response;

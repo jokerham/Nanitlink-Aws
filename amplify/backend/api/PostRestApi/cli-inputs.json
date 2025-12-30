@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/board/{id}": {
+      "name": "/board/{id}",
+      "lambdaFunction": "BoardRestApi",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/post/increment": {
+      "name": "/post/increment",
+      "lambdaFunction": "PostRestApi",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

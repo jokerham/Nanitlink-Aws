@@ -9,7 +9,7 @@ interface ICreateBoardPostProps {
 }
 
 export const createBoardPost = async (postInput: ICreateBoardPostProps) => {
-  const apiName = 'post';
+  const apiName = 'PostRestApi';
   const path = `/board/${postInput.moduleId}`;
   try {
     const session = await fetchAuthSession();

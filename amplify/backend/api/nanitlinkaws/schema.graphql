@@ -1,0 +1,198 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+# 
+# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type Board
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] }, # Only Admins can mutate
+    { allow: private, provider: userPools, operations: [read, update] }, # Only authenticated users can read
+    { allow: public, operations: [read] } # Everyone can read (guests included)
+  ]) {
+  id: ID!
+  name: String!
+  description: String
+  rowsPerPage: Int!
+  headerText: String
+  footerText: String
+  posts: [Post] @hasMany
+  categories: [Category] @hasMany(indexName: "byBoard", fields: ["id"])
+  lastPostIndex: Int!
+  totalPosts: Int!
+}
+
+type Post 
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId", operations: [read, create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  moduleId: String!
+  module: String! 
+    @index(name: "byModule", sortKeyFields: ["moduleId", "postIndexString"])
+    @index(name: "byModuleCategory", sortKeyFields: ["moduleId", "categoryIndexString", "postIndexString"])
+  categoryId: ID
+  category: Category @belongsTo(fields: ["categoryId"])
+  categoryIndexString: String!
+  postIndex: Int!
+  postIndexString: String!
+  title: String!
+  content: String!
+  authorId: String!
+  comments: [Comment] @hasMany
+  attachments: [Media] @hasMany
+  status: PostStatus!
+  tags: [Tag] @manyToMany(relationName: "PostTags")
+  views: Int!
+
+  # NEW: activity log relation
+  activityLogs: [ActivityLog] @hasMany(indexName: "byPostActivityLog", fields: ["id"])
+}
+
+enum PostStatus {
+  PUBLISHED
+  DRAFT
+  ARCHIVED
+}
+
+type Comment 
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId", operations: [read, create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] }, 
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  postId: ID! @index(name: "byPost", sortKeyFields: ["commentIndexString"])
+  post: Post @belongsTo(fields: ["postId"])
+  commentIndex: Int!
+  commentIndexString: String!
+  authorId: String!
+  content: String!
+  attachments: [Media] @hasMany
+
+  # NEW: activity log relation
+  activityLogs: [ActivityLog] @hasMany(indexName: "byCommentActivityLog", fields: ["id"])
+}
+
+type Media
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId", operations: [read, create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  fileName: String!
+  path: String!
+  postId: ID! @index(name: "byPost", sortKeyFields: ["fileName"])
+  post: Post @belongsTo(fields: ["postId"])
+  commentId: ID! @index(name: "byComment", sortKeyFields: ["fileName"])
+  comment: Comment @belongsTo
+
+  # NEW: activity log relation
+  activityLogs: [ActivityLog] @hasMany(indexName: "byMediaActivityLog", fields: ["id"])
+}
+
+type Menu
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  module: String
+  moduleId: String
+  parentId: ID @index(name: "byParent", sortKeyFields: ["name"])
+  parent: Menu @belongsTo(fields: ["parentId"])
+  children: [Menu] @hasMany(indexName: "byParent", fields: ["id"])
+  link: String
+  sortOrder: Int!
+
+  # NEW: activity log relation
+  activityLogs: [ActivityLog] @hasMany(indexName: "byMenuActivityLog", fields: ["id"])
+}
+
+type Article
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  post: Post @hasOne
+
+  # NEW: activity log relation
+  activityLogs: [ActivityLog] @hasMany(indexName: "byArticleActivityLog", fields: ["id"])
+}
+
+type Category
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  boardId: ID! @index(name: "byBoard", sortKeyFields: ["categoryIndexString"])
+  board: Board @belongsTo(fields: ["boardId"])
+  post: [Post] @hasMany
+  categoryIndex: Int!
+  categoryIndexString: String!
+}
+
+type Tag
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId", operations: [read, create, update, delete] },
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  posts: [Post] @manyToMany(relationName: "PostTags")
+}
+
+type SiteSetting
+  @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"], operations: [read, create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  key: ID!
+  value: String!
+}
+
+type ActivityLog
+  @model 
+  @auth(rules: [
+    { allow: owner, ownerField: "userId", operations: [read, create, update, delete] },
+    { allow: public, operations: [read] }
+  ]) {
+  id: ID!
+  userId: String!
+  action: String!
+  timestamp: AWSDateTime
+
+  # NEW: optional links to each entity you want to log
+
+  postId: ID @index(name: "byPostActivityLog", sortKeyFields: ["timestamp"])
+  post: Post @belongsTo(fields: ["postId"])
+
+  commentId: ID @index(name: "byCommentActivityLog", sortKeyFields: ["timestamp"])
+  comment: Comment @belongsTo(fields: ["commentId"])
+
+  articleId: ID @index(name: "byArticleActivityLog", sortKeyFields: ["timestamp"])
+  article: Article @belongsTo(fields: ["articleId"])
+
+  mediaId: ID @index(name: "byMediaActivityLog", sortKeyFields: ["timestamp"])
+  media: Media @belongsTo(fields: ["mediaId"])
+
+  menuId: ID @index(name: "byMenuActivityLog", sortKeyFields: ["timestamp"])
+  menu: Menu @belongsTo(fields: ["menuId"])
+}

@@ -31,7 +31,7 @@ export const gqAddMenu = async (input: any) => {
 
     // 3️⃣ Prepare input for new menu
     if (!input.parentId) { delete input.parentId; }
-    if (!input.link) { input.link = `/${input.module}/${input.moduleId}` }
+    if (!input.link) { input.link = `/${input.module}/index/${input.moduleId}` }
     input.sortOrder = newSortOrder;
     
     const response: any = await client.graphql({

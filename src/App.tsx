@@ -56,7 +56,7 @@ const App: React.FC = () => {
           <Route path=":module/:action/:id/:tabPage/:tabPageAction" element={<ModuleWrapper />} />
           <Route path=":module/:action/:id/:tabPage" element={<ModuleWrapper />} />
           <Route path=":module/:action/:id" element={<ModuleWrapper />} />
-          <Route path=":module/:id" element={<ModuleWrapper />} />
+          <Route path=":module/:action" element={<ModuleWrapper />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
 

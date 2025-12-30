@@ -128,6 +128,10 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
       __typename
     }
     views
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     boardPostsId
@@ -178,6 +182,10 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
       __typename
     }
     views
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     boardPostsId
@@ -228,6 +236,10 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
       __typename
     }
     views
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     boardPostsId
@@ -270,6 +282,10 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
     authorId
     content
     attachments {
+      nextToken
+      __typename
+    }
+    activityLogs {
       nextToken
       __typename
     }
@@ -317,6 +333,10 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
       nextToken
       __typename
     }
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     postCommentsId
@@ -361,6 +381,10 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
       nextToken
       __typename
     }
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     postCommentsId
@@ -379,6 +403,7 @@ export const onCreateMedia = /* GraphQL */ `subscription OnCreateMedia(
     id
     fileName
     path
+    postId
     post {
       id
       moduleId
@@ -398,6 +423,7 @@ export const onCreateMedia = /* GraphQL */ `subscription OnCreateMedia(
       categoryPostId
       __typename
     }
+    commentId
     comment {
       id
       postId
@@ -408,6 +434,10 @@ export const onCreateMedia = /* GraphQL */ `subscription OnCreateMedia(
       createdAt
       updatedAt
       postCommentsId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -430,6 +460,7 @@ export const onUpdateMedia = /* GraphQL */ `subscription OnUpdateMedia(
     id
     fileName
     path
+    postId
     post {
       id
       moduleId
@@ -449,6 +480,7 @@ export const onUpdateMedia = /* GraphQL */ `subscription OnUpdateMedia(
       categoryPostId
       __typename
     }
+    commentId
     comment {
       id
       postId
@@ -459,6 +491,10 @@ export const onUpdateMedia = /* GraphQL */ `subscription OnUpdateMedia(
       createdAt
       updatedAt
       postCommentsId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -481,6 +517,7 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia(
     id
     fileName
     path
+    postId
     post {
       id
       moduleId
@@ -500,6 +537,7 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia(
       categoryPostId
       __typename
     }
+    commentId
     comment {
       id
       postId
@@ -510,6 +548,10 @@ export const onDeleteMedia = /* GraphQL */ `subscription OnDeleteMedia(
       createdAt
       updatedAt
       postCommentsId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -549,6 +591,10 @@ export const onCreateMenu = /* GraphQL */ `subscription OnCreateMenu($filter: Mo
     }
     link
     sortOrder
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -583,6 +629,10 @@ export const onUpdateMenu = /* GraphQL */ `subscription OnUpdateMenu($filter: Mo
     }
     link
     sortOrder
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -617,6 +667,10 @@ export const onDeleteMenu = /* GraphQL */ `subscription OnDeleteMenu($filter: Mo
     }
     link
     sortOrder
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -647,6 +701,10 @@ export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filt
       updatedAt
       boardPostsId
       categoryPostId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -682,6 +740,10 @@ export const onUpdateArticle = /* GraphQL */ `subscription OnUpdateArticle($filt
       categoryPostId
       __typename
     }
+    activityLogs {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     articlePostId
@@ -713,6 +775,10 @@ export const onDeleteArticle = /* GraphQL */ `subscription OnDeleteArticle($filt
       updatedAt
       boardPostsId
       categoryPostId
+      __typename
+    }
+    activityLogs {
+      nextToken
       __typename
     }
     createdAt
@@ -944,6 +1010,75 @@ export const onCreateActivityLog = /* GraphQL */ `subscription OnCreateActivityL
     userId
     action
     timestamp
+    postId
+    post {
+      id
+      moduleId
+      module
+      categoryId
+      categoryIndexString
+      postIndex
+      postIndexString
+      title
+      content
+      authorId
+      status
+      views
+      createdAt
+      updatedAt
+      boardPostsId
+      categoryPostId
+      __typename
+    }
+    commentId
+    comment {
+      id
+      postId
+      commentIndex
+      commentIndexString
+      authorId
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      __typename
+    }
+    articleId
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
+    mediaId
+    media {
+      id
+      fileName
+      path
+      postId
+      commentId
+      createdAt
+      updatedAt
+      postAttachmentsId
+      commentAttachmentsId
+      authorId
+      __typename
+    }
+    menuId
+    menu {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -962,6 +1097,75 @@ export const onUpdateActivityLog = /* GraphQL */ `subscription OnUpdateActivityL
     userId
     action
     timestamp
+    postId
+    post {
+      id
+      moduleId
+      module
+      categoryId
+      categoryIndexString
+      postIndex
+      postIndexString
+      title
+      content
+      authorId
+      status
+      views
+      createdAt
+      updatedAt
+      boardPostsId
+      categoryPostId
+      __typename
+    }
+    commentId
+    comment {
+      id
+      postId
+      commentIndex
+      commentIndexString
+      authorId
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      __typename
+    }
+    articleId
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
+    mediaId
+    media {
+      id
+      fileName
+      path
+      postId
+      commentId
+      createdAt
+      updatedAt
+      postAttachmentsId
+      commentAttachmentsId
+      authorId
+      __typename
+    }
+    menuId
+    menu {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -980,6 +1184,75 @@ export const onDeleteActivityLog = /* GraphQL */ `subscription OnDeleteActivityL
     userId
     action
     timestamp
+    postId
+    post {
+      id
+      moduleId
+      module
+      categoryId
+      categoryIndexString
+      postIndex
+      postIndexString
+      title
+      content
+      authorId
+      status
+      views
+      createdAt
+      updatedAt
+      boardPostsId
+      categoryPostId
+      __typename
+    }
+    commentId
+    comment {
+      id
+      postId
+      commentIndex
+      commentIndexString
+      authorId
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      __typename
+    }
+    articleId
+    article {
+      id
+      name
+      createdAt
+      updatedAt
+      articlePostId
+      __typename
+    }
+    mediaId
+    media {
+      id
+      fileName
+      path
+      postId
+      commentId
+      createdAt
+      updatedAt
+      postAttachmentsId
+      commentAttachmentsId
+      authorId
+      __typename
+    }
+    menuId
+    menu {
+      id
+      name
+      module
+      moduleId
+      parentId
+      link
+      sortOrder
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename

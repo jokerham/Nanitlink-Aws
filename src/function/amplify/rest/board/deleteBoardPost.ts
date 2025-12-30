@@ -7,7 +7,7 @@ interface IDeleteBoardPostProps {
 }
 
 export const deleteBoardPost = async (postDelete: IDeleteBoardPostProps) => {
-  const apiName = 'post';
+  const apiName = 'PostRestApi';
   const path = `/board/${postDelete.boardId}?postId=${postDelete.postId}`;
   try {
     const session = await fetchAuthSession();

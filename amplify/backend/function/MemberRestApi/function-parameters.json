@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "auth": {
+      "nanitlinkawsd5edfab0": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
