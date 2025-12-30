@@ -27,7 +27,7 @@
         },
         "BoardRestApi": {
           "deploymentBucketName": "amplify-nanitlinkaws-dev-3550a-deployment",
-          "s3Key": "amplify-builds/BoardRestApi-7a377a4c7a437538674c-build.zip"
+          "s3Key": "amplify-builds/BoardRestApi-6655307a3866366a3755-build.zip"
         },
         "CacheRestApi": {
           "deploymentBucketName": "amplify-nanitlinkaws-dev-3550a-deployment",

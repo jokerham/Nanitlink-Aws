@@ -119,10 +119,25 @@
         },
         {
           "attributes": [
+            "ApiName",
+            "ApiId"
+          ],
+          "category": "api",
+          "resourceName": "MemberRestApi"
+        },
+        {
+          "attributes": [
             "UserPoolId"
           ],
           "category": "auth",
           "resourceName": "nanitlinkawsd5edfab0"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "MemberRestApi"
         }
       ],
       "providerPlugin": "awscloudformation",

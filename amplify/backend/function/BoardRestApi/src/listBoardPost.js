@@ -25,14 +25,11 @@ async function getAuthor(subId) {
     pathParameters: {
       proxy: subId
     },
-    httpMethod: 'GET',
-    queryStringParameters: {
-      userPoolId: USERPOOLID
-    }
+    httpMethod: 'GET'
   };
 
   const params = {
-    FunctionName: process.env.FUNCTION_NLMEMBER_NAME,
+    FunctionName: process.env.FUNCTION_MEMBERRESTAPI_NAME,
     InvocationType: 'RequestResponse',
     Payload: JSON.stringify(payload)
   };

@@ -5,10 +5,24 @@
         "Query",
         "Mutation",
         "Subscription"
+      ],
+      "MemberRestApi": [
+        "create",
+        "read",
+        "update",
+        "delete"
       ]
     },
     "auth": {
       "nanitlinkawsd5edfab0": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "function": {
+      "MemberRestApi": [
         "create",
         "read",
         "update",
